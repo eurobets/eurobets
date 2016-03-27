@@ -76,10 +76,6 @@ function logoutError() {
   return { type: types.LOGOUT_ERROR_USER };
 }
 
-export function toggleLoginMode() {
-  return { type: types.TOGGLE_LOGIN_MODE };
-}
-
 export function manualLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
@@ -87,8 +83,8 @@ export function manualLogin(data) {
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message));
-          dispatch(push('/'));
+          dispatch(loginSuccess());
+          dispatch(push('/dashboard'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }
@@ -106,8 +102,8 @@ export function signUp(data) {
     return makeUserRequest('post', data, '/signup')
       .then(response => {
         if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
-          dispatch(push('/'));
+          dispatch(signUpSuccess());
+          dispatch(push('/dashboard'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }
@@ -133,3 +129,6 @@ export function logOut() {
   };
 }
 
+export function clearMessage() {
+    return { type: types.CLEAR_AUTHREG_DATA };
+}

@@ -33,8 +33,8 @@ module.exports = function(app, passport) {
   // Otherwise, the authentication has failed.
   app.get('/auth/google/callback',
     passport.authenticate('google', {
-      successRedirect: '/',
-      failureRedirect: '/login'
+      successRedirect: '/dashboard',
+      failureRedirect: '/'
     }));
 
   // topic routes

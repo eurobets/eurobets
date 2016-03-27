@@ -1,0 +1,27 @@
+@import '../../styles/settings';
+@import '../../styles/mixins';
+
+$logoHeight: 75px;
+
+.main
+{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, $materialBlue500 0%, $materialBlue900 100%);
+
+    .logo
+    {
+        height: $logoHeight;
+        color: $colorWhite;
+    }
+
+    .login-form
+    {
+        margin-bottom: $logoHeight;
+    }
+}

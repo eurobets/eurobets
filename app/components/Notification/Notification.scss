@@ -1,0 +1,21 @@
+@import '../../styles/settings.scss';
+
+.notification
+{
+    display: none;
+    padding: 12px 0;
+
+    color: $colorBlack;
+    text-align: center;
+
+    &_show
+    {
+        display: block;
+    }
+
+    &_success
+    {
+        background-color: $materialGreen700;
+        color: $colorWhite;
+    }
+}

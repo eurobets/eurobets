@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const User = require('../models/user');
 const passport = require('passport');
+const emailRegexp = /^.+\@.+\..+/i;
 
 /**
  * POST /login
@@ -41,15 +42,24 @@ exports.postLogout = function(req, res) {
 exports.postSignUp = function(req, res, next) {
   var user =  new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    profile: {
+      name: req.body.name,
+      lastName: req.body.lastName
+    }
   });
 
+  if (!emailRegexp.test(req.body.email)) {
+    return res.status(400).json({message: {email: {kind: 'wrongEmail'}}});
+  }
   User.findOne({email: req.body.email}, function(err, existingUser) {
     if(existingUser) {
-      return res.status(409).json({ message: 'Account with this email address already exists!'});
+      return res.status(409).json({message: {email: {kind: 'userAlreadyExists'}}});
     }
     user.save(function(err) {
-      if(err) return next(err);
+      if(err) {
+        return res.status(400).json({ message: err.errors});
+      };
       req.logIn(user, function(err) {
         if(err) return res.status(401).json({message: err});
         return res.status(200).json(
