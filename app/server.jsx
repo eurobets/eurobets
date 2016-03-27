@@ -67,6 +67,10 @@ export default function render(req, res) {
       }
     }, history);
 
+    global.navigator = {
+        userAgent: req.headers['user-agent']
+    };
+
     const routes = createRoutes(store);
 
   /*

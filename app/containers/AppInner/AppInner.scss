@@ -1,0 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700&subset=latin,cyrillic);
+@import '../../styles/settings';
+
+.page_mode_inner
+{
+    .page__content
+    {
+        padding: 20px $pageIndent;
+    }
+}

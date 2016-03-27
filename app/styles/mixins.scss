@@ -1,5 +1,14 @@
 @import 'settings.scss';
 
+@mixin clearfix {
+  &:after {
+    display: table;
+    clear: both;
+
+    content: '';
+  }
+}
+
 @mixin simpleBoxShadow() {
   box-shadow: 0 1px 2px $color-black;
 }

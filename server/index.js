@@ -10,7 +10,6 @@ const mongo_express_config = require('./config/mongo-express');
 
 app.use('/admin', mongo_express(mongo_express_config));
 
-
 // Find the appropriate database to connect to, default to localhost if not found.
 const connect = () => {
     mongoose.connect(secrets.db, function(err, res) {

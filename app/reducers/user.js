@@ -1,5 +1,5 @@
 import {
-  TOGGLE_LOGIN_MODE,
+  CLEAR_AUTHREG_DATA,
   MANUAL_LOGIN_USER,
   LOGIN_SUCCESS_USER,
   LOGIN_ERROR_USER,
@@ -16,9 +16,8 @@ export default function user(state={
   isWaiting: false,
   authenticated: false }, action={}) {
   switch (action.type) {
-    case TOGGLE_LOGIN_MODE:
+    case CLEAR_AUTHREG_DATA:
       return Object.assign({}, state, {
-        isLogin: !state.isLogin,
         message: ''
       });
     case MANUAL_LOGIN_USER:

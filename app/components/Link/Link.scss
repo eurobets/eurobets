@@ -1,0 +1,73 @@
+@import '../../styles/settings';
+
+
+.link, a
+{
+    position: relative;
+
+    transition: color .2s ease-out 0s;
+    text-decoration: none;
+
+    &
+    {
+        -moz-transition: none; // fallback for Firefox
+    }
+
+    &:hover
+    {
+        transition: none;
+    }
+
+    &.link_pseudo,
+    &:link,
+    &:visited
+    {
+        color: $materialBlue500;
+    }
+    &.link_pseudo:hover,
+    &:hover
+    {
+        color: $materialPinkA200;
+    }
+
+    &_theme
+    {
+        &_light
+        {
+            &.link_pseudo,
+            &:link,
+            &:visited
+            {
+                color: white;
+            }
+            &.link_pseudo:hover,
+            &:hover
+            {
+                color: $materialPinkA200;
+            }
+        }
+    }
+
+    &_disabled
+    {
+        cursor: default;
+
+        &.link_pseudo,
+        &:link,
+        &:visited,
+        &:hover,
+        &:active
+        {
+            pointer-events: none;
+
+            color: inherit;
+        }
+    }
+
+    &_pseudo
+    {
+        display: inline-block;
+
+        cursor: pointer;
+    }
+}

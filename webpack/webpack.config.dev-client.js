@@ -67,9 +67,9 @@ module.exports = {
     module: {
       loaders: commonLoaders.concat([
         { test: /\.scss$/,
-          loader: 'style!css?module&localIdentName=[local]__[hash:base64:5]' +
+          loader: 'style!css?module&localIdentName=[local]' +
             '&sourceMap!postcss-loader!sass?sourceMap&outputStyle=expanded' +
-            '&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, '..', 'app', 'scss'))
+            '&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, '..', 'app'))
         }
       ])
     },

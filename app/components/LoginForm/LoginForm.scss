@@ -1,0 +1,54 @@
+@import '../../styles/settings';
+@import '../../styles/mixins';
+
+.login-form
+{
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 1px $colorLightGrey;
+    display: flex;
+    flex-direction: column;
+    width: 296px;
+    position: relative;
+    background: $colorWhite;
+
+    &__content
+    {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+    }
+
+    &__controls
+    {
+        padding: 10px 0;
+    }
+
+    &__button
+    {
+        font-size: $fontLarge;
+    }
+
+    &__footer
+    {
+        @include clearfix();
+        top: 10px;
+        font-size: $fontSmall;
+    }
+    &__google-link
+    {
+        float: left;
+    }
+
+    &__register-link
+    {
+        float: right;
+    }
+
+    &__message
+    {
+        position: absolute;
+        color: $materialRed500;
+        font-size: $fontSmall;
+    }
+}
