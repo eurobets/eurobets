@@ -1,8 +1,28 @@
 @import '../../styles/settings';
 
+$avatarSize: 36px;
 .user
 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &__avatar
+    {
+        text-transform: uppercase;
+        background: $colorWhite;
+        width: $avatarSize;
+        height: $avatarSize;
+        border-radius: 50%;
+        line-height: $avatarSize;
+        text-align: center;
+        font-size: 18px;
+        color: $materialLightBlue700;
+        background: $colorWhite;
+    }
+
+    &__menu-item
+    {
+        padding: 0 12px!important;
+    }
 }

@@ -59,24 +59,24 @@ const Register = React.createClass({
                         errorText={nameError && formatMessage({id: `Register.${nameError}`})}
                         mix='register__input'
                         onChange={e => this.setState({name: e.target.value})}
-                        placeholder={formatMessage({id: 'Register.name'})} />
+                        hintText={formatMessage({id: 'Register.name'})} />
                     <Input
                         errorText={lastNameError && formatMessage({id: `Register.${lastNameError}`})}
                         mix='register__input'
                         onChange={e => this.setState({lastName: e.target.value})}
-                        placeholder={formatMessage({id: 'Register.lastName'})} />
+                        hintText={formatMessage({id: 'Register.lastName'})} />
                     <Input
                         errorText={emailError && formatMessage({id: `Register.${emailError}`})}
                         mix='register__input'
                         type="email"
                         onChange={e => this.setState({email: e.target.value})}
-                        placeholder="Email" />
+                        hintText="Email" />
                     <Input
                         errorText={passwordError && formatMessage({id: `Register.${passwordError}`})}
                         mix='register__input'
                         type="password"
                         onChange={e => this.setState({password: e.target.value})}
-                        placeholder={formatMessage({id: 'Register.password'})} />
+                        hintText={formatMessage({id: 'Register.password'})} />
                     {!!message && message.length > 0 &&
                         <div className="register__message">
                             {formatMessage({id: `Register.${message}`})}

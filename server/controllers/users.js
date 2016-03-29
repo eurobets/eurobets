@@ -4,7 +4,7 @@ const passport = require('passport');
 const emailRegexp = /^.+\@.+\..+/i;
 
 /**
- * POST /login
+ * POST /api/login
  */
 exports.postLogin = function(req, res, next) {
   // Do email and password validation for the server
@@ -19,6 +19,7 @@ exports.postLogin = function(req, res, next) {
       if(err) return res.status(401).json({message: err});
       return res.status(200).json(
         {
+          user: {email: user.email, profile: user.profile},
           message: 'You have been successfully logged in.'
         });
     });
@@ -27,7 +28,7 @@ exports.postLogin = function(req, res, next) {
 
 
 /**
- * POST /logout
+ * POST /api/logout
  */
 exports.postLogout = function(req, res) {
   // Do email and password validation for the server
@@ -36,7 +37,7 @@ exports.postLogout = function(req, res) {
 };
 
 /**
- * POST /signup
+ * POST /api/signup
  * Create a new local account
  */
 exports.postSignUp = function(req, res, next) {
@@ -64,6 +65,7 @@ exports.postSignUp = function(req, res, next) {
         if(err) return res.status(401).json({message: err});
         return res.status(200).json(
           {
+            user: {email: user.email, profile: user.profile},
             message: 'You have been successfully logged in.'
           });
       });

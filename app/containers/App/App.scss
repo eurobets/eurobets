@@ -1,10 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Oswald|PT+Sans:400,700&subset=latin,cyrillic);
+@import url(https://fonts.googleapis.com/css?family=Oswald|Roboto:300&subset=latin,cyrillic);
 @import '../../styles/settings';
 
 body {
     font-family: $fontFamily;
     font-size: $fontMedium;
-    font-weight: normal;
+    font-weight: 300;
     font-smoothing: antialiased;
     margin: 0;
 }

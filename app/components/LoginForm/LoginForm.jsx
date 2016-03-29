@@ -56,12 +56,12 @@ const UserLoginForm = React.createClass({
                         mix="login-form__input"
                         type="email"
                         onChange={e => this.setState({email: e.target.value})}
-                        placeholder="Email" />
+                        hintText="Email" />
                     <Input
                         mix="login-form__input"
                         type="password"
                         onChange={e => this.setState({password: e.target.value})}
-                        placeholder={intl.formatMessage({id: 'LoginForm.password'})} />
+                        hintText={intl.formatMessage({id: 'LoginForm.password'})} />
                     {!!message && message.length > 0 &&
                         <div className="login-form__message">
                             {intl.formatMessage({id: `LoginForm.${message}`})}

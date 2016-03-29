@@ -2,6 +2,7 @@ export default {
     'Navigation.dashboard': 'Дашборд',
 
     'User.logout': 'Выход',
+    'User.profile': 'Профиль',
 
     'LoginForm.login': 'Войти',
     'LoginForm.loginWithGoogle': 'Войти через Google',

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import ru from 'react-intl/locale-data/ru';
 import { connect } from 'react-redux';
@@ -11,10 +11,8 @@ import './App.scss';
 
 addLocaleData(ru);
 
-const App = React.createClass({
-    propTypes: {
-        children: PropTypes.object
-    },
+class App extends Component {
+
     render() {
         return (
             <IntlProvider messages={messages} locale={'ru-RU'}>
@@ -22,7 +20,7 @@ const App = React.createClass({
             </IntlProvider>
         );
     }
-});
+};
 
 
 export default App;

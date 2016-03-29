@@ -2,7 +2,7 @@
 
 .header
 {
-    background: $materialBlue800;
+    background: linear-gradient(135deg, $materialLightBlue900 0%, $materialLightBlue500 100%);
     height: $headerHeight;
     min-height: $headerHeight;
     display: flex;
