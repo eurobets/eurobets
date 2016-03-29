@@ -15,7 +15,7 @@ polyfill();
  * @param String endpoint - defaults to /login
  * @return Promise
  */
-function makeUserRequest(method, data, api='/login') {
+function makeUserRequest(method, data, api='/api/login') {
   return request({
     url: api,
     method: method,
@@ -30,10 +30,10 @@ function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
-function loginSuccess(message) {
+function loginSuccess(user) {
   return {
     type: types.LOGIN_SUCCESS_USER,
-    message: message
+    user
   };
 }
 
@@ -56,10 +56,11 @@ function beginSignUp() {
   return { type: types.SIGNUP_USER };
 }
 
-function signUpSuccess(message) {
+function signUpSuccess(user) {
+    console.log(user);
   return {
     type: types.SIGNUP_SUCCESS_USER,
-    message: message
+    user
   };
 }
 
@@ -80,10 +81,10 @@ export function manualLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
 
-    return makeUserRequest('post', data, '/login')
+    return makeUserRequest('post', data, '/api/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess());
+          dispatch(loginSuccess(response.data.user));
           dispatch(push('/dashboard'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
@@ -99,10 +100,10 @@ export function signUp(data) {
   return dispatch => {
     dispatch(beginSignUp());
 
-    return makeUserRequest('post', data, '/signup')
+    return makeUserRequest('post', data, '/api/signup')
       .then(response => {
         if (response.status === 200) {
-          dispatch(signUpSuccess());
+          dispatch(signUpSuccess(response.data.user));
           dispatch(push('/dashboard'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
@@ -118,7 +119,7 @@ export function logOut() {
   return dispatch => {
     dispatch(beginLogout());
 
-    return makeUserRequest('post', null, '/logout')
+    return makeUserRequest('post', null, '/api/logout')
       .then( response => {
         if (response.status === 200) {
           dispatch(logoutSuccess());

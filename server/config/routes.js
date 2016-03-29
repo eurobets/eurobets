@@ -13,9 +13,9 @@ var App = require(compiled_app_module_path);
 
 module.exports = function(app, passport) {
   // user routes
-  app.post('/login', users.postLogin);
-  app.post('/signup', users.postSignUp);
-  app.post('/logout', users.postLogout);
+  app.post('/api/login', users.postLogin);
+  app.post('/api/signup', users.postSignUp);
+  app.post('/api/logout', users.postLogout);
 
   // google auth
   // Redirect the user to Google for authentication. When complete, Google
