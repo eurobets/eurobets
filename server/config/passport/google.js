@@ -17,7 +17,7 @@ var secrets = require('../secrets');
  *       - If there is, return an error message.
  *       - Else create a new account.
  *
- * The Google OAuth 2.0 authentication strategy authenticates users using a Google account and OAuth 2.0 tokens. 
+ * The Google OAuth 2.0 authentication strategy authenticates users using a Google account and OAuth 2.0 tokens.
  * The strategy requires a verify callback, which accepts these credentials and calls done providing a user, as well
  * as options specifying a client ID, client secret, and callback URL.
  */
@@ -34,7 +34,8 @@ module.exports = new GoogleStrategy({
 				User.findById(req.user.id, function(err, user) {
 					user.google = profile.id;
 					user.tokens.push({ kind: 'google', accessToken: accessToken});
-					user.profile.name = user.profile.name || profile.displayName;
+                    user.profile.name = user.profile.name || profile.name.givenName;
+                    user.profile.lastName = user.profile.lastName || profile.name.familyName;
           user.profile.gender = user.profile.gender || profile._json.gender;
           user.profile.picture = user.profile.picture || profile._json.picture;
           user.save(function(err) {
@@ -54,7 +55,8 @@ module.exports = new GoogleStrategy({
           user.email = profile._json.emails[0].value;
           user.google = profile.id;
           user.tokens.push({ kind: 'google', accessToken: accessToken });
-          user.profile.name = profile.displayName;
+          user.profile.name = profile.name.givenName;
+          user.profile.lastName = profile.name.familyName;
           user.profile.gender = profile._json.gender;
           user.profile.picture = profile._json.picture;
           user.save(function(err) {

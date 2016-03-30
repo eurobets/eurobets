@@ -53,6 +53,9 @@ exports.postSignUp = function(req, res, next) {
   if (!emailRegexp.test(req.body.email)) {
     return res.status(400).json({message: {email: {kind: 'wrongEmail'}}});
   }
+  if (!req.body.password) {
+    return res.status(400).json({message: {password: {kind: 'required'}}});
+  }
   User.findOne({email: req.body.email}, function(err, existingUser) {
     if(existingUser) {
       return res.status(409).json({message: {email: {kind: 'userAlreadyExists'}}});
