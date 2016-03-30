@@ -16,7 +16,7 @@ export default {
     'Register.password': 'Пароль',
     'Register.required': 'Поле необходимо заполнить',
     'Register.toRegister': 'Зарегистрироваться',
-    'Register.userAlreadyExists': 'Почта уже использована другим пользователем',
+    'Register.userAlreadyExists': 'Эта почта уже используется',
     'Register.wrongEmail': 'Несуществующий email',
 
     'Register.title': 'Регистрация участника',
