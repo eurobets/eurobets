@@ -43,7 +43,7 @@ const config = {
     // Add to homescreen for Safari on IOS
     { 'name': 'apple-mobile-web-app-capable', 'content': 'yes' },
     { 'name': 'apple-mobile-web-app-status-bar-style', 'content': 'black' },
-    { 'name': 'apple-mobile-web-app-title', 'content': 'React Webpack Node' },
+    { 'name': 'apple-mobile-web-app-title', 'content': 'EURO 2016 BETS' },
     // Tile icon for Win8 (144x144 + tile color)
     { 'name': 'msapplication-TileImage', 'content': mscon },
     { 'name': 'msapplication-TileColor', 'content': '#3372DF' }
