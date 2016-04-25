@@ -47,7 +47,7 @@ const UserLoginForm = React.createClass({
     },
 
     render() {
-        const {user: {message}, intl} = this.props;
+        const {user, user: {message, isWaiting}, intl} = this.props;
 
         return (
             <form onSubmit={this.onLoginSubmit} className="login-form" action="/">
@@ -69,11 +69,12 @@ const UserLoginForm = React.createClass({
                 </div>
                 <div className="login-form__controls">
                     <Button
+                        disabled={isWaiting}
                         type="submit"
                         fullWidth
                         primary
                         mix="login-form__button"
-                        label={intl.formatMessage({id: 'LoginForm.login'})} />
+                        label={intl.formatMessage({id: 'LoginForm.login'}, {isWaiting})} />
                 </div>
                 <div className="login-form__footer">
                     <a className="login-form__google-link" href="/auth/google">

@@ -10,6 +10,7 @@ import Dashboard from 'containers/Dashboard/Dashboard';
 import RoomCreate from 'containers/RoomCreate/RoomCreate';
 import Room from 'containers/Room/Room';
 import RoomBets from 'containers/RoomBets/RoomBets';
+import RoomMain from 'containers/RoomMain/RoomMain';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
@@ -27,7 +28,7 @@ export default (store) => {
         const { user: { authenticated }} = store.getState();
         if (authenticated) {
             replace({
-              pathname: '/dashboard'
+                pathname: '/dashboard'
             });
         }
         callback();
@@ -39,8 +40,10 @@ export default (store) => {
                 <Route path="register" component={Register} onEnter={redirectAuth} />
                 <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
                 <Route path="rooms/create/" component={RoomCreate} onEnter={requireAuth} />
-                <Route path="rooms/:roomId/" component={Room} onEnter={requireAuth} />
-                <Route path="rooms/:roomId/bets/" component={RoomBets} onEnter={requireAuth} />
+                <Route path="rooms/:roomId/" component={Room} onEnter={requireAuth}>
+                    <IndexRoute component={RoomMain} onEnter={requireAuth} />
+                    <Route path="bets/" component={RoomBets} onEnter={requireAuth} />
+                </Route>
             </Route>
         </Route>
     );

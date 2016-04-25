@@ -9,7 +9,10 @@ const Link = React.createClass({
         const className = b('link', {theme: this.props.theme});
 
         return (
-            <RouterLink className={`${className} ${this.props.mix}`} {...this.props} />
+            <RouterLink
+                activeClassName="link_active"
+                className={`${className} ${this.props.mix || ''}`}
+                {...this.props} />
         );
     }
 });

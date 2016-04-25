@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import user from 'reducers/user';
-import topic from 'reducers/topic';
+import room from 'reducers/room';
 import message from 'reducers/message';
 import { routerReducer as routing } from 'react-router-redux';
 
@@ -8,7 +8,7 @@ import { routerReducer as routing } from 'react-router-redux';
 // router state
 const rootReducer = combineReducers({
     user,
-    topic,
+    room,
     message,
     routing
 });

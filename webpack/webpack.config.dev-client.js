@@ -4,26 +4,26 @@ var assetsPath = path.join(__dirname, '..', 'public', 'assets');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 var commonLoaders = [
-  {
-    /*
-     * TC39 categorises proposals for babel in 4 stages
-     * Read more http://babeljs.io/docs/usage/experimental/
-     */
-    test: /\.js$|\.jsx$/,
-    loader: 'babel',
-    // Reason why we put this here instead of babelrc
-    // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
-    query: {
-      "presets": ["react-hmre", "es2015", "react", "stage-0"]
+    {
+        /*
+         * TC39 categorises proposals for babel in 4 stages
+         * Read more http://babeljs.io/docs/usage/experimental/
+         */
+        test: /\.js$|\.jsx$/,
+        loader: 'babel',
+        // Reason why we put this here instead of babelrc
+        // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
+        query: {
+            "presets": ["react-hmre", "es2015", "react", "stage-0"]
+        },
+        include: path.join(__dirname, '..', 'app'),
+        exclude: path.join(__dirname, '/node_modules/')
     },
-    include: path.join(__dirname, '..', 'app'),
-    exclude: path.join(__dirname, '/node_modules/')
-  },
-  {
-    test: /\.(png|jpg|svg)$/,
-    loader: 'url?limit=10000'
-  },
-  { test: /\.html$/, loader: 'html-loader' }
+    {
+        test: /\.(png|jpg|svg)$/,
+        loader: 'url?limit=10000'
+    },
+    { test: /\.html$/, loader: 'html-loader' }
 ];
 
 module.exports = {
@@ -54,36 +54,36 @@ module.exports = {
     // Multiple entry with hot loader
     // https://github.com/glenjamin/webpack-hot-middleware/blob/master/example/webpack.config.multientry.js
     entry: {
-      app: ['./client', hotMiddlewareScript]
+        app: ['./client', hotMiddlewareScript]
     },
     output: {
-      // The output directory as absolute path
-      path: assetsPath,
-      // The filename of the entry chunk as relative path inside the output.path directory
-      filename: '[name].js',
-      // The output path from the view of the Javascript
-      publicPath: '/assets/'
+        // The output directory as absolute path
+        path: assetsPath,
+        // The filename of the entry chunk as relative path inside the output.path directory
+        filename: '[name].js',
+        // The output path from the view of the Javascript
+        publicPath: '/assets/'
     },
     module: {
-      loaders: commonLoaders.concat([
-        { test: /\.scss$/,
-          loader: 'style!css?module&localIdentName=[local]' +
-            '&sourceMap!postcss-loader!sass?sourceMap&outputStyle=expanded' +
-            '&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, '..', 'app'))
-        }
-      ])
+        loaders: commonLoaders.concat([
+            { test: /\.scss$/,
+                loader: 'style!css?module&localIdentName=[local]' +
+                '&sourceMap!postcss-loader!sass?sourceMap&outputStyle=expanded' +
+                '&includePaths[]=' + encodeURIComponent(path.resolve(__dirname, '..', 'app'))
+            }
+        ])
     },
     resolve: {
-      extensions: ['', '.js', '.jsx', '.scss'],
-      modulesDirectories: [
-        'app', 'node_modules'
-      ]
+        extensions: ['', '.js', '.jsx', '.scss'],
+        modulesDirectories: [
+            'app', 'node_modules'
+        ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
-          __DEV__: true
+            __DEV__: true
         })
     ]
 };

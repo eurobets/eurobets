@@ -16,118 +16,117 @@ polyfill();
  * @return Promise
  */
 function makeUserRequest(method, data, api='/api/login') {
-  return request({
-    url: api,
-    method: method,
-    data: data,
-    withCredentials: true
-  });
+    return request({
+        url: api,
+        method: method,
+        data: data,
+        withCredentials: true
+    });
 }
 
 
 // Log In Action Creators
 function beginLogin() {
-  return { type: types.MANUAL_LOGIN_USER };
+    return { type: types.MANUAL_LOGIN_USER };
 }
 
 function loginSuccess(user) {
-  return {
-    type: types.LOGIN_SUCCESS_USER,
-    user
-  };
+    return {
+        type: types.LOGIN_SUCCESS_USER,
+        user
+    };
 }
 
 function loginError(message) {
-  return {
-    type: types.LOGIN_ERROR_USER,
-    message: message
-  };
+    return {
+        type: types.LOGIN_ERROR_USER,
+        message: message
+    };
 }
 
 // Sign Up Action Creators
 function signUpError(message) {
-  return {
-    type: types.SIGNUP_ERROR_USER,
-    message: message
-  };
+    return {
+        type: types.SIGNUP_ERROR_USER,
+        message: message
+    };
 }
 
 function beginSignUp() {
-  return { type: types.SIGNUP_USER };
+    return { type: types.SIGNUP_USER };
 }
 
 function signUpSuccess(user) {
-    console.log(user);
-  return {
-    type: types.SIGNUP_SUCCESS_USER,
-    user
-  };
+    return {
+        type: types.SIGNUP_SUCCESS_USER,
+        user
+    };
 }
 
 // Log Out Action Creators
 function beginLogout() {
-  return { type: types.LOGOUT_USER};
+    return { type: types.LOGOUT_USER};
 }
 
 function logoutSuccess() {
-  return { type: types.LOGOUT_SUCCESS_USER };
+    return { type: types.LOGOUT_SUCCESS_USER };
 }
 
 function logoutError() {
-  return { type: types.LOGOUT_ERROR_USER };
+    return { type: types.LOGOUT_ERROR_USER };
 }
 
 export function manualLogin(data) {
-  return dispatch => {
-    dispatch(beginLogin());
+    return dispatch => {
+        dispatch(beginLogin());
 
-    return makeUserRequest('post', data, '/api/login')
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(loginSuccess(response.data.user));
-          dispatch(push('/dashboard'));
-        } else {
-          dispatch(loginError('Oops! Something went wrong!'));
-        }
-      })
-      .catch(err => {
-        dispatch(loginError(err.data.message));
-      });
-  };
+        return makeUserRequest('post', data, '/api/login')
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(loginSuccess(response.data.user));
+                    dispatch(push('/dashboard'));
+                } else {
+                    dispatch(loginError('Oops! Something went wrong!'));
+                }
+            })
+            .catch(err => {
+                dispatch(loginError(err.data.message));
+            });
+    };
 }
 
 export function signUp(data) {
-  return dispatch => {
-    dispatch(beginSignUp());
+    return dispatch => {
+        dispatch(beginSignUp());
 
-    return makeUserRequest('post', data, '/api/signup')
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.user));
-          dispatch(push('/dashboard'));
-        } else {
-          dispatch(signUpError('Oops! Something went wrong'));
-        }
-      })
-      .catch(err => {
-        dispatch(signUpError(err.data.message));
-      });
-  };
+        return makeUserRequest('post', data, '/api/signup')
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(signUpSuccess(response.data.user));
+                    dispatch(push('/dashboard'));
+                } else {
+                    dispatch(signUpError('Oops! Something went wrong'));
+                }
+            })
+            .catch(err => {
+                dispatch(signUpError(err.data.message));
+            });
+    };
 }
 
 export function logOut() {
-  return dispatch => {
-    dispatch(beginLogout());
+    return dispatch => {
+        dispatch(beginLogout());
 
-    return makeUserRequest('post', null, '/api/logout')
-      .then( response => {
-        if (response.status === 200) {
-          dispatch(logoutSuccess());
-        } else {
-          dispatch(logoutError());
-        }
-      });
-  };
+        return makeUserRequest('post', null, '/api/logout')
+            .then( response => {
+                if (response.status === 200) {
+                    dispatch(logoutSuccess());
+                } else {
+                    dispatch(logoutError());
+                }
+            });
+    };
 }
 
 export function clearMessage() {
