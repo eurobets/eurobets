@@ -32,7 +32,7 @@ const RoomMain = React.createClass({
                             currency: rules.charge.currency,
                             value: `${(rules.charge.value || 0) * chargePlayers}`
                         }} />
-                        {!iAmFree &&
+                        {iAmFree &&
                             <div>
                                 <FormattedHTMLMessage id="RoomMain.iAmFree" />
                                 <a href="#" onClick={this.playForMoney}>
