@@ -51,11 +51,6 @@ const User = React.createClass({
         const initials = name || lastName
             ? `${name.substr(0, 1) || ''}${lastName.substr(0, 1) || ''}`
             :  email.substr(0, 1);
-        const itemStyle = {padding: '0 12px'};
-
-        // <Link onClick={this.onLogout} mix="user__logout" theme="light" to="/">
-        //     {intl.formatMessage({id: 'User.logout'})}
-        // </Link>
 
         return authenticated && (
             <div className="user">

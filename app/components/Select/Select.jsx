@@ -1,9 +1,12 @@
 import React from 'react';
-import TextField from 'material-ui/lib/TextField';
+import SelectField from 'material-ui/lib/select-field';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import Theme from '../../styles/theme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
-const Checkbox = React.createClass({
+
+const Select = React.createClass({
     childContextTypes: {
         muiTheme: React.PropTypes.object
     },
@@ -16,10 +19,9 @@ const Checkbox = React.createClass({
 
     render() {
         return (
-            <TextField
-                className={`input ${this.props.mix || ''}`} {...this.props} />
+            <SelectField className={`select ${this.props.mix || ''}`} {...this.props} />
         );
     }
 });
 
-export default Checkbox;
+export default Select;

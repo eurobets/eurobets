@@ -1,19 +1,28 @@
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
-
-import './Button.scss';
-
-const materialLightBlueA700 = '#0091EA';
-
+import FlatButton from 'material-ui/lib/flat-button';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import Theme from '../../styles/theme';
 
 const Button = React.createClass({
+    childContextTypes: {
+        muiTheme: React.PropTypes.object
+    },
+
+    getChildContext() {
+        return {
+            muiTheme: ThemeManager.getMuiTheme(Theme)
+        };
+    },
+
     render() {
-        return (
-            <RaisedButton
-                className={`button ${this.props.mix}`} {...this.props}
-                labelStyle={{textTransform: 'none'}}
-                backgroundColor={this.props.primary && materialLightBlueA700} />
-        );
+        const {flat} = this.props;
+
+        return React.createElement(flat ? FlatButton : RaisedButton, {
+            className: `button ${this.props.mix || ''}`,
+            labelStyle: {textTransform: 'none'},
+            ...this.props
+        });
     }
 });
 

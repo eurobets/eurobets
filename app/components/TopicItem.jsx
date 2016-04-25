@@ -5,51 +5,51 @@ import styles from 'scss/components/topic-item';
 const cx = classNames.bind(styles);
 
 export default class TopicItem extends Component {
-  constructor(props) {
-    super(props);
-    this.onIncrement = this.onIncrement.bind(this);
-    this.onDecrement = this.onDecrement.bind(this);
-    this.onDestroyClick = this.onDestroyClick.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.onIncrement = this.onIncrement.bind(this);
+        this.onDecrement = this.onDecrement.bind(this);
+        this.onDestroyClick = this.onDestroyClick.bind(this);
+    }
 
-  onIncrement() {
-    const { id, index, onIncrement } = this.props;
-    onIncrement(id, index);
-  }
+    onIncrement() {
+        const { id, index, onIncrement } = this.props;
+        onIncrement(id, index);
+    }
 
-  onDecrement() {
-    const { id, index, onDecrement } = this.props;
-    onDecrement(id, index);
-  }
+    onDecrement() {
+        const { id, index, onDecrement } = this.props;
+        onDecrement(id, index);
+    }
 
-  onDestroyClick() {
-    const { id, index, onDestroy } = this.props;
-    onDestroy(id, index);
-  }
+    onDestroyClick() {
+        const { id, index, onDestroy } = this.props;
+        onDestroy(id, index);
+    }
 
-  render() {
-    return (
-      <li className={cx('topic-item')} key={this.props.id}>
-        <span className={cx('topic-item__topic')}>{this.props.text}</span>
-        <button className={
+    render() {
+        return (
+            <li className={cx('topic-item')} key={this.props.id}>
+                <span className={cx('topic-item__topic')}>{this.props.text}</span>
+                <button className={
           cx('topic-item__button', 'topic-item__button--increment')
         } onClick={this.onIncrement}>+</button>
-        <button className={
+                <button className={
           cx('topic-item__button', 'topic-item__button--decrement')
         } onClick={this.onDecrement}>-</button>
-        <button className={
+                <button className={
           cx('topic-item__button', 'topic-item__button--destroy')
         } onClick={this.onDestroyClick}>{String.fromCharCode(215)}</button>
-      </li>
-    );
-  }
+            </li>
+        );
+    }
 }
 
 TopicItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  onIncrement: PropTypes.func.isRequired,
-  onDecrement: PropTypes.func.isRequired,
-  onDestroy: PropTypes.func.isRequired
+    text: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    onIncrement: PropTypes.func.isRequired,
+    onDecrement: PropTypes.func.isRequired,
+    onDestroy: PropTypes.func.isRequired
 };

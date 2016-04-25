@@ -1,6 +1,6 @@
 import {
-  LOGIN_SUCCESS_USER,
-  SIGNUP_SUCCESS_USER
+    LOGIN_SUCCESS_USER,
+    SIGNUP_SUCCESS_USER
 } from 'constants/index';
 
 /*
@@ -10,18 +10,18 @@ import {
  * more context. - My 2 cents.
  */
 export default function message(state={
-  message: '',
-  type: 'SUCCESS'
+    message: '',
+    type: 'SUCCESS'
 }, action={}) {
-  switch (action.type) {
-    case LOGIN_SUCCESS_USER:
-    case SIGNUP_SUCCESS_USER:
-      return Object.assign({}, state, {
-        message: action.message,
-        type: 'SUCCESS'
-      });
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case LOGIN_SUCCESS_USER:
+        case SIGNUP_SUCCESS_USER:
+            return Object.assign({}, state, {
+                message: action.message,
+                type: 'SUCCESS'
+            });
+        default:
+            return state;
+    }
 }
 

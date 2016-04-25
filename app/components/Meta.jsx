@@ -8,7 +8,7 @@ class Meta extends React.Component {
   render() {
     return (
       <Helmet
-        title="EURO 2016 BETS"
+        title="Eurobets"
         meta={config.meta}
         link={config.link}
       />

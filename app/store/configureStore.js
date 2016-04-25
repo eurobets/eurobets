@@ -12,27 +12,27 @@ import createLogger from 'redux-logger';
  *                          rendering.
  */
 export default function configureStore(initialState, history) {
-  let middleware = [ thunk, promiseMiddleware ];
-  // Installs hooks that always keep react-router and redux
-  // store in sync
-  const reactRouterReduxMiddleware = routerMiddleware(history);
-  if (__DEV__) {
-    middleware.push(reactRouterReduxMiddleware, createLogger());
-  } else {
-    middleware.push(reactRouterReduxMiddleware);
-  }
+    let middleware = [ thunk, promiseMiddleware ];
+    // Installs hooks that always keep react-router and redux
+    // store in sync
+    const reactRouterReduxMiddleware = routerMiddleware(history);
+    if (__DEV__) {
+        middleware.push(reactRouterReduxMiddleware, createLogger());
+    } else {
+        middleware.push(reactRouterReduxMiddleware);
+    }
 
-  const finalCreateStore = applyMiddleware(...middleware)(createStore);
+    const finalCreateStore = applyMiddleware(...middleware)(createStore);
 
-  const store = finalCreateStore(rootReducer, initialState);
+    const store = finalCreateStore(rootReducer, initialState);
 
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('reducers', () => {
-      const nextReducer = require('reducers');
-      store.replaceReducer(nextReducer);
-    });
-  }
+    if (module.hot) {
+        // Enable Webpack hot module replacement for reducers
+        module.hot.accept('reducers', () => {
+            const nextReducer = require('reducers');
+            store.replaceReducer(nextReducer);
+        });
+    }
 
-  return store;
+    return store;
 }

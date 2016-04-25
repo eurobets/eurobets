@@ -1,0 +1,17 @@
+
+@import '../../styles/settings';
+
+.menu
+{
+    &__item + &__item
+    {
+        margin-left: 20px;
+    }
+
+    .link_active
+    {
+        color: $colorBlack;
+
+        border-bottom: 2px solid $colorBlack;
+    }
+}

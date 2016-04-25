@@ -1,9 +1,12 @@
+import b from 'b_';
 import React from 'react';
-import TextField from 'material-ui/lib/TextField';
+import CircularProgress from 'material-ui/lib/circular-progress';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import Theme from '../../styles/theme';
 
-const Checkbox = React.createClass({
+import './Spin.scss';
+
+const Spin = React.createClass({
     childContextTypes: {
         muiTheme: React.PropTypes.object
     },
@@ -15,11 +18,12 @@ const Checkbox = React.createClass({
     },
 
     render() {
+        const className = b('spin', {center: this.props.center});
+
         return (
-            <TextField
-                className={`input ${this.props.mix || ''}`} {...this.props} />
+            <CircularProgress className={`${className} ${this.props.mix || ''}`} />
         );
     }
 });
 
-export default Checkbox;
+export default Spin;
