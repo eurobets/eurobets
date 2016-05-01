@@ -21,8 +21,9 @@ const Room = React.createClass({
     },
 
     render() {
-        const {room, room: {_id: roomId, users=[], name}, user} = this.props;
-        const meInRoom = users.find(({user: {_id}}) => _id === user.id);
+        const {room, room: {_id: roomId, users=[], name, owner, code}, user} = this.props;
+        const meInRoom = users.find(({_id}) => _id === user.id);
+        const iAmOwner = user.id === (!!owner && owner._id);
 
         if (!roomId) {
             return <Spin center />
@@ -37,7 +38,10 @@ const Room = React.createClass({
                             {to: `/rooms/${roomId}/bets/`, name: 'Bets'}
                         ]
                     } />
-                    <h2 className="room__title">{name}</h2>
+                    <h2 className="room__title">
+                        {name}
+                        {iAmOwner && <span className="room__code"> {code}</span>}
+                    </h2>
                 </div>
                 <div className="room__content">
                     {React.cloneElement(this.props.children, {room, user, meInRoom})}

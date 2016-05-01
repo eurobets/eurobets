@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 const Room = mongoose.model('Room');
 
+function getAll(req, res) {
+    Room.find({users: req.user.id}).exec((err, rooms) => {
+        if(!err) {
+            return res.json(rooms);
+        } else {
+            console.log('Error in first query');
+        }
+    });
 
-exports.all = function(req, res) {
-    // console.log(req.user);
-    // Room.find({}).exec((err, rooms) => {
-    //     if(!err) {
-    //         res.json(rooms);
-    //     } else {
-    //         console.log('Error in first query');
-    //     }
-    // });
-};
+}
+
+exports.all = getAll;
 
 exports.get = function(req, res) {
     const query = {id: req.params.id};
@@ -38,7 +39,11 @@ exports.create = function(req, res) {
     const body = req.body;
 
     body.owner = req.user.id;
-    body.users = [{user: body.owner, charge: body.ownerCharge}];
+    body.users = [body.owner];
+    if (body.ownerCharge) {
+        body.chargeUsers = [body.owner];
+    }
+    body.code = Math.random().toString(36).substr(2, 9).toUpperCase();
 
     delete body.ownerCharge;
 
@@ -64,6 +69,30 @@ exports.remove = function(req, res) {
 exports.update = function(req, res) {
     // var query = { id: req.params.id };
     //
+    // Room.findOneAndUpdate(query, req.body, (err, data) => {
+    //     if(err) console.log('Error on delete');
+    //     res.status(200).send('Updated Successfully');
+    // });
+};
+
+exports.addToGroupByCode = function(req, res) {
+    const query = {code: req.body.code};
+    Room.findOne(query, (err, room) => {
+        const update = Object.assign({users: req.user.id}, !room.rules.free && {chargeUsers: req.user.id});
+
+        Room.update(query, {$addToSet: update}, (err, data) => {
+            if (err) {
+                return res.status(400).json({message: err.errors});
+            }
+
+            if (data.nModified === 0) {
+                return res.status(404).json({message: {code: {kind: data.n === 0 ? 'wrongCode': 'alreadyThere'}}});
+            }
+
+            return getAll(req, res);
+        });
+    });
+
     // Room.findOneAndUpdate(query, req.body, (err, data) => {
     //     if(err) console.log('Error on delete');
     //     res.status(200).send('Updated Successfully');

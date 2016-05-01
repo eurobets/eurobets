@@ -73,7 +73,7 @@ const RoomCreate = React.createClass({
     },
 
     render() {
-        const {intl: {formatMessage}, room, room: {message, creating}} = this.props;
+        const {intl: {formatMessage}, room, room: {message, loading}} = this.props;
         const {
             chargeValue,
             chargeCurrency,
@@ -166,12 +166,12 @@ const RoomCreate = React.createClass({
                         </div>
                     </div>
                     <Button
-                        disabled={creating}
+                        disabled={loading}
                         style={{marginTop: '30px'}}
                         type="submit"
                         primary
                         mix="room-create__button"
-                        label={formatMessage({id: 'RoomCreate.create'}, {creating})} />
+                        label={formatMessage({id: 'RoomCreate.create'}, {loading})} />
                 </form>
             </div>
         );

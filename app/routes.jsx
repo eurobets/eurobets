@@ -14,7 +14,8 @@ import RoomMain from 'containers/RoomMain/RoomMain';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
-        const { user: {authenticated}} = store.getState();
+        const {user: {authenticated}} = store.getState();
+
         if (!authenticated) {
             replace({
                 pathname: '/',

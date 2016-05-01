@@ -44,7 +44,7 @@ const Register = React.createClass({
     },
 
     render() {
-        const {intl: {formatMessage}, user: {message}} = this.props;
+        const {intl: {formatMessage}, user: {message, isWaiting}} = this.props;
         const nameError = _.get(message, ['profile.name', 'kind']);
         const lastNameError = _.get(message, ['profile.lastName', 'kind']);
         const emailError = _.get(message, ['email', 'kind']);
@@ -83,10 +83,11 @@ const Register = React.createClass({
                         </div>}
                     <div className="register__controls">
                         <Button
+                            disabled={isWaiting}
                             type="submit"
                             primary
                             mix="login-form__button"
-                            label={formatMessage({id: 'Register.toRegister'})} />
+                            label={formatMessage({id: 'Register.toRegister'}, {registering: isWaiting})} />
                     </div>
                 </form>
             </div>

@@ -20,6 +20,7 @@ module.exports = function(app, passport) {
 
     app.get('/api/rooms', rooms.all);
     app.post('/api/rooms', rooms.create);
+    app.patch('/api/rooms/code/', rooms.addToGroupByCode);
     app.get('/api/rooms/:id', rooms.get);
     app.put('/api/rooms/:id', rooms.update);
 

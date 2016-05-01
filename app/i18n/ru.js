@@ -1,7 +1,11 @@
 export default {
     'Navigation.dashboard': 'Дашборд',
 
-    'Dashboard.createNewRoom': 'Создать комнату',
+    'Dashboard.createNewRoom': 'Создать новую комнату',
+    'Dashboard.enterTheCode': 'Введите код комнаты',
+    'Dashboard.addRoom': 'Добавить комнату',
+    'Dashboard.alreadyThere': 'Вы уже есть в комнате с этим кодом',
+    'Dashboard.wrongCode': 'Неправильный код',
 
     'User.logout': 'Выход',
     'User.profile': 'Профиль',
@@ -17,7 +21,7 @@ export default {
     'Register.lastName': 'Фамилия',
     'Register.password': 'Пароль',
     'Register.required': 'Поле необходимо заполнить',
-    'Register.toRegister': 'Зарегистрироваться',
+    'Register.toRegister': '{registering, select, true {Регистрируем…} other {Зарегистрироваться}}',
     'Register.userAlreadyExists': 'Эта почта уже используется',
     'Register.wrongEmail': 'Несуществующий email',
 
@@ -28,7 +32,7 @@ export default {
     'RoomCreate.correctDifferencePoints': 'Верные исход и разница',
     'RoomCreate.correctResultPoints': 'Верный исход',
     'RoomCreate.correctScorePoints': 'Точный счёт',
-    'RoomCreate.create': '{creating, select, true {Создаём…} other {Создать}}',
+    'RoomCreate.create': '{loading, select, true {Создаём…} other {Создать}}',
     'RoomCreate.name': 'Название',
     'RoomCreate.roomIsFree': 'Играем на интерес',
     'RoomCreate.whatFor': 'На что играем?',

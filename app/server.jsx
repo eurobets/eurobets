@@ -37,6 +37,8 @@ function renderFullPage(renderedContent, initialState, head={
         ${head.meta}
 
         ${head.link}
+
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.ru"></script>
     </head>
     <body>
     <div id="app">${renderedContent}</div>

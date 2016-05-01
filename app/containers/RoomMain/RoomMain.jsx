@@ -16,9 +16,8 @@ const RoomMain = React.createClass({
     },
 
     render() {
-        const {intl, meInRoom, room: {rules, users}} = this.props;
+        const {intl, meInRoom, room: {rules, users, chargeUsers=[]}} = this.props;
         const players = users.length;
-        const chargePlayers = users.filter(({charge}) => charge).length;
         const iAmFree = meInRoom.charge === false;
 
         return (
@@ -30,7 +29,7 @@ const RoomMain = React.createClass({
                     <div>
                         <FormattedHTMLMessage id="RoomMain.overallBank" values={{
                             currency: rules.charge.currency,
-                            value: `${(rules.charge.value || 0) * chargePlayers}`
+                            value: `${(rules.charge.value || 0) * chargeUsers.length}`
                         }} />
                         {iAmFree &&
                             <div>
