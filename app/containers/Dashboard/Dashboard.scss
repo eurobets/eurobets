@@ -1,0 +1,127 @@
+@import '../../styles/settings';
+@import '../../styles/mixins';
+
+.dashboard
+{
+    &__rooms
+    {
+        position: relative;
+        margin: 20px 0;
+        vertical-align: top;
+        display: flex;
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    &__room-name
+    {
+        font-size: $fontLarge;
+        color: $colorWhite;
+        background: $materialLightBlue700;
+        padding: 10px 15px;
+        line-height: 1.4em;
+    }
+
+    &__room-content
+    {
+        padding: 10px 15px;
+        color: $colorBlack;
+    }
+
+    &__room
+    {
+        overflow: hidden;
+        position: relative;
+        margin: 20px;
+        display: inline-block;
+        width: 450px;
+        height: 200px;
+        box-shadow: 0 3px 10px transparentize($colorBlack, .87);
+
+        &_add
+        {
+            background-image: url('./ic_add_black_24px.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 30%;
+            text-align: center;
+
+            &, * {
+                transition-property: background-size, transform, opacity;
+                transition-duration: .2s;
+                transition-timing-function: ease-out;
+            }
+
+            .dashboard
+            {
+                &__room-content
+                {
+                    color: transparentize($colorBlack, .7);
+                }
+
+                &__room-name
+                {
+                    transform: translateY(-100%);
+                }
+
+                &__create-room
+                {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 0;
+                    right: 0;
+                }
+
+                &__add-room-input-wrapper
+                {
+                    opacity: 0;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 32px;
+                    margin: auto;
+                    position: absolute;
+
+                    label
+                    {
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                    }
+
+                    input
+                    {
+                        text-align: center;
+                    }
+                }
+            }
+
+            &:hover, &.dashboard__room_focused
+            {
+                opacity: 1;
+
+                background-size: 0;
+
+                .dashboard
+                {
+                    &__room-name
+                    {
+                        transform: translateY(0);
+                    }
+
+                    &__create-room
+                    {
+                        transform: translateY(-40px);
+                    }
+
+                    &__add-room-input-wrapper
+                    {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
