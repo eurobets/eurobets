@@ -1,11 +1,28 @@
 export default {
     'Navigation.dashboard': 'Дашборд',
 
+    'BetDialog.error.gameAlreadyStarted': 'Игра уже началась',
+    'BetDialog.error.noGame': 'Нет такого матча',
+    'BetDialog.error.required': 'Счёт не проставлен',
+
+    'BetDialog.cancel': 'Отмена',
+    'BetDialog.save': '{creating, select, true {Сохраняем…} other {Сохранить}}',
+    'BetDialog.matchday': `{matchday, select, 
+        1 {1 круг}
+        2 {2 круг}
+        3 {3 круг}
+        4 {1/8 финала}
+        5 {Четвертьфинал}
+        6 {Полуфинал}
+        7 {Финал}
+    }`,
     'Dashboard.createNewRoom': 'Создать новую комнату',
     'Dashboard.enterTheCode': 'Введите код комнаты',
     'Dashboard.addRoom': 'Добавить комнату',
     'Dashboard.alreadyThere': 'Вы уже есть в комнате с этим кодом',
     'Dashboard.wrongCode': 'Неправильный код',
+
+    'Games.time': '{date, date, medium}, {date, time, long}',
 
     'User.logout': 'Выход',
     'User.profile': 'Профиль',
@@ -27,6 +44,9 @@ export default {
 
     'Register.title': 'Регистрация участника',
     'Register.description': 'Для участия в игре нужно зарегистрироваться. Все поля обязательные.',
+
+    'Room.itself': 'Комната',
+    'Room.bets': 'Ставки и результаты',
 
     'RoomCreate.chargeValue': 'Цена участия',
     'RoomCreate.correctDifferencePoints': 'Верные исход и разница',
@@ -54,5 +74,30 @@ export default {
         other {}
     }</b>`,
     'RoomMain.iAmFree': 'Вы играете бесплатно и не участвуете в распределении банка. ',
-    'RoomMain.playForMoney': 'Черт с ним, я в игре!'
+    'RoomMain.playForMoney': 'Черт с ним, я в игре!',
+
+    'Teams.name.France': 'Франция',
+    'Teams.name.Romania': 'Румыния',
+    'Teams.name.Albania': 'Албания',
+    'Teams.name.Switzerland': 'Швейцария',
+    'Teams.name.Wales': 'Уэльс',
+    'Teams.name.Slovakia': 'Словакия',
+    'Teams.name.England': 'Англия',
+    'Teams.name.Russia': 'Россия',
+    'Teams.name.Turkey': 'Турция',
+    'Teams.name.Croatia': 'Хорватия',
+    'Teams.name.Poland': 'Польша',
+    'Teams.name.Northern Ireland': 'Северная Ирландия',
+    'Teams.name.Germany': 'Германия',
+    'Teams.name.Ukraine': 'Украина',
+    'Teams.name.Spain': 'Испания',
+    'Teams.name.Czech Republic': 'Чехия',
+    'Teams.name.Republic of Ireland': 'Ирландия',
+    'Teams.name.Sweden': 'Швеция',
+    'Teams.name.Belgium': 'Бельгия',
+    'Teams.name.Italy': 'Италия',
+    'Teams.name.Austria': 'Австрия',
+    'Teams.name.Hungary': 'Венгрия',
+    'Teams.name.Portugal': 'Португалия',
+    'Teams.name.Iceland': 'Исландия'
 }

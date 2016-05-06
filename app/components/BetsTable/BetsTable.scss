@@ -1,0 +1,103 @@
+@import '../../styles/settings';
+
+$firstColWidth: 150px;
+$cellHeight: 40px;
+$shadowWidth: 1px;
+
+.bets-table
+{
+    max-width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+
+    &__body-wrapper
+    {
+        overflow: auto;
+        max-width: 100%;
+        flex-grow: 1;
+        margin-right: -$pageIndent;
+    }
+
+    &__header-column-wrapper
+    {
+        min-width: $firstColWidth;
+        box-shadow: $shadowWidth 0 $shadowWidth 0 transparentize($colorBlack, .85);
+        position: relative;
+        z-index: 1;
+
+        &:before
+        {
+            top: -$shadowWidth;
+            bottom: -$shadowWidth;
+            background: white;
+            position: absolute;
+            content: '';
+            left: 0;
+            right: 0;
+            z-index: -1;
+        }
+    }
+    &__header-column
+    {
+        display: table;
+        width: $firstColWidth + $pageIndent;
+        white-space: nowrap;
+        margin-left: -$pageIndent;
+
+        .bets-table
+        {
+            &__cell
+            {
+                max-width: $firstColWidth;
+                padding: 0 10px 0 $pageIndent;
+                position: relative;
+            }
+
+            &__username
+            {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    &__body
+    {
+        position: relative;
+        display: table;
+        border-collapse: collapse;
+
+        .bets-table
+        {
+            &__cell
+            {
+                display: table-cell;
+                padding: 0 7px;
+                text-align: center;
+                vertical-align: top;
+            }
+        }
+    }
+
+    &__row
+    {
+        display: table-row;
+        position: relative;
+        height: $cellHeight;
+        line-height: $cellHeight;
+
+        &_hovered
+        {
+            background: transparentize($colorBlack, .96);
+        }
+    }
+
+    &__cell
+    {
+        display: table-cell;
+        padding: 0;
+        height: $cellHeight;
+        box-shadow: 0 1px 0 0 #eee;
+    }
+}

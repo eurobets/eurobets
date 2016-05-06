@@ -1,0 +1,33 @@
+@import '../../styles/settings';
+
+.games
+{
+    counter-reset: rowNumber;
+    position: relative;
+
+    td
+    {
+        padding: 5px 20px 5px 0;
+    }
+    &__item
+    {
+        counter-increment: rowNumber;
+        position: relative;
+
+        &:after
+        {
+            left: -37px;
+            width: 30px;
+            margin-top: 5px;
+            height: 20px;
+            position: absolute;
+            text-align: right;
+            color: transparentize($colorBlack, .75);
+            content: counter(rowNumber)'.';
+        }
+    }
+
+    &__item-time
+    {
+    }
+}

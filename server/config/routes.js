@@ -1,13 +1,13 @@
 /**
  * Routes for express app
  */
-const topics = require('../controllers/topics');
 const express = require('express');
+const bets = require('../controllers/bets');
+const topics = require('../controllers/topics');
 const users = require('../controllers/users');
 const rooms = require('../controllers/rooms');
+const footballData = require('../controllers/footballData');
 const mongoose = require('mongoose');
-const Topic = mongoose.model('Topic');
-const Room = mongoose.model('Topic');
 const path = require('path');
 const compiled_app_module_path = path.resolve(__dirname, '../../', 'public', 'assets', 'server.js');
 const App = require(compiled_app_module_path);
@@ -23,6 +23,11 @@ module.exports = function(app, passport) {
     app.patch('/api/rooms/code/', rooms.addToGroupByCode);
     app.get('/api/rooms/:id', rooms.get);
     app.put('/api/rooms/:id', rooms.update);
+
+    app.get('/api/games', footballData.getFixtures);
+    app.get('/api/teams', footballData.getTeams);
+    app.post('/api/bets', bets.create);
+    app.get('/api/bets', bets.get);
 
     // google auth
     // Redirect the user to Google for authentication. When complete, Google

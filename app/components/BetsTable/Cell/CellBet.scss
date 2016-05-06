@@ -1,0 +1,40 @@
+@import '../../../styles/settings';
+
+$cellHeight: 40px;
+
+.bets-table
+{
+    &__cell
+    {
+        &_hidden-bet
+        {
+            background: url('./ic_done_black_24px.svg') no-repeat;
+            background-position: center center;
+            background-size: 16px;
+        }
+    }
+
+    &__cell-add-icon
+    {
+        fill: $materialBlue300;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: fill .2s ease-out;
+
+        &:hover
+        {
+            fill: $materialRedA400;
+            transition: none;
+        }
+    }
+
+    &__cell-content
+    {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

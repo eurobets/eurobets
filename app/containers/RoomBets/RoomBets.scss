@@ -1,0 +1,10 @@
+@import '../../styles/settings';
+@import '../../styles/mixins';
+
+.room-bets
+{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
