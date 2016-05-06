@@ -1,6 +1,9 @@
 import React from 'react';
 import { getRoom } from '../../actions/rooms';
+import { getTeams } from '../../actions/teams';
 import { connect } from 'react-redux';
+
+import {FormattedHTMLMessage, injectIntl} from 'react-intl';
 
 import Spin from '../../components/Spin/Spin.jsx';
 import Menu from '../../components/Menu/Menu.jsx';
@@ -21,7 +24,7 @@ const Room = React.createClass({
     },
 
     render() {
-        const {room, room: {_id: roomId, users=[], name, owner, code}, user} = this.props;
+        const {intl, teams, room, room: {_id: roomId, users=[], name, owner, code}, user} = this.props;
         const meInRoom = users.find(({_id}) => _id === user.id);
         const iAmOwner = user.id === (!!owner && owner._id);
 
@@ -34,8 +37,8 @@ const Room = React.createClass({
                 <div className="room__header">
                     <Menu items={
                         [
-                            {to: `/rooms/${roomId}/`, name: 'Home'},
-                            {to: `/rooms/${roomId}/bets/`, name: 'Bets'}
+                            {to: `/rooms/${roomId}/`, name: intl.formatMessage({id: 'Room.itself'})},
+                            {to: `/rooms/${roomId}/bets/`, name: intl.formatMessage({id: 'Room.bets'})}
                         ]
                     } />
                     <h2 className="room__title">
@@ -44,15 +47,15 @@ const Room = React.createClass({
                     </h2>
                 </div>
                 <div className="room__content">
-                    {React.cloneElement(this.props.children, {room, user, meInRoom})}
+                    {React.cloneElement(this.props.children, {room, user, meInRoom, teams})}
                 </div>
             </div>
         );
     }
 });
 
-function mapStateToProps({room, user}) {
+function mapStateToProps({room, user, teams}) {
     return {room, user};
 }
 
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps)(injectIntl(Room));

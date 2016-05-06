@@ -6,12 +6,15 @@ import './Link.scss';
 
 const Link = React.createClass({
     render() {
-        const className = b('link', {theme: this.props.theme});
-
+        const {theme, pseudo, disabled, mix=''} = this.props;
+        const className = b('link', {theme, pseudo, disabled});
+        if (pseudo || disabled) {
+           return <span className={`${className} ${mix}`} {...this.props} />
+        }
         return (
             <RouterLink
                 activeClassName="link_active"
-                className={`${className} ${this.props.mix || ''}`}
+                className={`${className} ${mix}`}
                 {...this.props} />
         );
     }

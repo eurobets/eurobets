@@ -1,0 +1,44 @@
+@import '../../../styles/settings';
+
+$firstColWidth: 150px;
+$headerCellHeight: 40px;
+$shadowWidth: 1px;
+
+.bets-table
+{
+    &__cell
+    {
+        &_header
+        {
+            min-width: 100px;
+            text-align: center;
+            height: $headerCellHeight;
+            color: #aaa;
+            font-size: 13px;
+        }
+    }
+
+    &__flag
+    {
+        display: inline-block;
+        width: 20px;
+        height: 15px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 4px transparentize($colorBlack, .8);
+    }
+
+    &__cell-header-teams
+    {
+        height: $headerCellHeight;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__cell-header-vs
+    {
+        padding: 2px 5px 0;
+    }
+}

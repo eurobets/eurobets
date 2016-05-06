@@ -3,6 +3,9 @@
 
 .room
 {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
     &__header
     {
     }
@@ -14,7 +17,9 @@
 
     &__content
     {
-
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     &__code

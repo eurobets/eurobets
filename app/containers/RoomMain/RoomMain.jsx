@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedHTMLMessage, injectIntl} from 'react-intl';
+import Games from '../../components/Games/Games.jsx';
 
 import './RoomMain.scss';
 
@@ -39,7 +40,7 @@ const RoomMain = React.createClass({
                                 </a>
                             </div>}
                     </div>}
-
+                <Games />
             </div>
         );
     }

@@ -1,0 +1,198 @@
+@import '../../styles/settings';
+
+$arrowOuterSize: 11px;
+$arrowInnerSize: 10px;
+
+.popup
+{
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    left: 0;
+
+    display: block;
+    visibility: hidden;
+
+    margin: -9999px 0 0 -9999px;
+
+    transition: visibility .1s linear, opacity .1s linear;
+    animation-duration: .11s; // чтобы transition (visibility+opacity) сработал быстрее, чем перемещение в анимации
+    animation-timing-function: linear;
+    animation-delay: 0s;
+
+    opacity: 0;
+
+    animation-fill-mode: forwards;
+
+    &_shown
+    {
+        visibility: visible;
+
+        margin: 0;
+
+        transition-delay: 0s;
+
+        opacity: 1;
+    }
+    &_theme_normal
+    {
+        border: 1px solid $twilightGrey;
+        border-radius: 2px;
+        background-color: $colorWhite;
+        box-shadow: 0 5px 10px $twilightGrey;
+    }
+
+    &_theme_dark
+    {
+        letter-spacing: 0.5px;
+
+        color: $colorWhite;
+        background-color: transparentize($blackyBlue, 0.1);
+        box-shadow: none;
+    }
+
+    &_theme_clean
+    {
+        transition: none;
+        animation: none;
+
+        background-color: $colorWhite;
+
+        &.popup_direction_bottom.popup_shown
+        {
+            margin-top: 0;
+        }
+
+        .popup__content
+        {
+            padding: 0;
+        }
+    }
+    &__arrow
+    {
+        &:after
+        {
+            content: ' ';
+        }
+        &,
+        &:after
+        {
+            position: absolute;
+
+            display: block;
+
+            box-sizing: border-box;
+            width: 0;
+            height: 0;
+
+            border-style: solid;
+        }
+    }
+    &__title
+    {
+        margin: 0;
+        padding: 8px 14px;
+
+        border-bottom: 1px solid $lightGrey;
+        border-radius: 5px 5px 0 0;
+
+        font-size: 14px;
+    }
+    &__content
+    {
+        display: block;
+
+        padding: 8px 14px;
+    }
+    &_direction_bottom
+    {
+        &.popup_with-arrow
+        {
+            animation-name: popup_bottom;
+
+            &.popup_shown
+            {
+                animation-name: popup_bottom_shown;
+            }
+        }
+
+        & .popup__arrow
+        {
+            top: -$arrowOuterSize;
+            left: 50%;
+
+            margin-left: -$arrowOuterSize;
+
+            border-width: 0 $arrowOuterSize $arrowOuterSize;
+            border-color: transparent transparent $twilightGrey;
+            &:after
+            {
+                top: 1px;
+
+                margin-left: -$arrowInnerSize;
+
+                border-width: 0 $arrowInnerSize $arrowInnerSize;
+                border-color: transparent transparent $colorWhite;
+            }
+        }
+    }
+    &_direction_top
+    {
+        &.popup_with-arrow {
+            animation-name: popup_top;
+
+            &.popup_shown
+            {
+                animation-name: popup_top_shown;
+            }
+        }
+
+        & .popup__arrow
+        {
+            bottom: -$arrowOuterSize;
+            left: 50%;
+
+            margin-left: -$arrowOuterSize;
+
+            border-width: $arrowOuterSize $arrowOuterSize 0;
+            border-color: $twilightGrey transparent transparent;
+            &:after
+            {
+                bottom: 1px;
+
+                margin-left: -$arrowInnerSize;
+
+                border-width: $arrowInnerSize $arrowInnerSize 0;
+                border-color: $colorWhite transparent transparent;
+            }
+        }
+    }
+}
+
+@each $rule in ((bottom, $arrowInnerSize), (top, -$arrowInnerSize)) {
+    @keyframes popup_#{nth($rule, 1)} {
+        0%
+        {
+            margin: nth($rule, 2) 0 0;
+        }
+        99%
+        {
+            margin: 0;
+        }
+        100%
+        {
+            margin: -9999px 0 0 -9999px;
+        }
+    }
+
+    @keyframes popup_#{nth($rule, 1)}_shown {
+        0%
+        {
+            margin: 0;
+        }
+        100%
+        {
+            margin-top: nth($rule, 2);
+        }
+    }
+}

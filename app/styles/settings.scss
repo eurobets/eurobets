@@ -10,6 +10,10 @@ $headerHeight: 60px;
 
 $colorBlack: #000;
 $colorWhite: #fff;
+$twilightGrey: #ccc;
+$lightGrey: transparentize($colorBlack, .86);
+$blackyBlue: #111721;
+
 $colorLightGrey: #eee;
 
 $materialIndigo300: #7986CB;
@@ -45,4 +49,4 @@ $materialRedA400: #FF1744;
 
 $globalRadius: 4px;
 
-$pageIndent: 20px;
+$pageIndent: 40px;

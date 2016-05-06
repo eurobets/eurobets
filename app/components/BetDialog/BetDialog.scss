@@ -1,0 +1,90 @@
+@import '../../styles/settings';
+
+.bet-dialog
+{
+
+    &__header
+    {
+        font-size: $fontLarge;
+        text-align: center;
+    }
+
+    &__input
+    {
+        font-size: 28px;
+        height: 38px;
+        width: 1.8em;
+        border: 2px solid #000;
+        padding: 5px;
+        text-align: center;
+
+        &_home
+        {
+            margin-left: 20px;
+        }
+
+        &_away
+        {
+            margin-right: 20px;
+        }
+    }
+
+    &__content
+    {
+        position: relative;
+        margin-top: 20px;
+        font-size: $fontLarge;
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__team-name
+    {
+        width: 150px;
+
+        &_home
+        {
+            text-align: left;
+        }
+        &_away
+        {
+            text-align: right;
+        }
+    }
+
+    &__footer
+    {
+        position: relative;
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+
+        .button
+        {
+            width: 140px!important;
+        }
+    }
+
+    &__flag
+    {
+        display: inline-block;
+        width: 60px;
+        height: 45px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 4px transparentize($colorBlack, .8);
+    }
+
+    &__error-message
+    {
+        color: $materialRed800;
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        text-align: center;
+    }
+}
