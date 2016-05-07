@@ -60,7 +60,8 @@ const BetDialog = React.createClass({
 
 
     render() {
-        const {shown, game, status: {creating}, intl, message={}} = this.props;
+        const {shown, game, status, intl, message={}} = this.props;
+        const creating = status ? status.creating : false;
         const {homeScore, awayScore} = this.state;
         const errorCode =
             message.kind ||
