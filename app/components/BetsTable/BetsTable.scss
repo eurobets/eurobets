@@ -1,8 +1,23 @@
 @import '../../styles/settings';
 
-$firstColWidth: 150px;
+$firstTableWidth: 150px;
+$lastTableWidth: 60px;
 $cellHeight: 40px;
 $shadowWidth: 1px;
+
+@mixin hideBadShadow() {
+    &:before
+    {
+        top: -$shadowWidth;
+        bottom: -$shadowWidth;
+        background: white;
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        z-index: -1;
+    }
+}
 
 .bets-table
 {
@@ -11,37 +26,27 @@ $shadowWidth: 1px;
     display: flex;
     flex-direction: row;
 
-    &__body-wrapper
+    &__main-table-wrapper
     {
         overflow: auto;
         max-width: 100%;
         flex-grow: 1;
-        margin-right: -$pageIndent;
     }
 
-    &__header-column-wrapper
+    &__header-table-wrapper
     {
-        min-width: $firstColWidth;
+        min-width: $firstTableWidth;
         box-shadow: $shadowWidth 0 $shadowWidth 0 transparentize($colorBlack, .85);
         position: relative;
         z-index: 1;
 
-        &:before
-        {
-            top: -$shadowWidth;
-            bottom: -$shadowWidth;
-            background: white;
-            position: absolute;
-            content: '';
-            left: 0;
-            right: 0;
-            z-index: -1;
-        }
+        @include hideBadShadow();
     }
-    &__header-column
+
+    &__header-table
     {
         display: table;
-        width: $firstColWidth + $pageIndent;
+        width: $firstTableWidth + $pageIndent;
         white-space: nowrap;
         margin-left: -$pageIndent;
 
@@ -49,7 +54,7 @@ $shadowWidth: 1px;
         {
             &__cell
             {
-                max-width: $firstColWidth;
+                max-width: $firstTableWidth;
                 padding: 0 10px 0 $pageIndent;
                 position: relative;
             }
@@ -62,7 +67,30 @@ $shadowWidth: 1px;
         }
     }
 
-    &__body
+    &__overall-table-wrapper
+    {
+        min-width: $lastTableWidth;
+        box-shadow: -$shadowWidth 0 $shadowWidth 0 transparentize($colorBlack, .85);
+        position: relative;
+        z-index: 1;
+        margin-right: -$pageIndent;
+
+        @include hideBadShadow();
+
+        .bets-table
+        {
+            &__cell
+            {
+                text-align: center;
+
+                &_header
+                {
+                    min-width: $lastTableWidth;
+                }
+            }
+        }
+    }
+    &__main-table
     {
         position: relative;
         display: table;
@@ -73,9 +101,10 @@ $shadowWidth: 1px;
             &__cell
             {
                 display: table-cell;
-                padding: 0 7px;
+                padding: 0;
                 text-align: center;
                 vertical-align: top;
+                min-width: 100px;
             }
         }
     }

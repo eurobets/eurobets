@@ -17,13 +17,17 @@ function getFixturesRequest(callback) {
             return request(options, (error, response, body) => {
                 const fixtures = (body ? JSON.parse(body).fixtures : []).map(game => {
                     const match = game._links.self.href.match(/\/fixtures\/(\d+)/);
+                    // if (Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)) {
+                    //     game.result.goalsHomeTeam = Math.floor(Math.random() * 4);
+                    //     game.result.goalsAwayTeam = Math.floor(Math.random() * 4);
+                    // }
                     return Object.assign(
                         {},
                         game,
+                    //    {started: Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)},
                         {started: Date.now() > Date.parse(game.date)},
                         match && {id: match[1]});
                 });
-
                 myCache.set(options.url, fixtures);
                 callback(fixtures);
             });

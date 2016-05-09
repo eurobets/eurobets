@@ -1,6 +1,7 @@
 import React from 'react';
 import { getRoom } from '../../actions/rooms';
-import { getTeams } from '../../actions/teams';
+import { getBetsInRoom } from '../../actions/bets';
+import { getGames } from '../../actions/games';
 import { connect } from 'react-redux';
 
 import {FormattedHTMLMessage, injectIntl} from 'react-intl';
@@ -18,9 +19,11 @@ const Room = React.createClass({
     },
 
     componentDidMount() {
-        const {params} = this.props;
+        const {params, dispatch} = this.props;
 
-        this.props.dispatch(getRoom(params));
+        dispatch(getRoom(params));
+        dispatch(getBetsInRoom(params.roomId));
+        dispatch(getGames());
     },
 
     render() {

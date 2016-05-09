@@ -1,5 +1,6 @@
 import b from 'b_';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Button from '../Button/Button.jsx';
 import Dialog from '../../../node_modules/material-ui/lib/dialog';
@@ -8,6 +9,13 @@ import { connect } from 'react-redux';
 
 import './BetDialog.scss';
 import '../Flag/Flag.scss';
+
+const TIME_FORMAT = {
+    day: 'numeric',
+    month: 'long',
+    hour: 'numeric',
+    minute: '2-digit'
+};
 
 const BetDialog = React.createClass({
     propTypes: {
@@ -78,7 +86,12 @@ const BetDialog = React.createClass({
                 className="bet-dialog">
                 <form onSubmit={this.save}>
                     <div className="bet-dialog__header">
-                        {intl.formatMessage({id: 'BetDialog.matchday'}, {matchday: game.matchday})}
+                        <div className="bet-dialog__header-stage">
+                            {intl.formatMessage({id: 'BetDialog.matchday'}, {matchday: game.matchday})}
+                        </div>
+                        <div className="bet-dialog__header-date">
+                            {intl.formatTime(game.date, TIME_FORMAT)}
+                        </div>
                     </div>
                     <div className="bet-dialog__content">
                         <div className={`bet-dialog__flag flag_${game.homeTeamName.replace(/ /g,'')}`} />

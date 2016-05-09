@@ -5,17 +5,49 @@
     counter-reset: rowNumber;
     position: relative;
 
-    td
+    &__row, &__head
     {
-        padding: 5px 20px 5px 0;
+        display: flex;
     }
-    &__item
+
+    &__head .games__cell
+    {
+        border-bottom: 1px solid transparentize($colorBlack, .75);
+        text-align: center;
+        background: $colorWhite;
+        position: relative;
+
+        &:first-of-type:before
+        {
+            background: $colorWhite;
+            content: '';
+            left: -20px;
+            width: 20px;
+            margin-top: 5px;
+            height: 21px;
+            position: absolute;
+            border-bottom: 1px solid transparentize($colorBlack, .75);
+        }
+    }
+
+    &__cell
+    {
+        white-space: nowrap;
+        padding: 5px 20px;
+
+        &:first-of-type
+        {
+            padding-left: 0;
+        }
+    }
+    &__row
     {
         counter-increment: rowNumber;
         position: relative;
 
         &:after
         {
+            top: 0;
             left: -37px;
             width: 30px;
             margin-top: 5px;
@@ -27,7 +59,30 @@
         }
     }
 
-    &__item-time
+    &__cell-time
     {
+        min-width: 150px;
+        color: transparentize($colorBlack, .6);
+    }
+
+    &__cell-score
+    {
+        text-align: center;
+        min-width: 90px;
+    }
+
+    &__cell-bet
+    {
+        min-width: 150px;
+    }
+    &__cell-points
+    {
+        text-align: center;
+        min-width: 70px;
+    }
+
+    &__cell-teams
+    {
+        min-width: 240px;
     }
 }

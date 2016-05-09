@@ -16,6 +16,9 @@ export default {
         6 {Полуфинал}
         7 {Финал}
     }`,
+
+    'BetsTable.points': 'Очки',
+
     'Dashboard.createNewRoom': 'Создать новую комнату',
     'Dashboard.enterTheCode': 'Введите код комнаты',
     'Dashboard.addRoom': 'Добавить комнату',
@@ -23,6 +26,10 @@ export default {
     'Dashboard.wrongCode': 'Неправильный код',
 
     'Games.time': '{date, date, medium}, {date, time, long}',
+    'Games.newBet': 'сделать ставку',
+    'Games.score': 'Счёт',
+    'Games.bet': 'Ставка',
+    'Games.points': 'Очки',
 
     'User.logout': 'Выход',
     'User.profile': 'Профиль',

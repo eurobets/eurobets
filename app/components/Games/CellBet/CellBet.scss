@@ -1,0 +1,18 @@
+@import '../../../styles/settings';
+
+$cellHeight: 40px;
+
+.games
+{
+    &__cell-bet
+    {
+        text-align: center;
+
+        &_fucked-up
+        {
+            background: url('./ic_clear_black_24px.svg') no-repeat;
+            background-position: center center;
+            background-size: 16px;
+        }
+    }
+}
