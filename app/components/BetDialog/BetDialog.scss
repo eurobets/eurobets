@@ -2,6 +2,15 @@
 
 .bet-dialog
 {
+    padding: 0!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    > div > div
+    {
+        transform: none!important;
+    }
 
     &__header
     {

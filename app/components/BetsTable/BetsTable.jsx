@@ -28,6 +28,7 @@ const BetsTable = React.createClass({
 
     componentDidMount() {
         const {dispatch, room} = this.props;
+
     },
 
     onRowEnter(rowId) {

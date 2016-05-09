@@ -57,8 +57,8 @@ const Room = React.createClass({
     }
 });
 
-function mapStateToProps({room, user, teams}) {
-    return {room, user};
+function mapStateToProps({room, user, teams, bets: {data}, games}) {
+    return {room, user, bets: data, games};
 }
 
 export default connect(mapStateToProps)(injectIntl(Room));

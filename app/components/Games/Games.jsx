@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
 
+import Spin from '../Spin/Spin.jsx';
 import { getGamePoints } from '../../points';
 import Link from '../Link/Link.jsx';
 import CellBet from './CellBet/CellBet.jsx';
@@ -19,11 +20,10 @@ const TIME_FORMAT = {
 
 const Games = React.createClass({
     render() {
-        const {games=[], loading, intl, bets={}, user, room} = this.props;
-        const myBets = bets[user.id];
-        console.log(myBets);
+        const {games=[], loading, intl, bets, user, room} = this.props;
+        const myBets = bets ? bets[user.id] : null;
 
-        return (
+        return !bets ? <Spin center /> : (
             <div className="games">
                 <div className="games__head">
                     <div className="games__cell games__cell-teams">
@@ -51,9 +51,9 @@ const Games = React.createClass({
                         </div>
                         <div className="games__cell games__cell-score">
                             <strong>
-                                {game.result.goalsHomeTeam !== null ? game.result.goalsHomeTeam : '-'}
+                                {typeof game.result.goalsHomeTeam === 'number' ? game.result.goalsHomeTeam : '-'}
                                 {' : '}
-                                {game.result.goalsAwayTeam !== null ? game.result.goalsAwayTeam : '-'}
+                                {typeof game.result.goalsAwayTeam === 'number' ? game.result.goalsAwayTeam : '-'}
                             </strong>
                         </div>
                         <CellBet
