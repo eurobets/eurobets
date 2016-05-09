@@ -54,9 +54,8 @@ const BetsTableCellBet = React.createClass({
         return this.checkInputValue(value) && this.setState({awayScore: value});
     },
 
-
     render() {
-        const {bet: {data: bet={}, result}, me, game, room} = this.props;
+        const {bet: {data: bet, result}, me, game, room} = this.props;
         const {dialogShown} = this.state;
         const showBet = !!bet && typeof bet.homeScore === 'number';
         const iCanDoSmthWithBet = !game.started;

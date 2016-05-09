@@ -79,7 +79,9 @@ const BetDialog = React.createClass({
 
         return (
             <Dialog
-                autoScrollBodyContent
+                autoDetectWindowHeight={false}
+                actionsContainerClassName="bet-dialog__actions"
+                bodyClassName="bet-dialog__body"
                 open={shown}
                 modal={false}
                 onRequestClose={this.props.close}
