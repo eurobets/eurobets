@@ -12,6 +12,13 @@ $cellHeight: 40px;
             background-position: center center;
             background-size: 16px;
         }
+
+        &_fucked-up
+        {
+            background: url('./ic_clear_black_24px.svg') no-repeat;
+            background-position: center center;
+            background-size: 16px;
+        }
     }
 
     &__cell-add-icon
@@ -29,6 +36,14 @@ $cellHeight: 40px;
         }
     }
 
+    &__cell
+    {
+        &_bet
+        {
+            padding: 3px 0!important;
+        }
+    }
+
     &__cell-content
     {
         height: 100%;
@@ -36,5 +51,25 @@ $cellHeight: 40px;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+
+    &__cell-content-bet, &__cell-content-result
+    {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        line-height: $cellHeight / 2 - 4px;
+        justify-content: center;
+    }
+
+    &__cell-content-bet
+    {
+        color: transparentize($colorBlack, .6)
+    }
+
+    &__cell-content-result
+    {
+        font-weight: 900;
     }
 }

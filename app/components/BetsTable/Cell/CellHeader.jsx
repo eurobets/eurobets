@@ -22,7 +22,9 @@ const BetsTableCellHeader = React.createClass({
                 <div className="bets-table__cell-header-teams">
                     <div className={`bets-table__flag flag_${home.replace(/ /g,'')}`} />
                     <div className="bets-table__cell-header-vs">
-                        {result.goalsHomeTeam || '-'} : {result.goalsAwayTeam || '-'}
+                        {result.goalsHomeTeam !== null ? result.goalsHomeTeam : '-'}
+                        {' : '}
+                        {result.goalsAwayTeam !== null ? result.goalsAwayTeam : '-'}
                     </div>
                     <div className={`bets-table__flag flag_${away.replace(/ /g,'')}`} />
                 </div>

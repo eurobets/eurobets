@@ -5,8 +5,10 @@
 
     &__header
     {
-        font-size: $fontLarge;
-        text-align: center;
+        font-size: $fontMedium;
+
+        display: flex;
+        justify-content: space-between;
     }
 
     &__input
@@ -34,7 +36,7 @@
         position: relative;
         margin-top: 20px;
         font-size: $fontLarge;
-        padding: 10px;
+        padding: 10px 0;
         text-align: center;
         display: flex;
         justify-content: space-between;

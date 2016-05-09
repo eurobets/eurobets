@@ -7,6 +7,7 @@ import CellBet from './Cell/CellBet.jsx'
 import CellHeader from './Cell/CellHeader.jsx'
 import { getGames } from '../../actions/games';
 import { getBetsInRoom } from '../../actions/bets';
+import { getOverallPoints } from '../../points';
 
 import './BetsTable.scss';
 import '../Flag/Flag.scss';
@@ -27,9 +28,6 @@ const BetsTable = React.createClass({
 
     componentDidMount() {
         const {dispatch, room} = this.props;
-
-        dispatch(getGames());
-        dispatch(getBetsInRoom(room._id));
     },
 
     onRowEnter(rowId) {
@@ -41,13 +39,13 @@ const BetsTable = React.createClass({
     },
 
     render() {
-        const {games=[], loading, intl, room: {users=[]}, bets={}} = this.props;
+        const {games=[], loading, intl, room: {users=[], rules={}}, bets={}} = this.props;
         const {hoveredRow} = this.state;
 
         return (
             <div className="bets-table">
-                <div className="bets-table__header-column-wrapper">
-                    <div className="bets-table__header-column">
+                <div className="bets-table__header-table-wrapper">
+                    <div className="bets-table__header-table">
                         <div className="bets-table__row">
                             <div className={b('bets-table', 'cell', {header: true, first: true})} />
                         </div>
@@ -66,8 +64,8 @@ const BetsTable = React.createClass({
                         ))}
                     </div>
                 </div>
-                <div className="bets-table__body-wrapper">
-                    <div className="bets-table__body">
+                <div className="bets-table__main-table-wrapper">
+                    <div className="bets-table__main-table">
                         <div className="bets-table__row">
                             {games.map(game => (
                                 <CellHeader
@@ -83,11 +81,29 @@ const BetsTable = React.createClass({
                                 onMouseLeave={this.onRowLeave}>
                                     {games.map((game, index) => (
                                         <CellBet
-                                            bet={bets[user._id] && bets[user._id][game.id] || null}
-                                            key={`${game.matchday}_${game.homeTeamName}_${game.awayTeamName}`}
+                                            bet={bets[user._id] && bets[user._id].games[game.id] || {}}
+                                            key={game.id}
                                             userId={user._id}
                                             game={game} />
                                     ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="bets-table__overall-table-wrapper">
+                    <div className="bets-table__overall-table">
+                        <div className="bets-table__row">
+                            <div className={b('bets-table', 'cell', {header: true})}>
+                                <FormattedMessage id="BetsTable.points" />
+                            </div>
+                        </div>
+                        {users.map(user => (
+                            <div className={b('bets-table', 'row', {hovered: hoveredRow === user._id})} key={user._id}>
+                                <div className="bets-table__cell">
+                                    {bets[user._id]
+                                        ? getOverallPoints(bets[user._id].overall, rules.points)
+                                        : 0}
+                                </div>
                             </div>
                         ))}
                     </div>
