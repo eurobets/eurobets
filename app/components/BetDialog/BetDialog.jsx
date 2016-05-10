@@ -29,14 +29,14 @@ const BetDialog = React.createClass({
         const {bet} = this.props;
 
         return {
-            homeScore: bet && bet.homeScore || null,
-            awayScore: bet && bet.awayScore || null
+            homeScore: bet ? bet.homeScore : null,
+            awayScore: bet ? bet.awayScore : null
         };
     },
 
     componentWillReceiveProps(nextProps) {
-        const nextHomeScore = nextProps.bet && nextProps.bet.homeScore || null;
-        const nextAwayScore = nextProps.bet && nextProps.bet.awayScore || null;
+        const nextHomeScore = nextProps.bet ? nextProps.bet.homeScore : null;
+        const nextAwayScore = nextProps.bet ? nextProps.bet.awayScore : null;
 
         if (this.state.homeScore === null && this.state.awayScore === null) {
             this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
