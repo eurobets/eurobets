@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import b from 'b_';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -27,8 +28,16 @@ const BetsTable = React.createClass({
     },
 
     componentDidMount() {
-        const {dispatch, room} = this.props;
+        if (this.props.games && this.props.games.some(game => game.actual)) {
+            $('.bets-table__main-table-wrapper').scrollTo('.bets-table__cell_actual', 500);
+        }
+    },
 
+    componentDidUpdate(prevProps) {
+        const {games} = this.props;
+        if (!prevProps.games.some(game => game.actual) && games.some(game => game.actual)) {
+            $('.bets-table__main-table-wrapper').scrollTo('.bets-table__cell_actual', 500);
+        }
     },
 
     onRowEnter(rowId) {
@@ -40,7 +49,7 @@ const BetsTable = React.createClass({
     },
 
     render() {
-        const {games=[], loading, intl, room: {users=[], rules={}}, bets={}} = this.props;
+        const {games=[], room: {users=[], rules={}}, bets={}} = this.props;
         const {hoveredRow} = this.state;
 
         return (
@@ -52,7 +61,10 @@ const BetsTable = React.createClass({
                         </div>
                         {users.map(user => (
                             <div
-                                className={b('bets-table', 'row', {hovered: hoveredRow === user._id})}
+                                className={b('bets-table', 'row', {
+                                    hovered: hoveredRow === user._id,
+                                    charge: user.charge
+                                })}
                                 key={user._id}
                                 onMouseEnter={this.onRowEnter.bind(this, user._id)}
                                 onMouseLeave={this.onRowLeave}>
@@ -114,8 +126,28 @@ const BetsTable = React.createClass({
     }
 });
 
-function mapStateToProps({games: {list, loading, message}, bets: {data}}) {
-    return {games: list, loading, message, bets: data};
+function mapStateToProps({room, games: {list=[], loading, message}, bets: {data}}) {
+    const lastStartedGame = _.findLast(list, game => game.started === true);
+    const lastStartedDate = lastStartedGame
+        ? new Date(lastStartedGame.date).setHours(0, 0, 0, 0)
+        : 0;
+
+    // актуальные игры - последние начавшиеся. Берётся последний день
+    const actualGames = list.filter(game =>
+        new Date(game.date).setHours(0, 0, 0, 0) === lastStartedDate).map(game => game.id);
+
+    list = list.map(game => {
+        game.actual = actualGames.indexOf(game.id) > -1;
+        return game;
+    });
+
+    room.users = room.users.map(user => {
+        user.charge = room.chargeUsers && room.chargeUsers.includes(user._id);
+        return user;
+    });
+
+    room.users = room.users.sort((a, b) => a.charge < b.charge);
+    return {games: list, loading, message, bets: data, room};
 }
 
 export default connect(mapStateToProps)(injectIntl(BetsTable));

@@ -15,10 +15,10 @@ const BetsTableCellHeader = React.createClass({
     },
 
     render() {
-        const {game: {homeTeamName: home, awayTeamName: away, result}} = this.props;
+        const {game: {actual, homeTeamName: home, awayTeamName: away, result}} = this.props;
 
         return (
-            <div className={b('bets-table', 'cell', {header: true})}>
+            <div className={b('bets-table', 'cell', {header: true, actual})}>
                 <div className="bets-table__cell-header-teams">
                     <div className={`bets-table__flag flag_${home.replace(/ /g,'')}`} />
                     <div className="bets-table__cell-header-vs">

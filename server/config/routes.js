@@ -23,6 +23,9 @@ module.exports = function(app, passport) {
     app.patch('/api/rooms/code/', rooms.addToGroupByCode);
     app.get('/api/rooms/:id', rooms.get);
     app.put('/api/rooms/:id', rooms.update);
+    app.patch('/api/rooms/:id/change_me', rooms.changeMe);
+    app.patch('/api/rooms/:id/remove_me', rooms.removeMe);
+    app.patch('/api/rooms/:id/remove_user', rooms.removeUser);
 
     app.get('/api/games', footballData.getFixtures);
     app.get('/api/teams', footballData.getTeams);

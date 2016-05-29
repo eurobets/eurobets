@@ -2,6 +2,7 @@
 
 $firstTableWidth: 150px;
 $lastTableWidth: 60px;
+$headerCellBorderWidth: 5px;
 $cellHeight: 40px;
 $shadowWidth: 1px;
 
@@ -55,10 +56,23 @@ $shadowWidth: 1px;
             &__cell
             {
                 max-width: $firstTableWidth;
-                padding: 0 10px 0 $pageIndent;
+                width: $firstTableWidth;
+                padding: 0 10px 0 $pageIndent - $headerCellBorderWidth;
                 position: relative;
+                box-sizing: border-box;
+                border-left: $headerCellBorderWidth solid transparent;
             }
 
+            &__row
+            {
+                &_charge
+                {
+                    .bets-table__cell
+                    {
+                        border-left-color: #FFEB3B;
+                    }
+                }
+            }
             &__username
             {
                 overflow: hidden;

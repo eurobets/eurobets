@@ -65,6 +65,7 @@ const BetsTableCellBet = React.createClass({
         const iCanDoSmthWithBet = me.id === userId && !game.started;
         const iCanCreateFirstBet = iCanDoSmthWithBet && !bet;
         const className = b('bets-table', 'cell', {
+            actual: game.actual,
             bet: true,
             started: game.started,
             'fucked-up': game.started && !bet,

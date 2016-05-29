@@ -37,9 +37,10 @@ function renderFullPage(renderedContent, initialState, head={
         ${head.meta}
 
         ${head.link}
-
+        
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.ru"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
     </head>
     <body>
     <div id="app">${renderedContent}</div>

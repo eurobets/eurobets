@@ -81,7 +81,9 @@ export default {
         other {}
     }</b>`,
     'RoomMain.iAmFree': 'Вы играете бесплатно и не участвуете в распределении банка. ',
-    'RoomMain.playForMoney': 'Черт с ним, я в игре!',
+    'RoomMain.leaveRoom': 'Покинуть комнату',
+    'RoomMain.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
+    'RoomMain.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть со всеми, но не на деньги}}',
 
     'Teams.name.France': 'Франция',
     'Teams.name.Romania': 'Румыния',

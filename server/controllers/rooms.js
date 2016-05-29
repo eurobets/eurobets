@@ -1,3 +1,5 @@
+'use strict';
+
 const mongoose = require('mongoose');
 const Room = mongoose.model('Room');
 
@@ -58,6 +60,46 @@ exports.create = function(req, res) {
         return res.status(200).send({id: room._id});
     });
 };
+
+exports.removeMe = function(req, res) {
+    console.log(req.params.id, req.user.id);
+    Room.findByIdAndUpdate(req.params.id, {$pull: {users: req.user.id}}, {new: true}, (err, room) => {
+        if(err) {
+            return res.status(400).json({message: err.errors});
+        }
+        return res.status(200).send(room);
+    });
+};
+exports.removeUser = function(req, res) {
+    Room.findByIdAndUpdate(req.params.id, {$pull: {users: req.data.userId}}, {new: true}, (err, room) => {
+        if(err) {
+            return res.status(400).json({message: err.errors});
+        }
+        return res.status(200).send(room);
+    });
+};
+exports.changeMe = function(req, res) {
+    let update = {};
+
+    console.log(req.body, req.params);
+    if (req.body.free === false) {
+        update = {$addToSet: {chargeUsers: req.user.id}};
+    }
+
+    if (req.body.free === true) {
+        update = {$pull: {chargeUsers: req.user.id}};
+    }
+
+    Room.findByIdAndUpdate(req.params.id, update, {new: true}, (err, room) => {
+        console.log(room);
+        if(err) {
+            return res.status(400).json({message: err.errors});
+        }
+        return res.status(200).send(room);
+    });
+};
+
+
 
 exports.remove = function(req, res) {
     // Room.findOneAndRemove(req.body, (err, data) => {
