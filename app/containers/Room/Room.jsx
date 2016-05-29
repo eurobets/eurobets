@@ -27,8 +27,7 @@ const Room = React.createClass({
     },
 
     render() {
-        const {intl, teams, room, room: {_id: roomId, users=[], name, owner, code}, user} = this.props;
-        const meInRoom = users.find(({_id}) => _id === user.id);
+        const {intl, room: {_id: roomId, name, owner, code}, user} = this.props;
         const iAmOwner = user.id === (!!owner && owner._id);
 
         if (!roomId) {
@@ -46,18 +45,18 @@ const Room = React.createClass({
                     } />
                     <h2 className="room__title">
                         {name}
-                        {iAmOwner && <span className="room__code"> {code}</span>}
+                        {iAmOwner && <span className="room__code">{code}</span>}
                     </h2>
                 </div>
                 <div className="room__content">
-                    {React.cloneElement(this.props.children, {room, user, meInRoom, teams})}
+                    {this.props.children}
                 </div>
             </div>
         );
     }
 });
 
-function mapStateToProps({room, user, teams, bets: {data}, games}) {
+function mapStateToProps({room, user, bets: {data}, games}) {
     return {room, user, bets: data, games};
 }
 

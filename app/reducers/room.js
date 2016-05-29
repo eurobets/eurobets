@@ -5,15 +5,14 @@ import {
     GET_ROOM_SUCCESS,
     GET_ROOMS_SUCCESS,
     INSERT_USER_BY_CODE_SUCCESS,
+    CHANGE_MY_STATE_SUCCESS,
+    REMOVE_USER_SUCCESS,
+    REMOVE_ME_SUCCESS
 } from 'constants/index';
 
 
 export default function room(state={}, action) {
     switch (action.type) {
-        case ROOM_REQUEST_START:
-            return Object.assign({}, state, action);
-        case ROOM_REQUEST_FAILURE:
-            return Object.assign({}, state, action);
         case CREATE_ROOM_SUCCESS:
             return Object.assign({}, state, {loading: false});
         case GET_ROOM_SUCCESS:
@@ -23,6 +22,6 @@ export default function room(state={}, action) {
         case GET_ROOMS_SUCCESS:
             return Object.assign({}, state, {loading: false}, {list: action.list});
         default:
-            return state;
+            return Object.assign({}, state, action);
     }
 }

@@ -1,5 +1,4 @@
 function getGamePoints(result, rules) {
-    console.log(result, rules);
     let points = 0;
 
     if (result.correctPromotion && rules.promotion) {

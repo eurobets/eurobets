@@ -50,6 +50,26 @@ function insertUserByCodeSuccess(data) {
     };
 }
 
+function removeUserSuccess(data) {
+    return {
+        type: types.REMOVE_USER_SUCCESS,
+        data
+    };
+}
+
+function removeMeSuccess(data) {
+    return {
+        type: types.REMOVE_ME_SUCCESS,
+        data
+    };
+}
+
+function changeMyStateSuccess(data) {
+    return {
+        type: types.CHANGE_MY_STATE_SUCCESS,
+        ...data
+    };
+}
 
 export function createRoom(data) {
     return (dispatch, getState) => {
@@ -90,6 +110,48 @@ export function insertUserByCode(code) {
             })
             .catch((err) => {
                 dispatch(roomRequestFailure({message: err.data.message, addingRoom: false}))
+            });
+    };
+}
+
+export function removeUser(query) {
+    return (dispatch, getState) => {
+        dispatch(roomRequestStart({removingSomeone: true}));
+
+        return apiRequest('patch', null, query, `/api/rooms/${query.roomId}/remove_user`)
+            .then(res => {
+                dispatch(removeUserSuccess(res.data));
+            })
+            .catch((err) => {
+                dispatch(roomRequestFailure({message: err.data.message, removingSomeone: false}))
+            });
+    };
+}
+
+export function removeMe(query) {
+    return (dispatch, getState) => {
+        dispatch(roomRequestStart({removingMe: true}));
+
+        return apiRequest('patch', null, null, `/api/rooms/${query.roomId}/remove_me`)
+            .then(res => {
+                dispatch(removeMeSuccess({...res.data, removingMe: false}));
+            })
+            .catch((err) => {
+                dispatch(roomRequestFailure({message: err.data.message, removingMe: false}))
+            });
+    };
+}
+
+export function changeMyState(query) {
+    return (dispatch, getState) => {
+        dispatch(roomRequestStart({changingMe: true}));
+
+        return apiRequest('patch', null, query, `/api/rooms/${query.roomId}/change_me`)
+            .then(res => {
+                dispatch(changeMyStateSuccess({...res.data, changingMe: false}));
+            })
+            .catch((err) => {
+                dispatch(roomRequestFailure({message: err.data.message, changingMe: false}))
             });
     };
 }

@@ -12,11 +12,9 @@ const RoomBets = React.createClass({
     },
 
     render() {
-        const {room} = this.props;
-
         return (
             <div className="room-bets">
-                <BetsTable room={room} />
+                <BetsTable />
             </div>
         );
     }
