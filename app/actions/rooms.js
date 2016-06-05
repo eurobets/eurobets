@@ -60,7 +60,7 @@ function removeUserSuccess(data) {
 function removeMeSuccess(data) {
     return {
         type: types.REMOVE_ME_SUCCESS,
-        data
+        ...data
     };
 }
 

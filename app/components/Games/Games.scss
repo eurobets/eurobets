@@ -2,66 +2,70 @@
 
 .games
 {
-    counter-reset: rowNumber;
     position: relative;
+    margin: 60px (-$pageIndent);
 
     &__row, &__head
     {
         display: flex;
-    }
 
-    &__head .games__cell
-    {
-        border-bottom: 1px solid transparentize($colorBlack, .75);
-        text-align: center;
-        background: $colorWhite;
-        position: relative;
-
-        &:first-of-type:before
+        .games__cell
         {
-            background: $colorWhite;
-            content: '';
-            left: -20px;
-            width: 20px;
-            margin-top: 5px;
-            height: 21px;
-            position: absolute;
-            border-bottom: 1px solid transparentize($colorBlack, .75);
+            &:first-of-type
+            {
+                margin-left: $pageIndent;
+            }
         }
     }
 
+    &__row
+    {
+        &:hover
+        {
+            background: transparentize($colorBlack, .96);
+        }
+    }
+
+    &__head
+    {
+        border-bottom: 1px solid transparentize($colorBlack, .75);
+
+        .games__cell
+        {
+            text-align: center;
+            background: $colorWhite;
+            position: relative;
+        }
+        .games__cell-bet
+        {
+            white-space: normal;
+            line-height: 14px;
+
+            > *
+            {
+                transform-origin: 22px -7px;
+                transform: rotate(-70deg);
+                text-align: left;
+            }
+        }
+
+    }
     &__cell
     {
         white-space: nowrap;
-        padding: 5px 20px;
+        padding: 5px 5px;
+        display: flex;
+        align-items: center;
 
         &:first-of-type
         {
             padding-left: 0;
         }
     }
-    &__row
-    {
-        counter-increment: rowNumber;
-        position: relative;
-
-        &:after
-        {
-            top: 0;
-            left: -37px;
-            width: 30px;
-            margin-top: 5px;
-            height: 20px;
-            position: absolute;
-            text-align: right;
-            color: transparentize($colorBlack, .75);
-            content: counter(rowNumber)'.';
-        }
-    }
 
     &__cell-time
     {
-        min-width: 150px;
+        min-width: 120px;
         color: transparentize($colorBlack, .6);
     }
 
@@ -73,7 +77,9 @@
 
     &__cell-bet
     {
-        min-width: 150px;
+        box-shadow: none;
+        min-width: 70px;
+        max-width: 70px;
     }
     &__cell-points
     {
@@ -84,5 +90,17 @@
     &__cell-teams
     {
         min-width: 240px;
+    }
+
+    &__team
+    {
+        &_winner
+        {
+            color: #00C853;
+        }
+        &_loser
+        {
+            color: transparentize($colorBlack, .6)
+        }
     }
 }

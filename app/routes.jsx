@@ -9,8 +9,7 @@ import Dashboard from 'containers/Dashboard/Dashboard';
 
 import RoomCreate from 'containers/RoomCreate/RoomCreate';
 import Room from 'containers/Room/Room';
-import RoomBets from 'containers/RoomBets/RoomBets';
-import RoomMain from 'containers/RoomMain/RoomMain';
+import GameWrapper from 'containers/GameWrapper/GameWrapper';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
@@ -37,13 +36,12 @@ export default (store) => {
     return (
         <Route path="/" component={App}>
             <IndexRoute component={Main} onEnter={redirectAuth} />
-            <Route component={Inner} >
+            <Route component={Inner}>
                 <Route path="register" component={Register} onEnter={redirectAuth} />
-                <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
-                <Route path="rooms/create/" component={RoomCreate} onEnter={requireAuth} />
-                <Route path="rooms/:roomId/" component={Room} onEnter={requireAuth}>
-                    <IndexRoute component={RoomMain} onEnter={requireAuth} />
-                    <Route path="bets/" component={RoomBets} onEnter={requireAuth} />
+                <Route path="create-room/" component={RoomCreate} onEnter={requireAuth} />
+                <Route component={GameWrapper} onEnter={requireAuth}>
+                    <Route path="dashboard" component={Dashboard} />
+                    <Route path="rooms/:roomId/" component={Room} />
                 </Route>
             </Route>
         </Route>

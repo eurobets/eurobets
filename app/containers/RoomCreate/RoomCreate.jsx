@@ -33,7 +33,8 @@ const RoomCreate = React.createClass({
             chargeCurrency: 'RUB',
             correctScorePoints: 5,
             correctDifferencePoints: 3,
-            correctResultPoints: 2
+            correctResultPoints: 2,
+            promotionPoints: 1
         }
     },
 
@@ -48,6 +49,7 @@ const RoomCreate = React.createClass({
             correctResultPoints,
             correctDifferencePoints,
             correctScorePoints,
+            promotionPoints,
             free
         } = this.state;
         const charge = !free && {
@@ -62,7 +64,8 @@ const RoomCreate = React.createClass({
                 points: {
                     score: correctScorePoints,
                     difference: correctDifferencePoints,
-                    result: correctResultPoints
+                    result: correctResultPoints,
+                    promotion: promotionPoints
                 },
                 charge
             },
@@ -81,6 +84,7 @@ const RoomCreate = React.createClass({
             correctResultPoints,
             correctDifferencePoints,
             correctScorePoints,
+            promotionPoints,
             free
         } = this.state;
 
@@ -88,6 +92,7 @@ const RoomCreate = React.createClass({
         const scoreError = _.get(message, ['rules.points.score', 'kind']);
         const resultError = _.get(message, ['rules.points.result', 'kind']);
         const differenceError = _.get(message, ['rules.points.difference', 'kind']);
+        const promotionError = _.get(message, ['rules.points.promotion', 'kind']);
         const chargeValueError = _.get(message, ['rules.charge.value', 'kind']);
 
         return (
@@ -131,6 +136,14 @@ const RoomCreate = React.createClass({
                                 mix='room-create__input'
                                 onChange={e => this.setState({correctResultPoints: e.target.value})}
                                 floatingLabelText={formatMessage({id: 'RoomCreate.correctResultPoints'})} />
+                            <Input
+                                fullWidth
+                                value={promotionPoints}
+                                type="number"
+                                errorText={promotionError && formatMessage({id: `RoomCreate.${promotionError}`})}
+                                mix='room-create__input'
+                                onChange={e => this.setState({promotionPoints: e.target.value})}
+                                floatingLabelText={formatMessage({id: 'RoomCreate.promotionPoints'})} />
                         </div>
                         <div className="room-create__charge">
                             <h2>{formatMessage({id: 'RoomCreate.whatFor'})}</h2>

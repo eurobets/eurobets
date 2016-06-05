@@ -1,13 +1,15 @@
 import React from 'react';
-import { getRoom } from '../../actions/rooms';
+import { getRoom, getMyRooms } from '../../actions/rooms';
 import { getBetsInRoom } from '../../actions/bets';
 import { getGames } from '../../actions/games';
 import { connect } from 'react-redux';
 
-import {FormattedHTMLMessage, injectIntl} from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { changeMyState, removeMe } from '../../actions/rooms';
 
+import BetsTable from '../../components/BetsTable/BetsTable.jsx';
+import Button from '../../components/Button/Button.jsx';
 import Spin from '../../components/Spin/Spin.jsx';
-import Menu from '../../components/Menu/Menu.jsx';
 import './Room.scss';
 
 const Room = React.createClass({
@@ -23,11 +25,42 @@ const Room = React.createClass({
 
         dispatch(getRoom(params));
         dispatch(getBetsInRoom(params.roomId));
-        dispatch(getGames());
+    },
+
+    componentWillReceiveProps(nextProps) {
+        const {room} = this.props;
+
+        if (nextProps.room && nextProps.room.users &&
+            room && room.users &&
+            nextProps.room.users.length < room.users.length
+        ) {
+            this.props.dispatch(getMyRooms());
+        }
+        if (nextProps.params.roomId !== this.props.params.roomId) {
+            this.props.dispatch(getRoom(nextProps.params));
+            this.props.dispatch(getBetsInRoom(nextProps.params.roomId));
+        }
+    },
+
+    playForMoney() {
+        this.props.dispatch(changeMyState({free: false, roomId: this.props.room._id}));
+    },
+    playForFree() {
+        this.props.dispatch(changeMyState({free: true, roomId: this.props.room._id}));
+    },
+    removeMe() {
+        this.props.dispatch(removeMe({roomId: this.props.room._id}));
     },
 
     render() {
-        const {intl, room: {_id: roomId, name, owner, code}, user} = this.props;
+        const {intl, room:
+            {_id: roomId, name, owner, code, rules={}, chargeUsers=[], changingMe, removingMe},
+        user, games} = this.props;
+
+        const iAmFree = !chargeUsers.some(chargeUser => chargeUser === user.id);
+        const tournamentStarted = games && games[0] && games[0].started || false;
+
+
         const iAmOwner = user.id === (!!owner && owner._id);
 
         if (!roomId) {
@@ -37,26 +70,51 @@ const Room = React.createClass({
         return (
             <div className="room">
                 <div className="room__header">
-                    <Menu items={
-                        [
-                            {to: `/rooms/${roomId}/`, name: intl.formatMessage({id: 'Room.itself'})},
-                            {to: `/rooms/${roomId}/bets/`, name: intl.formatMessage({id: 'Room.bets'})}
-                        ]
-                    } />
                     <h2 className="room__title">
                         {name}
                         {iAmOwner && <span className="room__code">{code}</span>}
                     </h2>
                 </div>
                 <div className="room__content">
-                    {this.props.children}
+                    <BetsTable />
+                </div>
+                <div className="room__footer">
+                    <span>
+                    {!rules.free &&
+                        <FormattedHTMLMessage id="Room.overallBank" values={{
+                            currency: rules.charge && rules.charge.currency,
+                            value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length}`
+                        }} />}
+                    </span>
+                    <div className="room__controls">
+                        {!rules.free && iAmFree &&
+                            <Button
+                                flat
+                                secondary
+                                disabled={changingMe}
+                                label={intl.formatMessage({id: 'Room.playForMoney'}, {changingMe})}
+                                onTouchTap={this.playForMoney} />}
+                        {!rules.free && !iAmFree &&
+                            <Button
+                                flat
+                                secondary
+                                disabled={changingMe}
+                                label={intl.formatMessage({id: 'Room.playForFree'}, {changingMe})}
+                                onTouchTap={this.playForFree} />}
+                        <Button
+                            flat
+                            secondary
+                            disabled={removingMe || tournamentStarted}
+                            label={intl.formatMessage({id: 'Room.leaveRoom'}, {removingMe})}
+                            onTouchTap={this.removeMe} />
+                    </div>
                 </div>
             </div>
         );
     }
 });
 
-function mapStateToProps({room, user, bets: {data}, games}) {
+function mapStateToProps({room, user, bets: {data, status}, games: {list: games}}) {
     return {room, user, bets: data, games};
 }
 
