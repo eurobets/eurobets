@@ -24,18 +24,32 @@ function betsRequestFailure(message, status) {
     };
 }
 
-function createBetSuccess(data, status) {
-    return {
+function createBetSuccess(data, mode, status) {
+    const result = {
         type: types.CREATE_BET_SUCCESS,
-        data,
         status
     };
+
+    if (mode === 'myBets') {
+        result.my = data;
+    } else {
+        result.data = data;
+    }
+    
+    return result;
 }
 
 function getBetsInRoomSuccess(data, status) {
     return {
         type: types.GET_BETS_IN_ROOM_SUCCESS,
         data,
+        status
+    };
+}
+function getMyBetsSuccess(data, status) {
+    return {
+        type: types.GET_MY_BETS_SUCCESS,
+        my: data,
         status
     };
 }
@@ -46,7 +60,7 @@ export function createBet(data) {
 
         return apiRequest('post', null, data)
             .then(res => {
-                dispatch(createBetSuccess(res.data, {creating: false, created: true}));
+                dispatch(createBetSuccess(res.data, data.mode, {creating: false, created: true}));
             })
             .catch((err) => {
                 dispatch(betsRequestFailure(err.data.message, {creating: false, created: false}))
@@ -61,6 +75,20 @@ export function getBetsInRoom(roomId) {
         return apiRequest('get', null, null, `/api/bets/?room=${roomId}`)
             .then(res => {
                 dispatch(getBetsInRoomSuccess(res.data, {loading: false}));
+            })
+            .catch((err) => {
+                dispatch(betsRequestFailure({loading: false}))
+            });
+    };
+}
+
+export function getMyBets() {
+    return (dispatch, getState) => {
+        dispatch(betsRequestStart({loading: true}));
+
+        return apiRequest('get', null, null, `/api/bets/my/`)
+            .then(res => {
+                dispatch(getMyBetsSuccess(res.data, {loading: false}));
             })
             .catch((err) => {
                 dispatch(betsRequestFailure({loading: false}))

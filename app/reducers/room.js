@@ -18,9 +18,9 @@ export default function room(state={}, action) {
         case GET_ROOM_SUCCESS:
             return Object.assign({}, state, {loading: false}, action.data);
         case INSERT_USER_BY_CODE_SUCCESS:
-            return Object.assign({}, state, {addingRoom: false}, {list: action.list});
+            return Object.assign({}, state, {addingRoom: false}, {rooms: action.list});
         case GET_ROOMS_SUCCESS:
-            return Object.assign({}, state, {loading: false}, {list: action.list});
+            return Object.assign({}, state, {loading: false}, {rooms: action.list});
         default:
             return Object.assign({}, state, action);
     }

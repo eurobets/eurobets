@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import b from 'b_';
 import React from 'react';
 import Link from '../../Link/Link.jsx';
@@ -40,9 +41,9 @@ const BetsTableCellBet = React.createClass({
     },
 
     save({homeScore, awayScore, homeWins, awayWins}) {
-        const {room: {_id: room}, game: {id: gameId}} = this.props;
+        const {room: {_id: room}, game: {id: gameId}, mode} = this.props;
 
-        this.props.dispatch(createBet({homeScore, awayScore, game: gameId, room, homeWins, awayWins}));
+        this.props.dispatch(createBet({homeScore, awayScore, game: gameId, room, homeWins, awayWins, mode}));
     },
     checkInputValue(value) {
         return value === '' || value.length < 3 && !!value.match(/^\d+$/);
@@ -58,13 +59,14 @@ const BetsTableCellBet = React.createClass({
 
 
     render() {
-        const {bet: {data: bet, result}, me, userId, game, room} = this.props;
+        const {bet: {data: bet, result}, me, userId, game, room, mix=''} = this.props;
         const {dialogShown} = this.state;
         const showBet = !!bet && typeof bet.homeScore === 'number';
         const showResult = !!result && showBet && game.result.goalsHomeTeam !== null;
         const iCanDoSmthWithBet = me.id === userId && !game.started;
         const iCanCreateFirstBet = iCanDoSmthWithBet && !bet;
         const className = b('bets-table', 'cell', {
+            status: _.values(result).find(value => value === true) ? 'success' : 'fail',
             actual: game.actual,
             bet: true,
             started: game.started,
@@ -73,7 +75,7 @@ const BetsTableCellBet = React.createClass({
         });
 
         return (
-            <div className={className}>
+            <div className={`${className} ${mix}`}>
                 <div className="bets-table__cell-content">
                     <div className="bets-table__cell-content-bet">
                         {showBet &&
@@ -103,8 +105,8 @@ const BetsTableCellBet = React.createClass({
     }
 });
 
-function mapStateToProps({user, room, bets: {status: betsStatus={}}}) {
-    return {me: user, room, betsStatus};
+function mapStateToProps({user}) {
+    return {me: user};
 }
 
 export default connect(mapStateToProps)(injectIntl(BetsTableCellBet));

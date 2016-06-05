@@ -62,8 +62,17 @@ exports.create = function(req, res) {
 };
 
 exports.removeMe = function(req, res) {
-    console.log(req.params.id, req.user.id);
-    Room.findByIdAndUpdate(req.params.id, {$pull: {users: req.user.id}}, {new: true}, (err, room) => {
+    Room
+        .findByIdAndUpdate(req.params.id, {$pull: {users: req.user.id, chargeUsers: req.user.id}}, {new: true})
+        .populate({
+            path: 'owner',
+            select: 'profile'
+        })
+        .populate({
+            path: 'users',
+            populate: {path: 'user', select: 'profile'}
+        })
+        .exec((err, room) => {
         if(err) {
             return res.status(400).json({message: err.errors});
         }
@@ -81,7 +90,6 @@ exports.removeUser = function(req, res) {
 exports.changeMe = function(req, res) {
     let update = {};
 
-    console.log(req.body, req.params);
     if (req.body.free === false) {
         update = {$addToSet: {chargeUsers: req.user.id}};
     }
@@ -90,8 +98,16 @@ exports.changeMe = function(req, res) {
         update = {$pull: {chargeUsers: req.user.id}};
     }
 
-    Room.findByIdAndUpdate(req.params.id, update, {new: true}, (err, room) => {
-        console.log(room);
+    Room.findByIdAndUpdate(req.params.id, update, {new: true})
+        .populate({
+            path: 'owner',
+            select: 'profile'
+        })
+        .populate({
+            path: 'users',
+            populate: {path: 'user', select: 'profile'}
+        })
+        .exec((err, room) => {
         if(err) {
             return res.status(400).json({message: err.errors});
         }
@@ -120,6 +136,13 @@ exports.update = function(req, res) {
 exports.addToGroupByCode = function(req, res) {
     const query = {code: req.body.code};
     Room.findOne(query, (err, room) => {
+        if (err) {
+            return res.status(400).json({message: err.errors});
+        }
+        if (room === null) {
+            return res.status(404).json({message: {code: {kind: 'wrongCode'}}});
+        }
+
         const update = Object.assign({users: req.user.id}, !room.rules.free && {chargeUsers: req.user.id});
 
         Room.update(query, {$addToSet: update}, (err, data) => {

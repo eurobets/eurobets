@@ -31,6 +31,7 @@ module.exports = function(app, passport) {
     app.get('/api/teams', footballData.getTeams);
     app.post('/api/bets', bets.create);
     app.get('/api/bets', bets.get);
+    app.get('/api/bets/my/', bets.getMy);
 
     // google auth
     // Redirect the user to Google for authentication. When complete, Google

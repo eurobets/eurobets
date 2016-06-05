@@ -12,7 +12,8 @@ const RoomSchema = new mongoose.Schema({
         points: {
             score: {type: Number, required: true},
             difference: {type: Number, required: true},
-            result: {type: Number, required: true}
+            result: {type: Number, required: true},
+            promotion: {type: Number, required: true}
         },
         charge: {
             value: {type: Number},

@@ -5,39 +5,6 @@ const mongoose = require('mongoose');
 const Bet = mongoose.model('Bet');
 const footballData = require('./footballData');
 
-function getPromotion(result) {
-    if (result.penaltyShootout) {
-        switch (getResult(result.penaltyShootout.goalsHomeTeam, result.penaltyShootout.goalsAwayTeam)) {
-            case 1:
-                return {homeWins: true, awayWins: false};
-            case -1:
-                return {homeWins: false, awayWins: true};
-            default:
-                return {homeWins: null, awayWins: null};
-        }
-    }
-
-    if (result.extraTime) {
-        switch (getResult(result.extraTime.goalsHomeTeam, result.extraTime.goalsAwayTeam)) {
-            case 1:
-                return {homeWins: true, awayWins: false};
-            case -1:
-                return {homeWins: false, awayWins: true};
-            default:
-                return {homeWins: null, awayWins: null};
-        }
-    }
-
-    switch (getResult(result.goalsHomeTeam, result.goalsAwayTeam)) {
-        case 1:
-            return {homeWins: true, awayWins: false};
-        case -1:
-            return {homeWins: false, awayWins: true};
-        default:
-            return {homeWins: null, awayWins: null};
-    }
-}
-
 function getResult(homeGoals, awayGoals) {
     if (homeGoals === awayGoals) {
         return 0;
@@ -71,11 +38,10 @@ function getBetResult(game, bet) {
     const betResult = {correctScore, correctDifference, correctResult};
 
     if (game.matchday > 3) {
-        const gamePromotion = getPromotion(game.result);
-        const hasGamePromotion = gamePromotion.homeWins !== null && gamePromotion.awayWins !== null;
+        const hasGamePromotion = game.homeWins !== null && game.awayWins !== null;
 
         betResult.correctPromotion = hasGamePromotion
-            ? bet.homeWins === gamePromotion.homeWins && bet.awayWins === gamePromotion.awayWins
+            ? bet.homeWins === game.homeWins && bet.awayWins === game.awayWins
             : null;
     }
 
@@ -124,7 +90,7 @@ function getBetsTable(req, res, bets, fixtures, user) {
         return playersBets;
     });
 
-    return res.json(players);
+    return players;
 }
 
 function getFixturesRequest(callback) {
@@ -133,12 +99,16 @@ function getFixturesRequest(callback) {
     });
 }
 
-function getMyBetsInRoom(req, res) {
-    Bet.find({owner: req.user.id}).exec((err, rooms) => {
-        if(!err) {
-            return res.json(rooms);
+function getMyBets(req, res, fixtures) {
+    Bet.find({owner: req.user.id}).exec((err, bets) => {
+        if(!err && fixtures) {
+            const betsByRoom  = _.groupBy(bets, bet => bet.room);
+
+            return res.json(_.map(betsByRoom, (roomBets, key) => {
+                return {[key]: getBetsTable(req, res, roomBets, fixtures, req.user.id)}
+            }));
         } else {
-            console.log('Error in first query');
+            return res.status(400).json({message: {kind: 'getMyBetsError'}});
         }
     });
 }
@@ -148,12 +118,13 @@ function getBetsInRoom(req, res, room, user, fixtures) {
         .find({room: room})
         .exec((err, bets) => {
             if(!err && fixtures) {
-                return getBetsTable(req, res, bets, fixtures, user);
+                return res.json(getBetsTable(req, res, bets, fixtures, user));
             } else {
                 return res.status(400).json({message: {kind: 'getBetsInRoomError'}});
             }
         });
 }
+
 
 exports.get = function(req, res) {
     getFixturesRequest(fixtures => {
@@ -161,7 +132,16 @@ exports.get = function(req, res) {
     });
 };
 
+exports.getMy = function(req, res) {
+    getFixturesRequest(fixtures => {
+        return getMyBets(req, res, fixtures);
+    });
+};
+
 exports.create = function(req, res) {
+    const mode = req.body.mode;
+
+    delete req.body.mode;
     getFixturesRequest(fixtures => {
         req.body.owner = req.user.id;
         const game = fixtures.find(game => game.id === req.body.game);
@@ -177,7 +157,9 @@ exports.create = function(req, res) {
                 return res.status(400).json({message: err.errors});
             }
 
-            return getBetsInRoom(req, res, req.body.room, req.user.id, fixtures);
+            return mode === 'myBets'
+                ? getMyBets(req, res, fixtures)
+                : getBetsInRoom(req, res, req.body.room, req.user.id, fixtures);
         });
     });
 };

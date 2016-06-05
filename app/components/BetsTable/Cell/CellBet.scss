@@ -8,16 +8,16 @@ $cellHeight: 40px;
     {
         &_hidden-bet
         {
-            background: url('./ic_done_black_24px.svg') no-repeat;
+            background: url('./circle-made-bet.svg') no-repeat;
             background-position: center center;
-            background-size: 16px;
+            background-size: 10px;
         }
 
         &_fucked-up
         {
-            background: url('./ic_clear_black_24px.svg') no-repeat;
+            background: url('./circle-fucked-up.svg') no-repeat;
             background-position: center center;
-            background-size: 16px;
+            background-size: 10px;
         }
     }
 
@@ -41,6 +41,19 @@ $cellHeight: 40px;
         &_bet
         {
             padding: 3px 0!important;
+        }
+        &_status
+        {
+            &_success
+            {
+                color: #00C853;
+            }
+
+            &_fail
+            {
+                color: #E57373;
+
+            }
         }
     }
 

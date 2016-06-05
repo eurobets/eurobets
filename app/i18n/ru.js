@@ -19,11 +19,15 @@ export default {
 
     'BetsTable.points': 'Очки',
 
-    'Dashboard.createNewRoom': 'Создать новую комнату',
-    'Dashboard.enterTheCode': 'Введите код комнаты',
-    'Dashboard.addRoom': 'Добавить комнату',
-    'Dashboard.alreadyThere': 'Вы уже есть в комнате с этим кодом',
-    'Dashboard.wrongCode': 'Неправильный код',
+    'GameWrapper.enterTheCode': 'Введите код комнаты',
+    'GameWrapper.addRoom': 'Добавить комнату',
+    'GameWrapper.alreadyThere': 'Вы уже есть в комнате с этим кодом',
+    'GameWrapper.wrongCode': 'Неправильный код',
+
+    'GameWrapper.addFirstRoom': 'Добавьте первую комнату',
+    'GameWrapper.addFirstRoomReason': `Чтобы начать играть, нужно добавить первую комнату. </br>
+        Можно ввести код доступа к комнате, в которую вас пригласил друг. А можно создать свою комнату.`,
+    'GameWrapper.createRoom': 'Создать новую',
 
     'Games.time': '{date, date, medium}, {date, time, long}',
     'Games.newBet': 'сделать ставку',
@@ -52,13 +56,25 @@ export default {
     'Register.title': 'Регистрация участника',
     'Register.description': 'Для участия в игре нужно зарегистрироваться. Все поля обязательные.',
 
+    'Room.leaveRoom': 'Покинуть комнату',
+    'Room.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
+    'Room.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть со всеми, но не на деньги}}',
     'Room.itself': 'Комната',
     'Room.bets': 'Ставки и результаты',
+    'Room.overallBank': `Призовой фонд &mdash; <b>{value} {currency, select,
+        RUB {{value, plural, one {рубль} few {рубля} other {рублей}}}
+        USD {{value, plural, one {доллар} few {доллара} other {долларов}}}
+        EUR {евро}
+        snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
+        beer {{value, plural, one {пиво} few {пива} other {пив}}}
+        other {}
+    }</b>`,
 
     'RoomCreate.chargeValue': 'Цена участия',
     'RoomCreate.correctDifferencePoints': 'Верные исход и разница',
     'RoomCreate.correctResultPoints': 'Верный исход',
     'RoomCreate.correctScorePoints': 'Точный счёт',
+    'RoomCreate.promotionPoints': 'Победа в плей-офф',
     'RoomCreate.create': '{loading, select, true {Создаём…} other {Создать}}',
     'RoomCreate.name': 'Название',
     'RoomCreate.roomIsFree': 'Играем на интерес',
@@ -72,18 +88,7 @@ export default {
     'RoomCreate.required': 'Поле необходимо заполнить',
 
     'RoomMain.overallPlayers': '{players} {players, plural, one {игрок} few {игрока} other {игроков}}',
-    'RoomMain.overallBank': `Общий банк &mdash; <b>{value} {currency, select,
-        RUB {{value, plural, one {рубль} few {рубля} other {рублей}}}
-        USD {{value, plural, one {доллар} few {доллара} other {долларов}}}
-        EUR {евро}
-        snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
-        beer {{value, plural, one {пиво} few {пива} other {пив}}}
-        other {}
-    }</b>`,
     'RoomMain.iAmFree': 'Вы играете бесплатно и не участвуете в распределении банка. ',
-    'RoomMain.leaveRoom': 'Покинуть комнату',
-    'RoomMain.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
-    'RoomMain.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть со всеми, но не на деньги}}',
 
     'Teams.name.France': 'Франция',
     'Teams.name.Romania': 'Румыния',

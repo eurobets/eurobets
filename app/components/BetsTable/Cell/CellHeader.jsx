@@ -15,18 +15,24 @@ const BetsTableCellHeader = React.createClass({
     },
 
     render() {
-        const {game: {actual, homeTeamName: home, awayTeamName: away, result}} = this.props;
-
+        const {game, game: {actual, homeTeamName: home, awayTeamName: away, result}} = this.props;
+        const homeClassName = b('bets-table', 'flag', {
+            loser: game.awayWins
+        });
+        const awayClassName = b('bets-table', 'flag', {
+            loser: game.homeWins
+        });
         return (
             <div className={b('bets-table', 'cell', {header: true, actual})}>
                 <div className="bets-table__cell-header-teams">
-                    <div className={`bets-table__flag flag_${home.replace(/ /g,'')}`} />
+                    <div
+                        className={`${homeClassName} flag_${home.replace(/ /g,'')}`} />
                     <div className="bets-table__cell-header-vs">
                         {result.goalsHomeTeam !== null ? result.goalsHomeTeam : '-'}
                         {' : '}
                         {result.goalsAwayTeam !== null ? result.goalsAwayTeam : '-'}
                     </div>
-                    <div className={`bets-table__flag flag_${away.replace(/ /g,'')}`} />
+                    <div className={`${awayClassName} flag_${away.replace(/ /g,'')}`} />
                 </div>
             </div>
         );

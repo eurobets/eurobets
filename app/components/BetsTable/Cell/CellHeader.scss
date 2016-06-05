@@ -26,6 +26,11 @@ $shadowWidth: 1px;
         background-size: cover;
         background-position: center;
         box-shadow: 0 0 4px transparentize($colorBlack, .8);
+
+        &_loser
+        {
+            opacity: 0.3;
+        }
     }
 
     &__cell-header-teams

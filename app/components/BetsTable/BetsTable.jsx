@@ -4,8 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
 
-import CellBet from './Cell/CellBet.jsx'
-import CellHeader from './Cell/CellHeader.jsx'
+import CellBet from '../BetsTable/Cell/CellBet.jsx';
+import CellHeader from './Cell/CellHeader.jsx';
 import { getGames } from '../../actions/games';
 import { getBetsInRoom } from '../../actions/bets';
 import { getOverallPoints } from '../../points';
@@ -49,7 +49,7 @@ const BetsTable = React.createClass({
     },
 
     render() {
-        const {games=[], room: {users=[], rules={}}, bets={}} = this.props;
+        const {games=[], room, room: {users=[], rules={}}, bets={}, betsStatus} = this.props;
         const {hoveredRow} = this.state;
 
         return (
@@ -95,8 +95,10 @@ const BetsTable = React.createClass({
                                     {games.map((game, index) => (
                                         <CellBet
                                             bet={bets[user._id] && bets[user._id].games[game.id] || {}}
+                                            betsStatus={betsStatus}
                                             key={game.id}
                                             userId={user._id}
+                                            room={room}
                                             game={game} />
                                     ))}
                             </div>
@@ -126,7 +128,7 @@ const BetsTable = React.createClass({
     }
 });
 
-function mapStateToProps({room, games: {list=[], loading, message}, bets: {data}}) {
+function mapStateToProps({room, games: {list=[], loading, message}, bets: {data, status: betsStatus}}) {
     const lastStartedGame = _.findLast(list, game => game.started === true);
     const lastStartedDate = lastStartedGame
         ? new Date(lastStartedGame.date).setHours(0, 0, 0, 0)
@@ -147,7 +149,7 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data}
     });
 
     room.users = room.users.sort((a, b) => a.charge < b.charge);
-    return {games: list, loading, message, bets: data, room};
+    return {games: list, loading, message, bets: data, room, betsStatus};
 }
 
 export default connect(mapStateToProps)(injectIntl(BetsTable));
