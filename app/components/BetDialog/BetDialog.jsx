@@ -18,6 +18,10 @@ const TIME_FORMAT = {
 };
 
 const BetDialog = React.createClass({
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
+
     propTypes: {
         close: React.PropTypes.func.isRequired,
         save: React.PropTypes.func.isRequired,
@@ -38,9 +42,7 @@ const BetDialog = React.createClass({
         const nextHomeScore = nextProps.bet ? nextProps.bet.homeScore : null;
         const nextAwayScore = nextProps.bet ? nextProps.bet.awayScore : null;
 
-        if (this.state.homeScore === null && this.state.awayScore === null) {
-            this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
-        }
+        this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
     },
 
     close() {
