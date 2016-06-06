@@ -158,21 +158,17 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data,
             if (nameA > nameB)
                 return 1;
             return 0;
-        })
-        .sort((a, b) => { // затем поднимаем себя наверх
-            if (a._id === user.id && b._id !== user.id) {
-                return -1;
-            }
-            if (a._id !== user.id && b._id === user.id) {
-                return 1;
-            }
-            return 0;
         });
-    
-    // почему-то обычная сортировка по charge приводит к странным штукам в хроме (в фф ок)
+
+    // почему-то обычная сортировка приводит к странным штукам в хроме (в фф ок)
+    room.users = room.users
+        .filter(u => u._id === user.id)
+        .concat(room.users.filter(u => u._id !== user.id));
+
     room.users =
-        room.users.filter(user => user.charge)
-        .concat(room.users.filter(user => !user.charge));
+        room.users
+            .filter(u => u.charge)
+            .concat(room.users.filter(u => !u.charge));
 
     return {games: list, loading, message, bets: data, room, betsStatus};
 }
