@@ -42,11 +42,13 @@ const BetDialog = React.createClass({
         const nextHomeScore = nextProps.bet ? nextProps.bet.homeScore : null;
         const nextAwayScore = nextProps.bet ? nextProps.bet.awayScore : null;
 
-        this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
+        if (!nextProps.status.creating || this.props.status.creating) {
+            this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
+        }
     },
 
     close() {
-        this.setState(this.getInitialState(), this.props.close);
+        this.props.close();
     },
 
     save(e) {

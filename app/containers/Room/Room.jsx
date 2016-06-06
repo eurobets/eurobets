@@ -58,8 +58,6 @@ const Room = React.createClass({
         user, games} = this.props;
 
         const iAmFree = !chargeUsers.some(chargeUser => chargeUser === user.id);
-        const tournamentStarted = games && games[0] && games[0].started || false;
-
 
         const iAmOwner = user.id === (!!owner && owner._id);
 
@@ -79,13 +77,26 @@ const Room = React.createClass({
                     <BetsTable />
                 </div>
                 <div className="room__footer">
-                    <span>
-                    {!rules.free &&
-                        <FormattedHTMLMessage id="Room.overallBank" values={{
-                            currency: rules.charge && rules.charge.currency,
-                            value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length}`
-                        }} />}
-                    </span>
+                    <div className="room__rules">
+                        <div>
+                            {!rules.free &&
+                            <FormattedHTMLMessage id="Room.overallBank" values={{
+                                currency: rules.charge && rules.charge.currency,
+                                value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length}`
+                            }} />}
+                        </div>
+
+
+                        <div  className="room__rules-points">
+                            <FormattedHTMLMessage id="Room.rules" values={{
+                                score: rules.points.score,
+                                difference: rules.points.difference,
+                                result: rules.points.result,
+                                promotion: rules.points.promotion
+                                }} />
+                        </div>
+                    </div>
+
                     <div className="room__controls">
                         {!rules.free && iAmFree &&
                             <Button
@@ -104,7 +115,7 @@ const Room = React.createClass({
                         <Button
                             flat
                             secondary
-                            disabled={removingMe || tournamentStarted}
+                            disabled={removingMe}
                             label={intl.formatMessage({id: 'Room.leaveRoom'}, {removingMe})}
                             onTouchTap={this.removeMe} />
                     </div>

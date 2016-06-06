@@ -16,7 +16,7 @@
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
     }
 
     &__title
@@ -40,6 +40,20 @@
 
     &__leave
     {
+    }
+
+    &__rules
+    {
+        font-size: 12px;
+    }
+
+    &__controls
+    {
+        .button
+        {
+            font-size: 12px!important;
+            line-height: 24px!important;
+        }
     }
 }
 

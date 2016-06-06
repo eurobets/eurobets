@@ -12,6 +12,10 @@ import { getMyBets } from '../../actions/bets';
 
 import './Games.scss';
 
+const MIN_HIDDEN_OLD_GAMES = 2;
+const STARTED_GAMES_TO_SHOW = 4;
+
+
 const TIME_FORMAT = {
     day: 'numeric',
     month: 'long',
@@ -20,6 +24,11 @@ const TIME_FORMAT = {
 };
 
 const Games = React.createClass({
+    getInitialState() {
+        return {
+            hideOld: true
+        };
+    },
 
     componentDidMount() {
         const {params, dispatch} = this.props;
@@ -27,14 +36,24 @@ const Games = React.createClass({
         dispatch(getMyBets());
     },
 
+    toggleOld() {
+        this.setState({hideOld: !this.state.hideOld});
+    },
+
     render() {
-        const {games=[], loading, intl, myBets, user, rooms=[], betsStatus} = this.props;
+        const {games=[], loading, intl, myBets, user, rooms=[], betsStatus, startedGames} = this.props;
+        const {hideOld} = this.state;
+        const oldGamesNumber = startedGames > STARTED_GAMES_TO_SHOW + MIN_HIDDEN_OLD_GAMES
+            ? startedGames - STARTED_GAMES_TO_SHOW
+            : 0;
 
         return !myBets ? <Spin center /> : (
             <div className="games">
                 <div className="games__head">
                     <div className="games__cell games__cell-time">
-                        &nbsp;
+                        <Link mix="games__toggle-old-games" onClick={this.toggleOld} pseudo>
+                            <FormattedMessage id="Games.toggleOld" values={{hideOld}} />
+                        </Link>
                     </div>
                     <div className="games__cell games__cell-teams">
                         &nbsp;
@@ -46,12 +65,12 @@ const Games = React.createClass({
                         <div key={index} className="games__cell games__cell-bet"><div>{name}</div></div>
                     ))}
                 </div>
-                {games.map(game => {
+                {games.map((game, index) => {
                     const homeClassName = b('games', 'team', {winner: game.homeWins, loser: game.awayWins});
                     const awayClassName = b('games', 'team', {winner: game.awayWins, loser: game.homeWins});
-
+                    const hidden = hideOld && index < oldGamesNumber;
                     return (
-                        <div className="games__row" key={game.id}>
+                        <div className={b('games', 'row', {hidden})} key={game.id}>
                             <div className="games__cell games__cell-time">
                                 {intl.formatTime(game.date, TIME_FORMAT)}
                             </div>
@@ -106,7 +125,8 @@ const Games = React.createClass({
 // </div>
 
 function mapStateToProps({games: {list, loading, message}, bets: {data, my, status}, user, room: {rooms}}) {
-    return {games: list, loading, message, myBets: my, user, rooms, betsStatus: status};
+    const startedGames = list ? list.filter(game => game.started).length : 0;
+    return {games: list, startedGames, loading, message, myBets: my, user, rooms, betsStatus: status};
 }
 
 export default connect(mapStateToProps)(injectIntl(Games));

@@ -20,9 +20,19 @@
 
     &__row
     {
+        overflow: hidden;
+        transition: all .2s ease-out;
+        height: 40px;
+
         &:hover
         {
             background: transparentize($colorBlack, .96);
+        }
+
+        &_hidden
+        {
+            transform: scaleY(0);
+            height: 0;
         }
     }
 
@@ -90,6 +100,12 @@
     &__cell-teams
     {
         min-width: 240px;
+    }
+
+    &__toggle-old-games
+    {
+        position: absolute;
+        z-index: 1;
     }
 
     &__team

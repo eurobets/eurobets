@@ -34,6 +34,10 @@ export default {
     'Games.score': 'Счёт',
     'Games.bet': 'Ставка',
     'Games.points': 'Очки',
+    'Games.toggleOld': `{hideOld, select, 
+        true {Показать} 
+        false {Скрыть}
+    } предыдущие игры`,
 
     'User.logout': 'Выход',
     'User.profile': 'Профиль',
@@ -58,7 +62,7 @@ export default {
 
     'Room.leaveRoom': 'Покинуть комнату',
     'Room.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
-    'Room.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть со всеми, но не на деньги}}',
+    'Room.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть не на деньги}}',
     'Room.itself': 'Комната',
     'Room.bets': 'Ставки и результаты',
     'Room.overallBank': `Призовой фонд &mdash; <b>{value} {currency, select,
@@ -69,6 +73,10 @@ export default {
         beer {{value, plural, one {пиво} few {пива} other {пив}}}
         other {}
     }</b>`,
+
+    'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>, 
+        победа в плей-офф — <b>+{promotion}</b>`,
+
 
     'RoomCreate.chargeValue': 'Цена участия',
     'RoomCreate.correctDifferencePoints': 'Верные исход и разница',
