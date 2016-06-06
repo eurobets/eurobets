@@ -51,9 +51,10 @@ const Games = React.createClass({
             <div className="games">
                 <div className="games__head">
                     <div className="games__cell games__cell-time">
-                        <Link mix="games__toggle-old-games" onClick={this.toggleOld} pseudo>
-                            <FormattedMessage id="Games.toggleOld" values={{hideOld}} />
-                        </Link>
+                        {oldGamesNumber > 0 &&
+                            <Link mix="games__toggle-old-games" onClick={this.toggleOld} pseudo>
+                                <FormattedMessage id="Games.toggleOld" values={{hideOld}} />
+                            </Link>}
                     </div>
                     <div className="games__cell games__cell-teams">
                         &nbsp;
