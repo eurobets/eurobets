@@ -81,13 +81,14 @@ const Room = React.createClass({
                         <div>
                             {!rules.free &&
                             <FormattedHTMLMessage id="Room.overallBank" values={{
+                                fee: rules.charge && rules.charge.value,
                                 currency: rules.charge && rules.charge.currency,
                                 value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length}`
                             }} />}
                         </div>
 
 
-                        <div  className="room__rules-points">
+                        <div className="room__rules-points">
                             <FormattedHTMLMessage id="Room.rules" values={{
                                 score: rules.points.score,
                                 difference: rules.points.difference,
@@ -125,8 +126,8 @@ const Room = React.createClass({
     }
 });
 
-function mapStateToProps({room, user, bets: {data, status}, games: {list: games}}) {
-    return {room, user, bets: data, games};
+function mapStateToProps({room, user, bets: {data, status}, games}) {
+    return {room, user, bets: data, games: games.list};
 }
 
 export default connect(mapStateToProps)(injectIntl(Room));

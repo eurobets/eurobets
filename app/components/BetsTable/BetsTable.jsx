@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
 
+import Spin from '../Spin/Spin.jsx';
 import CellBet from '../BetsTable/Cell/CellBet.jsx';
 import CellHeader from './Cell/CellHeader.jsx';
 import { getGames } from '../../actions/games';
@@ -49,8 +50,12 @@ const BetsTable = React.createClass({
     },
 
     render() {
-        const {games=[], room, room: {users=[], rules={}}, bets={}, betsStatus} = this.props;
+        const {games=[], loading, room, room: {users=[], rules={}}, bets={}, betsStatus} = this.props;
         const {hoveredRow} = this.state;
+
+        if (loading) {
+            return <Spin center />;
+        }
 
         return (
             <div className="bets-table">
@@ -128,7 +133,7 @@ const BetsTable = React.createClass({
     }
 });
 
-function mapStateToProps({room, games: {list=[], loading, message}, bets: {data, status: betsStatus}, user}) {
+function mapStateToProps({room, games, games: {list=[], message}, bets, bets: {data, status: betsStatus}, user}) {
     const lastStartedGame = _.findLast(list, game => game.started === true);
     const lastStartedDate = lastStartedGame
         ? new Date(lastStartedGame.date).setHours(0, 0, 0, 0)
@@ -170,7 +175,7 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data,
             .filter(u => u.charge)
             .concat(room.users.filter(u => !u.charge));
 
-    return {games: list, loading, message, bets: data, room, betsStatus};
+    return {games: list, message, bets: data, loading: betsStatus.loading || room.loading || games.loading, room, betsStatus};
 }
 
 export default connect(mapStateToProps)(injectIntl(BetsTable));

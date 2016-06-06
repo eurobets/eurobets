@@ -47,7 +47,7 @@ const Games = React.createClass({
             ? startedGames - STARTED_GAMES_TO_SHOW
             : 0;
 
-        return !myBets ? <Spin center /> : (
+        return !myBets || loading || betsStatus.loading ? <Spin center /> : (
             <div className="games">
                 <div className="games__head">
                     <div className="games__cell games__cell-time">
@@ -117,17 +117,18 @@ const Games = React.createClass({
     }
 });
 
-
-// <div className="games__cell games__cell-points">
-//     {game.started
-//         ? myBets && myBets.games[game.id] && myBets.games[game.id].result &&
-//     getGamePoints(myBets.games[game.id].result, room.rules.points) || 0
-//         : '–'}
-// </div>
-
-function mapStateToProps({games: {list, loading, message}, bets: {data, my, status}, user, room: {rooms}}) {
+function mapStateToProps({games, games: {list, message}, bets: {data, my, status}, user, room: {rooms}}) {
     const startedGames = list ? list.filter(game => game.started).length : 0;
-    return {games: list, startedGames, loading, message, myBets: my, user, rooms, betsStatus: status};
+    return {
+        games: list,
+        startedGames,
+        loading: games.loading,
+        message,
+        myBets: my,
+        user,
+        rooms,
+        betsStatus: status
+    };
 }
 
 export default connect(mapStateToProps)(injectIntl(Games));
