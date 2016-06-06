@@ -35,7 +35,7 @@ function createBetSuccess(data, mode, status) {
     } else {
         result.data = data;
     }
-    
+
     return result;
 }
 

@@ -72,6 +72,13 @@ export default {
         snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
         beer {{value, plural, one {пиво} few {пива} other {пив}}}
         other {}
+    }</b>, взнос <b>{fee} {currency, select,
+        RUB {{value, plural, one {рубль} few {рубля} other {рублей}}}
+        USD {{value, plural, one {доллар} few {доллара} other {долларов}}}
+        EUR {евро}
+        snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
+        beer {{value, plural, one {пиво} few {пива} other {пив}}}
+        other {}
     }</b>`,
 
     'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>, 
