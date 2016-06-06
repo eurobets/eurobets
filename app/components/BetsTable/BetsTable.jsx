@@ -167,8 +167,12 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data,
                 return 1;
             }
             return 0;
-        })
-        .sort((a, b) => a.charge < b.charge); // делим на группы платные/бесплатные
+        });
+    
+    // почему-то обычная сортировка по charge приводит к странным штукам в хроме (в фф ок)
+    room.users =
+        room.users.filter(user => user.charge)
+        .concat(room.users.filter(user => !user.charge));
 
     return {games: list, loading, message, bets: data, room, betsStatus};
 }
