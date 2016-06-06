@@ -149,9 +149,25 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data,
     });
 
     room.users = room.users
-        .sort(({profile: a}, {profile: b}) =>
-            (`${a.name} ${a.lastName}`).localeCompare(`${b.name} ${b.lastName}`)) // по алфавиту
-        .sort(a => a._id !== user.id) // себя - наверх
+        .sort(({profile: a}, {profile: b}) => { // сортируем всех по алфавиту
+            const nameA = `${a.name.toLowerCase()} ${a.lastName.toLowerCase()}`;
+            const nameB = `${b.name.toLowerCase()} ${b.lastName.toLowerCase()}`;
+
+            if (nameA < nameB)
+                return -1;
+            if (nameA > nameB)
+                return 1;
+            return 0;
+        })
+        .sort((a, b) => { // затем поднимаем себя наверх
+            if (a._id === user.id && b._id !== user.id) {
+                return -1;
+            }
+            if (a._id !== user.id && b._id === user.id) {
+                return 1;
+            }
+            return 0;
+        })
         .sort((a, b) => a.charge < b.charge); // делим на группы платные/бесплатные
 
     return {games: list, loading, message, bets: data, room, betsStatus};
