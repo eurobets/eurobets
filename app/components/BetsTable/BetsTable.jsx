@@ -128,7 +128,7 @@ const BetsTable = React.createClass({
     }
 });
 
-function mapStateToProps({room, games: {list=[], loading, message}, bets: {data, status: betsStatus}}) {
+function mapStateToProps({room, games: {list=[], loading, message}, bets: {data, status: betsStatus}, user}) {
     const lastStartedGame = _.findLast(list, game => game.started === true);
     const lastStartedDate = lastStartedGame
         ? new Date(lastStartedGame.date).setHours(0, 0, 0, 0)
@@ -148,7 +148,12 @@ function mapStateToProps({room, games: {list=[], loading, message}, bets: {data,
         return user;
     });
 
-    room.users = room.users.sort((a, b) => a.charge < b.charge);
+    room.users = room.users
+        .sort(({profile: a}, {profile: b}) =>
+            (`${a.name} ${a.lastName}`).localeCompare(`${b.name} ${b.lastName}`)) // по алфавиту
+        .sort(a => a._id !== user.id) // себя - наверх
+        .sort((a, b) => a.charge < b.charge); // делим на группы платные/бесплатные
+
     return {games: list, loading, message, bets: data, room, betsStatus};
 }
 
