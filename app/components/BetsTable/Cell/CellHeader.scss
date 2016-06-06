@@ -6,15 +6,58 @@ $shadowWidth: 1px;
 
 .bets-table
 {
+    &__cell-header-teams-popup
+    {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.2s ease-out;
+        background: transparentize($blackyBlue, .2);
+        color: white;
+        position: absolute;
+        line-height: 18px;
+        padding: 10px;
+        white-space: nowrap;
+        z-index: 10;
+        border-radius: 3px;
+        top: -50px;
+        text-align: left;
+    }
+
+    &__cell-header-teams-popup-date
+    {
+        font-size: 12px;
+        color: transparentize($colorWhite, .4);
+    }
+
     &__cell
     {
         &_header
         {
+            cursor: default;
+            position: relative;
             min-width: 100px;
             text-align: center;
             height: $headerCellHeight;
             color: #aaa;
             font-size: 13px;
+
+            &:last-of-type
+            {
+                .bets-table__cell-header-teams-popup
+                {
+                    text-align: right;
+                    right: 0;
+                }
+            }
+
+            &:hover
+            {
+                .bets-table__cell-header-teams-popup
+                {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
         }
     }
 

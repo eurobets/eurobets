@@ -6,6 +6,14 @@ import '../BetsTable.scss';
 import './CellHeader.scss';
 import '../../Flag/Flag.scss';
 
+const TIME_FORMAT = {
+    day: 'numeric',
+    month: 'long',
+    hour: 'numeric',
+    minute: '2-digit'
+};
+
+
 const BetsTableCellHeader = React.createClass({
     propTypes: {
         teams: React.PropTypes.array,
@@ -15,7 +23,7 @@ const BetsTableCellHeader = React.createClass({
     },
 
     render() {
-        const {game, game: {actual, homeTeamName: home, awayTeamName: away, result}} = this.props;
+        const {game, game: {actual, homeTeamName: home, awayTeamName: away, result}, intl} = this.props;
         const homeClassName = b('bets-table', 'flag', {
             loser: game.awayWins
         });
@@ -24,6 +32,16 @@ const BetsTableCellHeader = React.createClass({
         });
         return (
             <div className={b('bets-table', 'cell', {header: true, actual})}>
+                <div className={b('bets-table', 'cell-header-teams-popup')}>
+                    <div>
+                        <FormattedMessage id={`Teams.name.${game.homeTeamName}`}/>
+                        &nbsp;–&nbsp;
+                        <FormattedMessage id={`Teams.name.${game.awayTeamName}`}/>
+                    </div>
+                    <div className={b('bets-table', 'cell-header-teams-popup-date')}>
+                        {intl.formatTime(game.date, TIME_FORMAT)}
+                    </div>
+                </div>
                 <div className="bets-table__cell-header-teams">
                     <div
                         className={`${homeClassName} flag_${home.replace(/ /g,'')}`} />

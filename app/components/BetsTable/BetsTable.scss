@@ -29,6 +29,8 @@ $shadowWidth: 1px;
 
     &__main-table-wrapper
     {
+        padding-top: 50px;
+        margin-top: -50px;
         overflow: auto;
         max-width: 100%;
         flex-grow: 1;
