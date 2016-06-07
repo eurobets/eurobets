@@ -59,6 +59,7 @@ module.exports = function (app, passport) {
         // Add HTTPOnly, Secure attributes on Session Cookie
         // If secure is set, and you access your site over HTTP, the cookie will not be set
         cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 60,
             httpOnly: true,
             secure: false,
         },
