@@ -80,7 +80,7 @@ const BetsTableCellBet = React.createClass({
                         <div className="bets-table__cell-content-bet">
                             {showBet &&
                                 <Link
-                                    disabled={game.started}
+                                    disabled={game.started || game.result.goalsHomeTeam !== null}
                                     onClick={this.openDialog} pseudo>{bet.homeScore} : {bet.awayScore}</Link>}
                             {iCanCreateFirstBet &&
                                 <svg

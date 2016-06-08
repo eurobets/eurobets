@@ -110,5 +110,49 @@
             border-bottom: 2px solid black;
         }
     }
+
+    &__info
+    {
+        background: url(./info.svg) no-repeat;
+        background-size: 16px;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        right: 10px;
+        top: 3px;
+        cursor: default;
+        opacity: .4;
+
+        &:hover
+        {
+            opacity: 1;
+
+            .game-wrapper__info-popup
+            {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    &__info-popup
+    {
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.2s ease-out;
+        background: transparentize($blackyBlue, .2);
+        color: white;
+        position: absolute;
+        font-size: 12px;
+        line-height: 22px;
+        padding: 10px;
+        white-space: normal;
+        z-index: 10;
+        border-radius: 3px;
+        top: -12px;
+        right: 20px;
+        text-align: left;
+        width: 650px;
+    }
 }
 

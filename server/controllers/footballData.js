@@ -68,8 +68,8 @@ function getFixturesRequest(callback) {
                     return Object.assign(
                         {},
                         game,
-                    //    {started: Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)},
-                        {started: Date.now() > Date.parse(game.date)},
+                        {started: Date.now() + 1000 * 60 * 5 > Date.parse(game.date)},
+                        //{started: Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)},
                         match && {id: match[1]});
                 });
                 myCache.set(options.url, fixtures);
