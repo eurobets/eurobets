@@ -47,7 +47,8 @@ exports.postSignUp = function(req, res, next) {
         profile: {
             name: req.body.name,
             lastName: req.body.lastName
-        }
+        },
+        bot: null
     });
 
     if (!emailRegexp.test(req.body.email)) {

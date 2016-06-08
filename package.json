@@ -83,7 +83,7 @@
     "lodash": "^3.9.3",
     "material-ui": "^0.14.4",
     "method-override": "^2.3.5",
-    "mongo-express": "^0.30.35",
+    "mongo-express": "=0.30.35",
     "mongoose": "^4.3.4",
     "node-cache": "^3.2.1",
     "node-libs-browser": "^0.5.2",

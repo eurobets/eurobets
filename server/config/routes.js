@@ -34,6 +34,10 @@ module.exports = function(app, passport) {
     app.get('/api/bets', bets.get);
     app.get('/api/bets/my/', bets.getMy);
 
+    // bot routes
+    app.get('/api/bets/bots/', bets.createBotsBets);
+    app.get('/api/bets/bots/:name', bets.createBotBet);
+
     // google auth
     // Redirect the user to Google for authentication. When complete, Google
     // will redirect the user back to the application at

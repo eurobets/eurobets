@@ -9,6 +9,7 @@ import Link from '../Link/Link.jsx';
 import CellBet from '../BetsTable/Cell/CellBet.jsx';
 import { getGames } from '../../actions/games';
 import { getMyBets } from '../../actions/bets';
+import { getBotBets } from '../../actions/bets';
 
 import './Games.scss';
 

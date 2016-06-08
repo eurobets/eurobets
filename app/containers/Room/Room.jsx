@@ -3,6 +3,7 @@ import b from 'b_';
 import React from 'react';
 import { getRoom, getMyRooms } from '../../actions/rooms';
 import { getBetsInRoom } from '../../actions/bets';
+import { getBotBets } from '../../actions/bets';
 import { connect } from 'react-redux';
 
 import Menu from 'material-ui/lib/menus/menu';
@@ -17,7 +18,7 @@ import Button from '../../components/Button/Button.jsx';
 import Spin from '../../components/Spin/Spin.jsx';
 import './Room.scss';
 
-const AVAILABLE_BOTS = ['trololo'];
+const AVAILABLE_BOTS = ['trololo', 'median'];
 
 const Room = React.createClass({
     propTypes: {
@@ -39,6 +40,7 @@ const Room = React.createClass({
 
         dispatch(getRoom(params));
         dispatch(getBetsInRoom(params.roomId));
+        dispatch(getBotBets());
     },
 
     componentWillReceiveProps(nextProps) {

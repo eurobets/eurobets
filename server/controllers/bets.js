@@ -4,6 +4,8 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Bet = mongoose.model('Bet');
 const footballData = require('./footballData');
+const User = mongoose.model('User');
+const Room = mongoose.model('Room');
 
 function getResult(homeGoals, awayGoals) {
     if (homeGoals === awayGoals) {
@@ -164,3 +166,84 @@ exports.create = function(req, res) {
     });
 };
 
+
+function median(values) {
+    values.sort( function(a,b) {return a - b;} );
+    var half = Math.floor(values.length/2);
+    if(values.length % 2)
+        return values[half];
+    else
+        return Math.round((values[half-1] + values[half]) / 2.0);
+}
+
+function createBotBetFun(req, res, bot){
+    getFixturesRequest(fixtures => {
+        User
+            .findOne({bot: bot})
+            .exec((err, bot) => {
+                if(!err) {
+                    if (bot.bot === 'median') {
+                        Bet.find({by_bot: { $ne: true }}).
+                            exec((err, bets) => {
+                                let away_scores = {};
+                                let home_scores = {};
+                                var games = [];
+                                bets.forEach(bet => {
+                                    if (away_scores.hasOwnProperty(bet.game)){
+                                        away_scores[bet.game].push(bet.awayScore);
+                                        home_scores[bet.game].push(bet.homeScore);
+                                    } else {
+                                        away_scores[bet.game] = [];
+                                        home_scores[bet.game] = [];
+                                        games.push(bet.game);
+                                    }
+                                });
+                                Room.find({}).exec((err, rooms) => {
+                                    for (var index=0; index < games.length; ++index) {
+                                        const gamee = fixtures.find(game => game.id === games[index]);
+                                        if (gamee.started){
+                                            var to_create = false;
+                                            Bet.find({owner: bot.id, game: games[index]}).exec((err, bets_bots) => {
+                                                if (bets_bots.length === 0){
+                                                    to_create = true;
+                                                }
+                                            });
+                                            if(to_create){
+                                                const awayScore = median(away_scores[games[index]]);
+                                                const homeScore = median(home_scores[games[index]]);
+                                                const owner = bot.id;
+                                                const game = games[index];
+                                                for (var i_room=0; i_room < rooms.length; ++i_rooms){
+                                                    const room = rooms[i_room]._id;
+                                                    Bet.create(awayScore, homeScore, owner, room, game);
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                    } else {
+                        return res.status(200);
+                    }
+                } else {
+                    return res.status(400);
+                }
+            });
+    });
+}
+
+exports.createBotsBets = function(req, res) {
+    User.find({bot: { $ne: null }}).exec((err, bots) => {
+        if(!err){
+            bots.forEach(bot => {
+                createBotBetFun(req, res, bot.bot);
+            });
+        } else {
+            return res.status(400);
+        }
+    });
+};
+
+exports.createBotBet = function(req, res, bot) {
+    createBotBetFun(req, res, bot);
+};

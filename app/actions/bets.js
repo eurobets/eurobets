@@ -53,6 +53,13 @@ function getMyBetsSuccess(data, status) {
         status
     };
 }
+function getBotBetsSuccess(data, status) {
+    return {
+        type: "GET_BOT_BETS_SUCCESS",
+        my: data,
+        status
+    };
+}
 
 export function createBet(data) {
     return (dispatch, getState) => {
@@ -95,3 +102,18 @@ export function getMyBets() {
             });
     };
 }
+
+export function getBotBets() {
+    return (dispatch, getState) => {
+        dispatch(betsRequestStart({loading: true}));
+
+        return apiRequest('get', null, null, `/api/bets/bots/`)
+            .then(res => {
+                dispatch(getBotBetsSuccess(res.data, {loading: false}));
+            })
+            .catch((err) => {
+                dispatch(betsRequestFailure({loading: false}))
+            });
+    };
+}
+
