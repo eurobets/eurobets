@@ -64,7 +64,7 @@ export default {
     'Bots.trololoDescription': `Трололо получает число очков, равное возможному максимуму за эту игру 
         минус максимальное число очков среди игроков, играющих на деньги. Трололо на коне, когда случилось то, что 
         никто не предсказывал.`,
-    
+
     'Room.leaveRoom': 'Покинуть комнату',
     'Room.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
     'Room.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть не на деньги}}',
@@ -78,11 +78,11 @@ export default {
         beer {{value, plural, one {пиво} few {пива} other {пив}}}
         other {}
     }</b>, взнос <b>{fee} {currency, select,
-        RUB {{value, plural, one {рубль} few {рубля} other {рублей}}}
-        USD {{value, plural, one {доллар} few {доллара} other {долларов}}}
+        RUB {{fee, plural, one {рубль} few {рубля} other {рублей}}}
+        USD {{fee, plural, one {доллар} few {доллара} other {долларов}}}
         EUR {евро}
-        snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
-        beer {{value, plural, one {пиво} few {пива} other {пив}}}
+        snickers {{fee, plural, one {сникерс} few {сникерса} other {сникерсов}}}
+        beer {{fee, plural, one {пиво} few {пива} other {пив}}}
         other {}
     }</b>`,
 
