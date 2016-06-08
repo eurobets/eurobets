@@ -72,16 +72,17 @@ const GameWrapper = React.createClass({
 
         return (
             <div className="game-wrapper">
-                {!norooms && <div className="game-wrapper__header">
-                    <Link
-                        mix={b('game-wrapper', 'to-dashboard', {active: isDashboard})}
-                        to="/dashboard"></Link>
-                    <Menu items={rooms.map(({_id: id, name}) => ({to: `/rooms/${id}/`, name}))} />
-                    {!adding && isDashboard && <Link
-                        pseudo
-                        mix="game-wrapper__add-room-control"
-                        onClick={() => this.setState({adding: true})}>+</Link>}
-                </div>}
+                {!norooms &&
+                    <div className="game-wrapper__header">
+                        <Link
+                            mix={b('game-wrapper', 'to-dashboard', {active: isDashboard})}
+                            to="/dashboard" />
+                        <Menu items={rooms.map(({_id: id, name}) => ({to: `/rooms/${id}/`, name}))} />
+                        {!adding && isDashboard && <Link
+                            pseudo
+                            mix="game-wrapper__add-room-control"
+                            onClick={() => this.setState({adding: true})}>+</Link>}
+                    </div>}
                 {adding &&
                     <div className={b('game-wrapper', 'add-room', {norooms})}>
                         {!norooms &&
@@ -103,6 +104,11 @@ const GameWrapper = React.createClass({
                             <FormattedMessage id="GameWrapper.createRoom" />
                         </Link>
                     </div>}
+                <div className="game-wrapper__info">
+                    <div className="game-wrapper__info-popup">
+                        <FormattedHTMLMessage id="GameWrapper.info" />
+                    </div>
+                </div>
                 <div className="game-wrapper__content">
                     {this.props.children}
                 </div>
