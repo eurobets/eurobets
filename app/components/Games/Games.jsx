@@ -93,6 +93,10 @@ const Games = React.createClass({
                             </div>
                             {rooms && rooms.map((room, index) => {
                                 const myRoomBets = myBets.find(bet => bet[room._id]);
+                                const bet = myRoomBets &&
+                                    myRoomBets[room._id] &&
+                                    myRoomBets[room._id][user.id] &&
+                                    myRoomBets[room._id][user.id].games[game.id] || {};
 
                                 return (
                                     <CellBet
@@ -105,8 +109,9 @@ const Games = React.createClass({
                                         key={room._id}
                                         mix="games__cell-bet"
                                         userId={user.id}
+                                        points={bet.result && getGamePoints(bet.result, room.rules.points)}
                                         room={room}
-                                        game={game}/>
+                                        game={game} />
                                 )
                             })}
                         </div>

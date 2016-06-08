@@ -58,18 +58,18 @@ function getFixturesRequest(callback) {
                 const fixtures = (body ? JSON.parse(body).fixtures : []).map(game => {
                     const match = game._links.self.href.match(/\/fixtures\/(\d+)/);
 
-                    // if (Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)) {
-                    //     game.result.goalsHomeTeam = Math.floor(Math.random() * 4);
-                    //     game.result.goalsAwayTeam = Math.floor(Math.random() * 4);
-                    // }
+                    if (Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)) {
+                        game.result.goalsHomeTeam = Math.floor(Math.random() * 4);
+                        game.result.goalsAwayTeam = Math.floor(Math.random() * 4);
+                    }
 
                     game = Object.assign({}, game, getWinner(game.result));
 
                     return Object.assign(
                         {},
                         game,
-                    //    {started: Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)},
                         {started: Date.now() > Date.parse(game.date)},
+                        {started: Date.parse("2016-06-15T12:00:00Z") > Date.parse(game.date)},
                         match && {id: match[1]});
                 });
                 myCache.set(options.url, fixtures);

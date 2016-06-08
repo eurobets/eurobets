@@ -7,9 +7,9 @@ import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
 import Spin from '../Spin/Spin.jsx';
 import CellBet from '../BetsTable/Cell/CellBet.jsx';
 import CellHeader from './Cell/CellHeader.jsx';
-import { getGames } from '../../actions/games';
-import { getBetsInRoom } from '../../actions/bets';
-import { getOverallPoints } from '../../points';
+
+import { removeUser } from '../../actions/rooms';
+import { getTrololoPoints, getGamePoints } from '../../points';
 
 import './BetsTable.scss';
 import '../Flag/Flag.scss';
@@ -41,6 +41,10 @@ const BetsTable = React.createClass({
         }
     },
 
+    removeUser(userId) {
+        this.props.dispatch(removeUser({roomId: this.props.room._id, userId}));
+    },
+
     onRowEnter(rowId) {
         this.setState({hoveredRow: rowId});
     },
@@ -50,15 +54,22 @@ const BetsTable = React.createClass({
     },
 
     render() {
-        const {games=[], loading, room, room: {users=[], rules={}}, bets={}, betsStatus} = this.props;
+        const {
+            points,
+            games=[],
+            loading,
+            user,
+            room,
+            room: {users=[], rules={}, owner},
+            bets={},
+            betsStatus} = this.props;
         const {hoveredRow} = this.state;
 
-        if (loading) {
-            return <Spin center />;
-        }
+        const iAmOwner = user.id === (!!owner && owner._id);
 
         return (
             <div className="bets-table">
+                {loading && <Spin center />}
                 <div className="bets-table__header-table-wrapper">
                     <div className="bets-table__header-table">
                         <div className="bets-table__row">
@@ -68,7 +79,8 @@ const BetsTable = React.createClass({
                             <div
                                 className={b('bets-table', 'row', {
                                     hovered: hoveredRow === user._id,
-                                    charge: user.charge
+                                    charge: user.charge,
+                                    bot: user.bot
                                 })}
                                 key={user._id}
                                 onMouseEnter={this.onRowEnter.bind(this, user._id)}
@@ -77,6 +89,16 @@ const BetsTable = React.createClass({
                                     <div className="bets-table__username">
                                         {user.profile.name} {user.profile.lastName}
                                     </div>
+                                    {!!user.bot &&
+                                        <div className="bets-table__bot-description-control">
+                                            <div className="bets-table__bot-description-popup">
+                                                <FormattedMessage id={`Bots.${user.bot}Description`} />
+                                            </div>
+                                        </div>}
+                                    {!!user.bot && iAmOwner &&
+                                        <div
+                                            onClick={this.removeUser.bind(this, user._id)}
+                                            className="bets-table__remove-control" />}
                                 </div>
                             </div>
                         ))}
@@ -100,6 +122,7 @@ const BetsTable = React.createClass({
                                     {games.map((game, index) => (
                                         <CellBet
                                             bet={bets[user._id] && bets[user._id].games[game.id] || {}}
+                                            points={points[user._id] && points[user._id][game.id]}
                                             betsStatus={betsStatus}
                                             key={game.id}
                                             userId={user._id}
@@ -120,9 +143,7 @@ const BetsTable = React.createClass({
                         {users.map(user => (
                             <div className={b('bets-table', 'row', {hovered: hoveredRow === user._id})} key={user._id}>
                                 <div className="bets-table__cell">
-                                    {bets[user._id]
-                                        ? getOverallPoints(bets[user._id].overall, rules.points)
-                                        : 0}
+                                    {_.sum(_.values( points[user._id])) || 0}
                                 </div>
                             </div>
                         ))}
@@ -139,9 +160,9 @@ function mapStateToProps({room, games, games: {list=[], message}, bets, bets: {d
         ? new Date(lastStartedGame.date).setHours(0, 0, 0, 0)
         : 0;
 
-    // актуальные игры - последние начавшиеся. Берётся последний день
+    // актуальные игры - игры, сыгранные за последние два дня
     const actualGames = list.filter(game =>
-        new Date(game.date).setHours(0, 0, 0, 0) === lastStartedDate).map(game => game.id);
+        lastStartedDate - new Date(game.date).setHours(0, 0, 0, 0) < 1000 * 48 * 60 * 60).map(game => game.id);
 
     list = list.map(game => {
         game.actual = actualGames.indexOf(game.id) > -1;
@@ -165,17 +186,62 @@ function mapStateToProps({room, games, games: {list=[], message}, bets, bets: {d
             return 0;
         });
 
-    // почему-то обычная сортировка приводит к странным штукам в хроме (в фф ок)
+    // ботов в самый низ
+    room.users =
+        room.users
+            .filter(u => !u.bot)
+            .concat(room.users.filter(u => !!u.bot));
+
+    // себя - наверх
     room.users = room.users
         .filter(u => u._id === user.id)
         .concat(room.users.filter(u => u._id !== user.id));
 
+    // на деньги - наверх
     room.users =
         room.users
             .filter(u => u.charge)
             .concat(room.users.filter(u => !u.charge));
 
-    return {games: list, message, bets: data, loading: betsStatus.loading || room.loading || games.loading, room, betsStatus};
+    let points = {};
+    const gamesMaxPoints = {};
+
+    if (data && room.users) {
+        room.users
+            .forEach(u => {
+                const userPoints = data[u._id] && data[u._id].games;
+
+                points[u._id] = userPoints
+                    ? _.mapValues(userPoints, ((g, gameId) => {
+                        const gamePoint = g && g.result
+                            ? getGamePoints(g.result, room.rules.points)
+                            : null;
+                        if (u.charge && (!gamesMaxPoints[gameId] || gamesMaxPoints[gameId] < gamePoint)) {
+                            gamesMaxPoints[gameId] = gamePoint;
+                        }
+
+                        return gamePoint;
+                    }))
+                    : {};
+            });
+
+        const trololo = room.users.find(u => u.bot === 'trololo');
+
+        if (trololo) {
+            points = getTrololoPoints(trololo, points, gamesMaxPoints, room.rules, games.list);
+        }
+    }
+
+    return {
+        points,
+        user,
+        games: list,
+        message,
+        bets: data,
+        loading: betsStatus.loading || room.loading || games.loading,
+        room,
+        betsStatus
+    };
 }
 
 export default connect(mapStateToProps)(injectIntl(BetsTable));

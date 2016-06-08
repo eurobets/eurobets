@@ -20,11 +20,9 @@ if (process.env.VCAP_SERVICES) {
     mongo = {
         db:       'db',
         host:     'localhost',
-        password: 'pass',
         port:     27017,
         ssl:      false,
-        url:      'mongodb://localhost/ReactWebpackNode',
-        username: 'admin'
+        url:      'mongodb://localhost/ReactWebpackNode'
     };
 }
 
