@@ -1,16 +1,23 @@
+import _ from 'lodash';
+import b from 'b_';
 import React from 'react';
 import { getRoom, getMyRooms } from '../../actions/rooms';
 import { getBetsInRoom } from '../../actions/bets';
-import { getGames } from '../../actions/games';
 import { connect } from 'react-redux';
 
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { changeMyState, removeMe } from '../../actions/rooms';
+import Menu from 'material-ui/lib/menus/menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import Popover from 'material-ui/lib/popover/popover';
+
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { changeMyState, removeMe, insertBot } from '../../actions/rooms';
 
 import BetsTable from '../../components/BetsTable/BetsTable.jsx';
 import Button from '../../components/Button/Button.jsx';
 import Spin from '../../components/Spin/Spin.jsx';
 import './Room.scss';
+
+const AVAILABLE_BOTS = ['trololo'];
 
 const Room = React.createClass({
     propTypes: {
@@ -18,6 +25,13 @@ const Room = React.createClass({
         children: React.PropTypes.node,
         room: React.PropTypes.object,
         user: React.PropTypes.object
+    },
+
+    getInitialState() {
+        return {
+            openBotMenu: false,
+            botControl: null
+        };
     },
 
     componentDidMount() {
@@ -28,12 +42,13 @@ const Room = React.createClass({
     },
 
     componentWillReceiveProps(nextProps) {
-        const {room} = this.props;
+        const {room, user} = this.props;
 
         if (nextProps.room && nextProps.room.users &&
             room && room.users &&
-            nextProps.room.users.length < room.users.length
-        ) {
+            !nextProps.room.users.find(u => u._id === user.id) &&
+            room.users.find(u => u._id === user.id)
+    ) {
             this.props.dispatch(getMyRooms());
         }
         if (nextProps.params.roomId !== this.props.params.roomId) {
@@ -52,14 +67,28 @@ const Room = React.createClass({
         this.props.dispatch(removeMe({roomId: this.props.room._id}));
     },
 
+    addBot(bot) {
+        if (this.props.room.rules.charge) {
+            this.props.dispatch(insertBot({roomId: this.props.room._id, bot}));
+            this.setState({openBotMenu: false});
+        }
+    },
+
     render() {
         const {intl, room:
-            {_id: roomId, name, owner, code, rules={}, chargeUsers=[], changingMe, removingMe},
-        user, games} = this.props;
+            {_id: roomId, name, owner, code, users, rules={}, chargeUsers=[], changingMe, removingMe},
+        user} = this.props;
 
         const iAmFree = !chargeUsers.some(chargeUser => chargeUser === user.id);
 
         const iAmOwner = user.id === (!!owner && owner._id);
+        const botsInPlay = users
+            ? users
+                .filter(u => !!u.bot)
+                .map(u => u.bot)
+            : [];
+
+        const unusedBots = _.difference(AVAILABLE_BOTS, botsInPlay);
 
         if (!roomId) {
             return <Spin center />
@@ -87,7 +116,6 @@ const Room = React.createClass({
                             }} />}
                         </div>
 
-
                         <div className="room__rules-points">
                             <FormattedHTMLMessage id="Room.rules" values={{
                                 score: rules.points.score,
@@ -99,6 +127,33 @@ const Room = React.createClass({
                     </div>
 
                     <div className="room__controls">
+                        {iAmOwner && unusedBots.length > 0 &&
+                            <div>
+                                <div
+                                    onClick={e => this.setState({openBotMenu: true, botControl: e.currentTarget})}
+                                    className="room__add-bot-control" />
+                                <Popover
+                                    className={b('room', 'add-bot-popup')}
+                                open={this.state.openBotMenu}
+                                    anchorEl={this.state.botControl}
+                                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                    onRequestClose={() => this.setState({openBotMenu: false})}>
+                                        <Menu>
+                                            {unusedBots.map(bot => (
+                                                <MenuItem
+                                                    key={bot}
+                                                    onClick={this.addBot.bind(this, bot)}
+                                                    className={b('room', 'add-bot', {bot})}>
+                                                        <div className="room__add-bot-title">
+                                                            <FormattedMessage id={`Bots.${bot}`} />
+                                                        </div>
+                                                        <FormattedMessage id={`Bots.${bot}Description`} />
+                                                </MenuItem>
+                                            ))}
+                                        </Menu>
+                                </Popover>
+                            </div>}
                         {!rules.free && iAmFree &&
                             <Button
                                 flat

@@ -26,6 +26,7 @@ module.exports = function(app, passport) {
     app.patch('/api/rooms/:id/change_me', rooms.changeMe);
     app.patch('/api/rooms/:id/remove_me', rooms.removeMe);
     app.patch('/api/rooms/:id/remove_user', rooms.removeUser);
+    app.patch('/api/rooms/:id/add_bot', rooms.addBot);
 
     app.get('/api/games', footballData.getFixtures);
     app.get('/api/teams', footballData.getTeams);

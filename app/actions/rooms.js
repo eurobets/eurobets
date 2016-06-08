@@ -53,7 +53,7 @@ function insertUserByCodeSuccess(data) {
 function removeUserSuccess(data) {
     return {
         type: types.REMOVE_USER_SUCCESS,
-        data
+        ...data
     };
 }
 
@@ -67,6 +67,14 @@ function removeMeSuccess(data) {
 function changeMyStateSuccess(data) {
     return {
         type: types.CHANGE_MY_STATE_SUCCESS,
+        ...data
+    };
+}
+
+
+function insertBotSuccess(data) {
+    return {
+        type: types.INSERT_BOT_SUCCESS,
         ...data
     };
 }
@@ -113,14 +121,27 @@ export function insertUserByCode(code) {
             });
     };
 }
+export function insertBot({roomId, bot}) {
+    return (dispatch, getState) => {
+        dispatch(roomRequestStart({insertingBot: true}));
 
-export function removeUser(query) {
+        return apiRequest('patch', null, {bot}, `/api/rooms/${roomId}/add_bot`)
+            .then(res => {
+                dispatch(insertBotSuccess({...res.data, insertingBot: false}));
+            })
+            .catch((err) => {
+                dispatch(roomRequestFailure({message: err.data.message, insertingBot: false}))
+            });
+    };
+}
+
+export function removeUser({roomId, userId}) {
     return (dispatch, getState) => {
         dispatch(roomRequestStart({removingSomeone: true}));
 
-        return apiRequest('patch', null, query, `/api/rooms/${query.roomId}/remove_user`)
+        return apiRequest('patch', null, {userId}, `/api/rooms/${roomId}/remove_user`)
             .then(res => {
-                dispatch(removeUserSuccess(res.data));
+                dispatch(removeUserSuccess({...res.data, removingSomeone: false}));
             })
             .catch((err) => {
                 dispatch(roomRequestFailure({message: err.data.message, removingSomeone: false}))

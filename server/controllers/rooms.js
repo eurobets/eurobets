@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Room = mongoose.model('Room');
+const User = mongoose.model('User');
 
 function getAll(req, res) {
     Room.find({users: req.user.id}).exec((err, rooms) => {
@@ -14,9 +15,7 @@ function getAll(req, res) {
 
 }
 
-exports.all = getAll;
-
-exports.get = function(req, res) {
+function getRoomById(req, res) {
     const query = {id: req.params.id};
     Room
         .findById(req.params.id)
@@ -29,13 +28,17 @@ exports.get = function(req, res) {
             populate: {path: 'user', select: 'profile'}
         })
         .exec((err, room) => {
-             if(!err) {
-                 res.json(room);
-             } else {
-                 console.log('Error in first query');
-             }
-    });
-};
+            if(!err) {
+                res.json(room);
+            } else {
+                console.log('Error in first query');
+            }
+        });
+}
+
+exports.all = getAll;
+
+exports.get = getRoomById;
 
 exports.create = function(req, res) {
     const body = req.body;
@@ -80,12 +83,22 @@ exports.removeMe = function(req, res) {
     });
 };
 exports.removeUser = function(req, res) {
-    Room.findByIdAndUpdate(req.params.id, {$pull: {users: req.data.userId}}, {new: true}, (err, room) => {
-        if(err) {
-            return res.status(400).json({message: err.errors});
-        }
-        return res.status(200).send(room);
-    });
+    Room
+        .findByIdAndUpdate(req.params.id, {$pull: {users: req.body.userId, chargeUsers: req.body.userId}}, {new: true})
+        .populate({
+            path: 'owner',
+            select: 'profile'
+        })
+        .populate({
+            path: 'users',
+            populate: {path: 'user', select: 'profile'}
+        })
+        .exec((err, room) => {
+            if (err) {
+                return res.status(400).json({message: err.errors});
+            }
+            return res.status(200).send(room);
+        });
 };
 exports.changeMe = function(req, res) {
     let update = {};
@@ -115,15 +128,6 @@ exports.changeMe = function(req, res) {
     });
 };
 
-
-
-exports.remove = function(req, res) {
-    // Room.findOneAndRemove(req.body, (err, data) => {
-    //     if(err) console.log('Error on delete');
-    //     res.status(200).send('Removed Successfully');
-    // });
-};
-
 exports.update = function(req, res) {
     // var query = { id: req.params.id };
     //
@@ -131,6 +135,24 @@ exports.update = function(req, res) {
     //     if(err) console.log('Error on delete');
     //     res.status(200).send('Updated Successfully');
     // });
+};
+
+exports.addBot = function(req, res) {
+    User
+        .findOne({bot: req.body.bot})
+        .exec((err, bot) => {
+            Room.update({_id: req.params.id}, {$addToSet: {users: bot._id}}, (err, data) => {
+                if (err) {
+                    return res.status(400).json({message: err.errors});
+                }
+
+                if (data.nModified === 0) {
+                    return res.status(404).json({message: {code: {kind: data.n === 0 ? 'wrongCode': 'alreadyThere'}}});
+                }
+
+                return getRoomById(req, res);
+            });
+        });
 };
 
 exports.addToGroupByCode = function(req, res) {

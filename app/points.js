@@ -42,7 +42,24 @@ function getOverallPoints(result, rules) {
     return points;
 }
 
+function getTrololoPoints(trololo, points, gamesMaxPoints, rules, games) {
+    points[trololo._id] = {};
+
+    if (games) {
+        games.forEach(game => {
+            const gameMaxPoints = game.matchday > 3
+                ? rules.points.score + rules.points.promotion
+                : rules.points.score;
+
+            points[trololo._id][game.id] = game.started ? gameMaxPoints - gamesMaxPoints[game.id] : null;
+        })
+    }
+
+    return points;
+}
+
 export {
     getGamePoints,
-    getOverallPoints
+    getOverallPoints,
+    getTrololoPoints
 }
