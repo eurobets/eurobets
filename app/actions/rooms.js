@@ -79,6 +79,13 @@ function insertBotSuccess(data) {
     };
 }
 
+function setUsersSortingFieldSuccess(field) {
+    return {
+        type: types.SET_USERS_SORTING_FIELD_SUCCESS,
+        sort: field
+    };
+}
+
 export function createRoom(data) {
     return (dispatch, getState) => {
         dispatch(roomRequestStart({loading: true}));
@@ -189,4 +196,10 @@ export function getMyRooms() {
                 dispatch(roomRequestFailure({loading: false}))
             });
     };
+}
+
+export function setUsersSortingField(field) {
+    return (dispatch, getState) => {
+       return dispatch(setUsersSortingFieldSuccess(field));
+    }
 }

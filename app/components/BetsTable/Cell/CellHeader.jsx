@@ -23,15 +23,16 @@ const BetsTableCellHeader = React.createClass({
     },
 
     render() {
-        const {game, game: {actual, homeTeamName: home, awayTeamName: away, result}, intl} = this.props;
+        const {game, game: {actual, homeTeamName: home, awayTeamName: away, result, status}, intl} = this.props;
         const homeClassName = b('bets-table', 'flag', {
             loser: game.awayWins
         });
         const awayClassName = b('bets-table', 'flag', {
             loser: game.homeWins
         });
+
         return (
-            <div className={b('bets-table', 'cell', {header: true, actual})}>
+            <div className={b('bets-table', 'cell', {header: true, actual, live: status === 'IN_PLAY'})}>
                 <div className={b('bets-table', 'cell-header-teams-popup')}>
                     <div>
                         <FormattedMessage id={`Teams.name.${game.homeTeamName}`}/>

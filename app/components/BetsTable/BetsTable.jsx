@@ -8,7 +8,7 @@ import Spin from '../Spin/Spin.jsx';
 import CellBet from '../BetsTable/Cell/CellBet.jsx';
 import CellHeader from './Cell/CellHeader.jsx';
 
-import { removeUser } from '../../actions/rooms';
+import { removeUser, setUsersSortingField } from '../../actions/rooms';
 import { getTrololoPoints, getGamePoints } from '../../points';
 
 import './BetsTable.scss';
@@ -51,6 +51,10 @@ const BetsTable = React.createClass({
 
     onRowLeave() {
         this.setState({hoveredRow: null});
+    },
+
+    toggleSortPoints() {
+        this.props.dispatch(setUsersSortingField(this.props.room.sort === 'points' ? null : 'points'));
     },
 
     render() {
@@ -136,8 +140,14 @@ const BetsTable = React.createClass({
                 <div className="bets-table__overall-table-wrapper">
                     <div className="bets-table__overall-table">
                         <div className="bets-table__row">
-                            <div className={b('bets-table', 'cell', {header: true})}>
-                                <FormattedMessage id="BetsTable.points" />
+                            <div
+                                className={b('bets-table', 'cell', {
+                                    header: true,
+                                    points: true,
+                                    sorted: room.sort === 'points'
+                                })}
+                                onClick={this.toggleSortPoints}>
+                                    <FormattedMessage id="BetsTable.points" />
                             </div>
                         </div>
                         {users.map(user => (
@@ -230,6 +240,23 @@ function mapStateToProps({room, games, games: {list=[], message}, bets, bets: {d
         if (trololo) {
             points = getTrololoPoints(trololo, points, gamesMaxPoints, room.rules, games.list);
         }
+    }
+
+    if (room.sort === 'points') {
+        room.users.sort((a, b) => {
+            const overallA = _.sum(_.values(points[a._id]));
+            const overallB = _.sum(_.values(points[b._id]));
+
+            if (overallA < overallB) {
+                return 1;
+            }
+
+            if (overallA > overallB) {
+                return -1;
+            }
+
+            return 0;
+        });
     }
 
     return {

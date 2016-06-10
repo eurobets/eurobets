@@ -219,6 +219,43 @@ $shadowWidth: 1px;
         padding: 0;
         height: $cellHeight;
         box-shadow: 0 -1px 0 0 #eee inset;
+
+        &_header
+        {
+            &.bets-table__cell_points
+            {
+                cursor: pointer;
+                transition: color .2s ease-out;
+
+                &:hover
+                {
+                    color: $colorBlack;
+                    transition: none;
+                }
+
+                &:before
+                {
+                    transition: opacity .2s ease-out;
+                    position: absolute;
+                    left: 7px;
+                    content: '';
+                    font-size: 10px;
+                    top: -1px;
+                    opacity: 0;
+                }
+            }
+
+            &.bets-table__cell_sorted
+            {
+                color: $colorBlack;
+
+                &:before
+                {
+                    opacity: 1;
+                    content: '↓';
+                }
+            }
+        }
     }
 
     .spin
