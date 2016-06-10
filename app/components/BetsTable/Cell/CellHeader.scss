@@ -58,6 +58,21 @@ $shadowWidth: 1px;
                     opacity: 1;
                 }
             }
+
+            &.bets-table__cell_live:after
+            {
+                top: -12px;
+                left: 0;
+                right: 0;
+                margin: auto;
+                position: absolute;
+                width: 30px;
+                height: 10px;
+                font-size: 8px;
+                color: #00C853;
+                content: 'live';
+                text-transform: uppercase;
+            }
         }
     }
 
