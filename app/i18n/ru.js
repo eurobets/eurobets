@@ -95,6 +95,7 @@ export default {
         минус максимальное число очков среди игроков, играющих на деньги. Трололо на коне, когда случилось то, что 
         никто не предсказывал.`,
 
+    'Room.tournamentStarted': 'Турнир начался, состояние больше нельзя менять',
     'Room.leaveRoom': 'Покинуть комнату',
     'Room.playForMoney': '{changingMe, select, true {Меняем…} other {Играть на деньги}}',
     'Room.playForFree': '{changingMe, select, true {Меняем…} other {Я хочу играть не на деньги}}',
@@ -116,8 +117,9 @@ export default {
         other {}
     }</b>`,
 
-    'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>, 
-        победа в плей-офф — <b>+{promotion}</b>`,
+    'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>
+        </br>победа в плей-офф: <b>+{promotion}</b>
+        </br>очки в полуфинале и финале: <b>×{finalsCoefficient}</b>`,
 
 
     'RoomCreate.chargeValue': 'Цена участия',

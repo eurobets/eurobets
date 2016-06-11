@@ -223,8 +223,9 @@ function mapStateToProps({room, games, games: {list=[], message}, bets, bets: {d
 
                 points[u._id] = userPoints
                     ? _.mapValues(userPoints, ((g, gameId) => {
+                        const game = list.find(game => game.id === gameId) || {};
                         const gamePoint = g && g.result
-                            ? getGamePoints(g.result, room.rules.points)
+                            ? getGamePoints(g.result, room.rules.points, game.matchday)
                             : null;
                         if (u.charge && (!gamesMaxPoints[gameId] || gamesMaxPoints[gameId] < gamePoint)) {
                             gamesMaxPoints[gameId] = gamePoint;
