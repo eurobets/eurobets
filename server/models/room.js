@@ -10,6 +10,7 @@ const RoomSchema = new mongoose.Schema({
     rules: {
         free: {type: Boolean, default: false},
         points: {
+            finalsCoefficient: {type: Number, default: 1},
             score: {type: Number, required: true},
             difference: {type: Number, required: true},
             result: {type: Number, required: true},

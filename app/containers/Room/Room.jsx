@@ -75,7 +75,7 @@ const Room = React.createClass({
     },
 
     render() {
-        const {intl, room:
+        const {intl, games, room:
             {_id: roomId, name, owner, code, users, rules={}, chargeUsers=[], changingMe, removingMe},
         user} = this.props;
 
@@ -89,6 +89,7 @@ const Room = React.createClass({
             : [];
 
         const unusedBots = _.difference(AVAILABLE_BOTS, botsInPlay);
+        const tournamentStarted = games && games[0] && games[0].started || false;
 
         if (!roomId) {
             return <Spin center />
@@ -121,7 +122,8 @@ const Room = React.createClass({
                                 score: rules.points.score,
                                 difference: rules.points.difference,
                                 result: rules.points.result,
-                                promotion: rules.points.promotion
+                                promotion: rules.points.promotion,
+                                finalsCoefficient: rules.points.finalsCoefficient
                                 }} />
                         </div>
                     </div>
@@ -165,13 +167,15 @@ const Room = React.createClass({
                             <Button
                                 flat
                                 secondary
-                                disabled={changingMe}
+                                title={tournamentStarted && intl.formatMessage({id: 'Room.tournamentStarted'})}
+                                disabled={changingMe || tournamentStarted}
                                 label={intl.formatMessage({id: 'Room.playForFree'}, {changingMe})}
                                 onTouchTap={this.playForFree} />}
                         <Button
                             flat
                             secondary
-                            disabled={removingMe}
+                            title={tournamentStarted && intl.formatMessage({id: 'Room.tournamentStarted'})}
+                            disabled={removingMe || tournamentStarted}
                             label={intl.formatMessage({id: 'Room.leaveRoom'}, {removingMe})}
                             onTouchTap={this.removeMe} />
                     </div>
