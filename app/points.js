@@ -1,3 +1,5 @@
+'use strict';
+
 const GROUP_GAMES = 3;
 const NOT_FINAL_GAMES = 5;
 
@@ -76,5 +78,7 @@ function getTrololoPoints(trololo, points, gamesMaxPoints, rules, games) {
 export {
     getGamePoints,
     getOverallPoints,
-    getTrololoPoints
+    getTrololoPoints,
+    GROUP_GAMES,
+    NOT_FINAL_GAMES
 }

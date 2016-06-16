@@ -4,6 +4,7 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Bet = mongoose.model('Bet');
 const footballData = require('./footballData');
+const GROUP_GAMES = 3;
 
 function getResult(homeGoals, awayGoals) {
     if (homeGoals === awayGoals) {
@@ -37,7 +38,7 @@ function getBetResult(game, bet) {
 
     const betResult = {correctScore, correctDifference, correctResult};
 
-    if (game.matchday > 3) {
+    if (game.matchday > GROUP_GAMES) {
         const hasGamePromotion = game.homeWins !== null && game.awayWins !== null;
 
         betResult.correctPromotion = hasGamePromotion
