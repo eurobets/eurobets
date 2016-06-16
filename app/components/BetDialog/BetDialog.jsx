@@ -1,10 +1,12 @@
 import b from 'b_';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Button from '../Button/Button.jsx';
 import Dialog from '../../../node_modules/material-ui/lib/dialog';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import RadioButtonGroup from '../../../node_modules/material-ui/lib/radio-button-group';
+import RadioButton from '../../../node_modules/material-ui/lib/radio-button';
+import { GROUP_GAMES } from '../../points';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
 import './BetDialog.scss';
@@ -33,6 +35,7 @@ const BetDialog = React.createClass({
         const {bet} = this.props;
 
         return {
+            promotionTeam: this.getPromotionTeam(bet),
             homeScore: bet ? bet.homeScore : null,
             awayScore: bet ? bet.awayScore : null
         };
@@ -43,8 +46,27 @@ const BetDialog = React.createClass({
         const nextAwayScore = nextProps.bet ? nextProps.bet.awayScore : null;
 
         if (!nextProps.status.creating && !this.props.status.creating) {
-            this.setState({homeScore: nextHomeScore, awayScore: nextAwayScore});
+            this.setState({
+                homeScore: nextHomeScore,
+                awayScore: nextAwayScore,
+                promotionTeam: this.getPromotionTeam(nextProps.bet)
+            });
         }
+    },
+
+    getPromotionTeam(bet) {
+        if (!bet) {
+            return 'home';
+        }
+
+        if (bet.homeWins) {
+            return 'home';
+        }
+        if (bet.awayWins) {
+            return 'away';
+        }
+
+        return 'home';
     },
 
     close() {
@@ -53,9 +75,35 @@ const BetDialog = React.createClass({
 
     save(e) {
         e.preventDefault();
-        const {homeScore, awayScore} = this.state;
+        const {homeScore, awayScore, promotionTeam} = this.state;
+        const {game} = this.props;
+        let homeWins;
+        let awayWins;
 
-        this.props.save({homeScore, awayScore});
+        if (game.matchday > GROUP_GAMES) {
+            if (this.isDraw()) {
+                if (promotionTeam === 'home') {
+                    homeWins = true;
+                    awayWins = false;
+                }
+
+                if (promotionTeam === 'away') {
+                    homeWins = false;
+                    awayWins = true;
+                }
+            } else {
+                if (homeScore > awayScore) {
+                    homeWins = true;
+                    awayWins = false;
+                }
+                if (homeScore < awayScore) {
+                    homeWins = false;
+                    awayWins = true;
+                }
+            }
+        }
+
+        this.props.save({homeScore, awayScore, homeWins, awayWins});
     },
 
     checkInputValue(value) {
@@ -70,11 +118,20 @@ const BetDialog = React.createClass({
         return this.checkInputValue(value) && this.setState({awayScore: value});
     },
 
+    onPromotionChange({target: {value: promotionTeam}}) {
+        this.setState({promotionTeam});
+    },
+
+    isDraw() {
+        return this.state.homeScore !== null &&
+            this.state.homeScore !== undefined &&
+            Number(this.state.homeScore) === Number(this.state.awayScore);
+    },
 
     render() {
         const {shown, game, status, intl, message={}} = this.props;
         const creating = status ? status.creating : false;
-        const {homeScore, awayScore} = this.state;
+        const {homeScore, awayScore, promotionTeam} = this.state;
         const errorCode =
             message.kind ||
             message.homeScore && message.homeScore.kind ||
@@ -118,6 +175,22 @@ const BetDialog = React.createClass({
                         </div>
                         <div className={`bet-dialog__flag flag_${game.awayTeamName.replace(/ /g,'')}`} />
                     </div>
+                    {game.matchday > GROUP_GAMES &&
+                        <div className={b('bet-dialog', 'promotion', {shown: this.isDraw()})}>
+                            <h3><FormattedMessage id="BetDialog.teamToPromote" /></h3>
+                            <RadioButtonGroup
+                                name="promote"
+                                onChange={this.onPromotionChange}
+                                valueSelected={promotionTeam}>
+                                    <RadioButton
+                                        value="home"
+
+                                        label={intl.formatMessage({id: `Teams.name.${game.homeTeamName}`})} />
+                                    <RadioButton
+                                        value="away"
+                                        label={intl.formatMessage({id: `Teams.name.${game.awayTeamName}`})} />
+                            </RadioButtonGroup>
+                        </div>}
                     {errorCode &&
                         <div className="bet-dialog__error-message">
                             <FormattedMessage id={`BetDialog.error.${errorCode}`} />

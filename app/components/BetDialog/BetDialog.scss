@@ -98,4 +98,27 @@
 
         text-align: center;
     }
+
+    &__promotion
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scaleY(0);
+        height: 0;
+        transition: all .2s ease-out;
+        white-space: nowrap;
+
+        h3
+        {
+            margin: 4px 0 8px;
+        }
+
+
+        &_shown
+        {
+            height: 60px;
+            transform: scaleY(1);
+        }
+    }
 }

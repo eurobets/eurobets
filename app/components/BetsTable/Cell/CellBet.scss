@@ -38,6 +38,8 @@ $cellHeight: 40px;
 
     &__cell
     {
+        position: relative;
+
         &_bet
         {
             padding: 3px 0!important;
@@ -53,6 +55,35 @@ $cellHeight: 40px;
             {
                 color: #E57373;
 
+            }
+        }
+
+        &_to-promote
+        {
+            &_home, &_away
+            {
+                .bets-table__cell-content-bet .link:before
+                {
+                    position: absolute;
+                    content: '';
+                    font-size: 10px;
+                    width: 10px;
+                    height: 10px;
+                    background: url(./up.svg) no-repeat center center / cover;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                }
+            }
+
+            &_home .bets-table__cell-content-bet .link:before
+            {
+                left: -13px;
+            }
+
+            &_away .bets-table__cell-content-bet .link:before
+            {
+                right: -13px;
             }
         }
     }

@@ -5,6 +5,7 @@ export default {
     'BetDialog.error.noGame': 'Нет такого матча',
     'BetDialog.error.required': 'Счёт не проставлен',
 
+    'BetDialog.teamToPromote': 'Выберите победителя пары',
     'BetDialog.cancel': 'Отмена',
     'BetDialog.save': '{creating, select, true {Сохраняем…} other {Сохранить}}',
     'BetDialog.matchday': `{matchday, select, 

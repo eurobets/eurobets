@@ -64,11 +64,23 @@ const BetsTableCellBet = React.createClass({
         const showResult = points !== null && game.result.goalsHomeTeam !== null;
         const iCanDoSmthWithBet = me.id === userId && !game.started;
         const iCanCreateFirstBet = iCanDoSmthWithBet && !bet;
+        let toPromote;
+
+        if (showBet && bet.homeScore === bet.awayScore) {
+            if (bet.homeWins) {
+                toPromote = 'home';
+            }
+            if (bet.awayWins) {
+                toPromote = 'away';
+            }
+        }
+
         const className = b('bets-table', 'cell', {
             status: points > 0 ? 'success' : 'fail',
             actual: game.actual,
             bet: true,
             started: game.started,
+            'to-promote': toPromote,
             'fucked-up': game.started && (points === null || points === undefined),
             'hidden-bet': !!bet && typeof bet.homeScore !== 'number'
         });
