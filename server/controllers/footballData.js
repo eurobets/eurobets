@@ -63,6 +63,20 @@ function getFixturesRequest(callback) {
                     //     game.result.goalsAwayTeam = Math.floor(Math.random() * 4);
                     // }
 
+                    const extraTime = game.result.extraTime;
+
+                    // Это большой хак. Данные приходят в таком виде, что невозможно определить счёт в основное время
+                    // Здесь всё пойдёт пиздой, если в дополнительное время каждая из команд забьёт.
+                    // Когда и если это случится, придётся что-то придумывать. Возможно, придётся искать другое апи
+                    // или просто костылить.
+
+                    if (extraTime && extraTime.goalsHomeTeam !== extraTime.goalsAwayTeam) {
+                        const minExtraTime = Math.min(extraTime.goalsHomeTeam, extraTime.goalsAwayTeam);
+
+                         game.result.goalsHomeTeam = minExtraTime;
+                         game.result.goalsAwayTeam = minExtraTime;
+                    }
+
                     game = Object.assign({}, game, getWinner(game.result));
 
                     return Object.assign(
