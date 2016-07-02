@@ -109,7 +109,7 @@ const Games = React.createClass({
                                         key={room._id}
                                         mix="games__cell-bet"
                                         userId={user.id}
-                                        points={bet.result && getGamePoints(bet.result, room.rules.points)}
+                                        points={bet.result && getGamePoints(bet.result, room.rules.points, game.matchday)}
                                         room={room}
                                         game={game} />
                                 )
