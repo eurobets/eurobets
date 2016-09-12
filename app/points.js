@@ -5,6 +5,7 @@ const NOT_FINAL_GAMES = 5;
 
 function getGamePoints(result, rules, matchday) {
     let points = 0;
+
     const coefficient = matchday > NOT_FINAL_GAMES && rules.finalsCoefficient
         ? rules.finalsCoefficient
         : 1;
