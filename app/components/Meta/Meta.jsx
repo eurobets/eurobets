@@ -4,17 +4,12 @@ import Helmet from 'react-helmet';
 
 import config from 'helmconfig.js';
 
-class Meta extends React.Component {
-  render() {
-    return (
-      <Helmet
+const Meta = () => (
+    <Helmet
         title="Eurobets"
         meta={config.meta}
-        link={config.link}
-      />
-    );
-  }
-}
+        link={config.link} />
+);
 
 ReactDOMServer.renderToString(<Meta />);
 let header = Helmet.rewind();

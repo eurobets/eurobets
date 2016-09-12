@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Provider } from 'react-redux';
 import createRoutes from 'routes.jsx';
 import configureStore from 'store/configureStore';
-import headconfig from 'components/Meta';
+import headconfig from 'components/Meta/Meta';
 import { fetchComponentDataBeforeRender } from 'api/fetchComponentDataBeforeRender';
 
 const clientConfig = {
