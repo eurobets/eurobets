@@ -1,8 +1,15 @@
 'use strict';
 
 const request = require('request');
-const NodeCache = require( "node-cache" );
+const NodeCache = require('node-cache');
 const myCache = new NodeCache({stdTTL: 20});
+
+const TOURNAMENT = 440; // UEFA Champions League, TODO: move to room attributes
+
+const endpoints = {
+    fixtures: '/soccerseasons/' + TOURNAMENT + '/fixtures/',
+    teams: '/soccerseasons/' + TOURNAMENT + '/teams/'
+};
 
 const options = {
     baseUrl: 'http://api.football-data.org/v1/',
@@ -50,7 +57,7 @@ function getResult(homeGoals, awayGoals) {
 }
 
 function getFixturesRequest(callback) {
-    options.url = '/soccerseasons/424/fixtures/';
+    options.url = endpoints.fixtures;
 
     myCache.get(options.url, (err, data) => {
         if (data === undefined) {
@@ -88,7 +95,7 @@ exports.getFixtures = function(req, res) {
 };
 
 exports.getTeams = function(req, res) {
-    options.url = '/soccerseasons/424/teams/';
+    options.url = endpoints.teams;
 
     request(options, (error, response, body) => {
         if (!error && response.statusCode == 200) {

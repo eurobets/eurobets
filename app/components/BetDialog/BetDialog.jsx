@@ -157,9 +157,11 @@ const BetDialog = React.createClass({
                         </div>
                     </div>
                     <div className="bet-dialog__content">
-                        <div className={`bet-dialog__flag flag_${game.homeTeamName.replace(/ /g,'')}`} />
+                        <div className={`bet-dialog__flag flag_${game.homeTeamName.replace(/( |\.)/g,'')}`} />
                         <div className={b('bet-dialog', 'team-name', {home: true})}>
-                            <FormattedMessage id={`Teams.name.${game.homeTeamName}`} />
+                            <FormattedMessage
+                                defaultMessage={game.homeTeamName}
+                                id={`Teams.name.${game.homeTeamName}`} />
                         </div>
                         <input
                             onChange={this.onHomeChange}
@@ -171,9 +173,11 @@ const BetDialog = React.createClass({
                             value={awayScore}
                             className={b('bet-dialog', 'input', {away: true})} />
                         <div className={b('bet-dialog', 'team-name', {away: true})}>
-                            <FormattedMessage id={`Teams.name.${game.awayTeamName}`} />
+                            <FormattedMessage
+                                defaultMessage={game.awayTeamName}
+                                id={`Teams.name.${game.awayTeamName}`} />
                         </div>
-                        <div className={`bet-dialog__flag flag_${game.awayTeamName.replace(/ /g,'')}`} />
+                        <div className={`bet-dialog__flag flag_${game.awayTeamName.replace(/( |\.)/g,'')}`} />
                     </div>
                     {game.matchday > GROUP_GAMES &&
                         <div className={b('bet-dialog', 'promotion', {shown: this.isDraw()})}>
@@ -184,11 +188,16 @@ const BetDialog = React.createClass({
                                 valueSelected={promotionTeam}>
                                     <RadioButton
                                         value="home"
-
-                                        label={intl.formatMessage({id: `Teams.name.${game.homeTeamName}`})} />
+                                        label={intl.formatMessage({
+                                            defaultMessage: game.homeTeamName,
+                                            id: `Teams.name.${game.homeTeamName}`})
+                                        } />
                                     <RadioButton
                                         value="away"
-                                        label={intl.formatMessage({id: `Teams.name.${game.awayTeamName}`})} />
+                                        label={intl.formatMessage({
+                                            defaultMessage: game.awayTeamName,
+                                            id: `Teams.name.${game.awayTeamName}`})
+                                        } />
                             </RadioButtonGroup>
                         </div>}
                     {errorCode &&

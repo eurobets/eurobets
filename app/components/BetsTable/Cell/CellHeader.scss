@@ -79,11 +79,11 @@ $shadowWidth: 1px;
     &__flag
     {
         display: inline-block;
-        width: 20px;
-        height: 15px;
+        width: 28px;
+        height: 21px;
         background-size: cover;
         background-position: center;
-        box-shadow: 0 0 4px transparentize($colorBlack, .8);
+        box-shadow: none;
 
         &_loser
         {

@@ -122,7 +122,7 @@ const Room = React.createClass({
                                 score: rules.points.score,
                                 difference: rules.points.difference,
                                 result: rules.points.result,
-                                promotion: rules.points.promotion,
+                                promotion: rules.points.promotion || 0,
                                 finalsCoefficient: rules.points.finalsCoefficient
                                 }} />
                         </div>
