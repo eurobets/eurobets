@@ -3,7 +3,6 @@
  */
 const express = require('express');
 const bets = require('../controllers/bets');
-const topics = require('../controllers/topics');
 const users = require('../controllers/users');
 const rooms = require('../controllers/rooms');
 const footballData = require('../controllers/footballData');
@@ -22,7 +21,6 @@ module.exports = function(app, passport) {
     app.post('/api/rooms', rooms.create);
     app.patch('/api/rooms/code/', rooms.addToGroupByCode);
     app.get('/api/rooms/:id', rooms.get);
-    app.put('/api/rooms/:id', rooms.update);
     app.patch('/api/rooms/:id/change_me', rooms.changeMe);
     app.patch('/api/rooms/:id/remove_me', rooms.removeMe);
     app.patch('/api/rooms/:id/remove_user', rooms.removeUser);
@@ -53,12 +51,6 @@ module.exports = function(app, passport) {
             successRedirect: '/dashboard',
             failureRedirect: '/'
         }));
-
-    // topic routes
-    app.get('/topic', topics.all);
-    app.post('/topic/:id', (req, res) => topics.add(req, res));
-    app.put('/topic/:id', (req, res) => topics.update(req, res));
-    app.delete('/topic/:id', (req, res) => topics.remove(req, res));
 
     // This is where the magic happens. We take the locals data we have already
     // fetched and seed our stores with data.

@@ -128,15 +128,6 @@ exports.changeMe = function(req, res) {
     });
 };
 
-exports.update = function(req, res) {
-    // var query = { id: req.params.id };
-    //
-    // Room.findOneAndUpdate(query, req.body, (err, data) => {
-    //     if(err) console.log('Error on delete');
-    //     res.status(200).send('Updated Successfully');
-    // });
-};
-
 exports.addBot = function(req, res) {
     User
         .findOne({bot: req.body.bot})
@@ -179,9 +170,4 @@ exports.addToGroupByCode = function(req, res) {
             return getAll(req, res);
         });
     });
-
-    // Room.findOneAndUpdate(query, req.body, (err, data) => {
-    //     if(err) console.log('Error on delete');
-    //     res.status(200).send('Updated Successfully');
-    // });
 };
