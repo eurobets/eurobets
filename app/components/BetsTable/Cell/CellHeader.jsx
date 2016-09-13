@@ -35,9 +35,13 @@ const BetsTableCellHeader = React.createClass({
             <div className={b('bets-table', 'cell', {header: true, actual, live: status === 'IN_PLAY'})}>
                 <div className={b('bets-table', 'cell-header-teams-popup')}>
                     <div>
-                        <FormattedMessage id={`Teams.name.${game.homeTeamName}`}/>
+                        <FormattedMessage
+                            defaultMessage={game.homeTeamName}
+                            id={`Teams.name.${game.homeTeamName}`} />
                         &nbsp;–&nbsp;
-                        <FormattedMessage id={`Teams.name.${game.awayTeamName}`}/>
+                        <FormattedMessage
+                            defaultMessage={game.awayTeamName}
+                            id={`Teams.name.${game.awayTeamName}`} />
                     </div>
                     <div className={b('bets-table', 'cell-header-teams-popup-date')}>
                         {intl.formatTime(game.date, TIME_FORMAT)}
@@ -45,13 +49,13 @@ const BetsTableCellHeader = React.createClass({
                 </div>
                 <div className="bets-table__cell-header-teams">
                     <div
-                        className={`${homeClassName} flag_${home.replace(/ /g,'')}`} />
+                        className={`${homeClassName} flag_${home.replace(/( |\.)/g,'')}`} />
                     <div className="bets-table__cell-header-vs">
                         {result.goalsHomeTeam !== null ? result.goalsHomeTeam : '-'}
                         {' : '}
                         {result.goalsAwayTeam !== null ? result.goalsAwayTeam : '-'}
                     </div>
-                    <div className={`${awayClassName} flag_${away.replace(/ /g,'')}`} />
+                    <div className={`${awayClassName} flag_${away.replace(/( |\.)/g,'')}`} />
                 </div>
             </div>
         );

@@ -1,7 +1,7 @@
 'use strict';
 
-const GROUP_GAMES = 3;
-const NOT_FINAL_GAMES = 5;
+const GROUP_GAMES = 96; // TODO: внести в настройки турнира
+const NOT_FINAL_GAMES = 120; // TODO: внести в настройки турнира
 
 function getGamePoints(result, rules, matchday) {
     let points = 0;
@@ -11,6 +11,7 @@ function getGamePoints(result, rules, matchday) {
         : 1;
 
     // в плей-офф можно получить дополнительные очки за проход дальше
+
     if (matchday > GROUP_GAMES && result.correctPromotion && rules.promotion) {
         points += rules.promotion;
     }
@@ -69,7 +70,7 @@ function getTrololoPoints(trololo, points, gamesMaxPoints, rules, games) {
                 gameMaxPoints *= rules.points.finalsCoefficient;
             }
 
-            points[trololo._id][game.id] = game.started ? gameMaxPoints - gamesMaxPoints[game.id] : null;
+            points[trololo._id][game.id] = game.started ? gameMaxPoints - (gamesMaxPoints[game.id] || 0) : null;
         })
     }
 

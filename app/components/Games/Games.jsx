@@ -1,13 +1,12 @@
 import b from 'b_';
 import React from 'react';
 import { connect } from 'react-redux';
-import {FormattedMessage, FormattedHTMLMessage, injectIntl} from 'react-intl';
+import {FormattedMessage, injectIntl} from 'react-intl';
 
 import Spin from '../Spin/Spin.jsx';
 import { getGamePoints } from '../../points';
 import Link from '../Link/Link.jsx';
 import CellBet from '../BetsTable/Cell/CellBet.jsx';
-import { getGames } from '../../actions/games';
 import { getMyBets } from '../../actions/bets';
 
 import './Games.scss';
@@ -31,9 +30,7 @@ const Games = React.createClass({
     },
 
     componentDidMount() {
-        const {params, dispatch} = this.props;
-
-        dispatch(getMyBets());
+        this.props.dispatch(getMyBets());
     },
 
     toggleOld() {
@@ -77,11 +74,15 @@ const Games = React.createClass({
                             </div>
                             <div className="games__cell games__cell-teams">
                                 <span className={homeClassName}>
-                                    <FormattedMessage id={`Teams.name.${game.homeTeamName}`}/>
+                                    <FormattedMessage
+                                        defaultMessage={game.homeTeamName}
+                                        id={`Teams.name.${game.homeTeamName}`}/>
                                 </span>
                                 &nbsp;–&nbsp;
                                 <span className={awayClassName}>
-                                    <FormattedMessage id={`Teams.name.${game.awayTeamName}`}/>
+                                    <FormattedMessage
+                                        defaultMessage={game.awayTeamName}
+                                        id={`Teams.name.${game.awayTeamName}`}/>
                                 </span>
                             </div>
                             <div className="games__cell games__cell-score">

@@ -58,7 +58,7 @@ const GameWrapper = React.createClass({
     },
 
     render() {
-        const {rooms, intl, loading, message} = this.props;
+        const {rooms, intl, message} = this.props;
 
         if (!rooms) {
             return <Spin center />;
@@ -67,8 +67,8 @@ const GameWrapper = React.createClass({
         let {adding, code} = this.state;
         const codeError = _.get(message, ['code', 'kind']);
         const norooms = rooms.length === 0;
-        adding = adding || norooms;
         const isDashboard = this.context.router.isActive('dashboard');
+        adding = adding || norooms;
 
         return (
             <div className="game-wrapper">
