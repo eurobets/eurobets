@@ -1,7 +1,7 @@
 {
-  "name": "react-webpack-node",
-  "version": "1.4.5",
-  "description": "A simple Node.js app using Express 4 with Webpack, React, alt, ImmutableJS",
+  "name": "eurobets",
+  "version": "1.0.0",
+  "description": "Betting service for old good friend",
   "repository": "https://github.com/choonkending/react-webpack-node",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "test:watch": "NODE_ENV=test npm test -- --watch --no-single-run",
     "postinstall": "npm run build"
   },
-  "author": "Choon Ken Ding",
+  "author": "Alexey Gerasimenko",
   "license": "MIT",
   "devDependencies": {
     "expect": "^1.13.4",
