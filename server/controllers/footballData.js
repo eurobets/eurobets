@@ -4,7 +4,7 @@ const request = require('request');
 const NodeCache = require('node-cache');
 const myCache = new NodeCache({stdTTL: 20});
 
-const TOURNAMENT = 440; // UEFA Champions League, TODO: move to room attributes
+const TOURNAMENT = 467; // WC 2018, TODO: move to room attributes
 
 const endpoints = {
     fixtures: '/soccerseasons/' + TOURNAMENT + '/fixtures/',
