@@ -190,5 +190,5 @@ export default {
     'Teams.name.Colombia': 'Колумбия',
     'Teams.name.Japan': 'Япония',
     'Teams.name.Senegal': 'Сенегал',
-    'Teams.name.': '?',
-}
+    'Teams.name.': '?'
+};
