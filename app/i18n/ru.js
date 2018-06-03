@@ -170,6 +170,7 @@ export default {
     'Teams.name.Hungary': 'Венгрия',
     'Teams.name.Portugal': 'Португалия',
     'Teams.name.Iceland': 'Исландия',
+
     'Teams.name.Saudi Arabia': 'Саудовская Аравия',
     'Teams.name.Egypt': 'Египет',
     'Teams.name.Uruguay': 'Уругвай',

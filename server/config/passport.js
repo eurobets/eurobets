@@ -1,7 +1,6 @@
 /* Initializing passport.js */
 var User = require('../models/user');
 var local = require('./passport/local');
-var google = require('./passport/google');
 
 /*
  * Expose
@@ -26,5 +25,7 @@ module.exports = function(app, passport, config) {
 
     //use the following strategies
     passport.use(local);
-    passport.use(google);
+    if (process.env.NODE_ENV === 'production') {
+        passport.use(require('./passport/google'));
+    }
 };
