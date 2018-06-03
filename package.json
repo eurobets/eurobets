@@ -73,6 +73,7 @@
     "extract-text-webpack-plugin": "^0.8.1",
     "file-loader": "^0.8.4",
     "helmet": "^0.15.0",
+    "heroku-ssl-redirect": "0.0.4",
     "immutable": "^3.7.4",
     "inline-environment-variables-webpack-plugin": "0.0.2",
     "intl": "^1.1.0",

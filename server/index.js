@@ -7,7 +7,9 @@ const webpack = require('webpack');
 const app = express();
 const mongo_express = require('mongo-express/lib/middleware');
 const mongo_express_config = require('./config/mongo-express');
+const sslRedirect = require('heroku-ssl-redirect');
 
+app.use(sslRedirect());
 app.use('/admin', mongo_express(mongo_express_config));
 
 // Find the appropriate database to connect to, default to localhost if not found.
