@@ -142,7 +142,7 @@ export default {
         будет проходить турнир. Выберите, сколько очков в каком случае получат игроки, на что играем и т.п.`,
     'RoomCreate.pointsScheme': 'Схема начисления очков',
     'RoomCreate.required': 'Поле необходимо заполнить',
-
+    'RoomCreate.finalsCoefficient': 'Коэффициент на 1/2 и финал',
     'RoomMain.overallPlayers': '{players} {players, plural, one {игрок} few {игрока} other {игроков}}',
     'RoomMain.iAmFree': 'Вы играете бесплатно и не участвуете в распределении банка. ',
 

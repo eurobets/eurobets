@@ -34,8 +34,9 @@ const RoomCreate = React.createClass({
             correctScorePoints: 5,
             correctDifferencePoints: 3,
             correctResultPoints: 2,
-            promotionPoints: 1
-        }
+            promotionPoints: 1,
+            finalsCoefficient: 1
+        };
     },
 
     onSubmit(e) {
@@ -50,6 +51,7 @@ const RoomCreate = React.createClass({
             correctDifferencePoints,
             correctScorePoints,
             promotionPoints,
+            finalsCoefficient,
             free
         } = this.state;
         const charge = !free && {
@@ -62,6 +64,7 @@ const RoomCreate = React.createClass({
             rules: {
                 free,
                 points: {
+                    finalsCoefficient,
                     score: correctScorePoints,
                     difference: correctDifferencePoints,
                     result: correctResultPoints,
@@ -85,6 +88,7 @@ const RoomCreate = React.createClass({
             correctDifferencePoints,
             correctScorePoints,
             promotionPoints,
+            finalsCoefficient,
             free
         } = this.state;
 
@@ -92,6 +96,7 @@ const RoomCreate = React.createClass({
         const scoreError = _.get(message, ['rules.points.score', 'kind']);
         const resultError = _.get(message, ['rules.points.result', 'kind']);
         const differenceError = _.get(message, ['rules.points.difference', 'kind']);
+        const coefficientError = _.get(message, ['rules.points.finalsCoefficient', 'kind']);
         const promotionError = _.get(message, ['rules.points.promotion', 'kind']);
         const chargeValueError = _.get(message, ['rules.charge.value', 'kind']);
 
@@ -144,6 +149,12 @@ const RoomCreate = React.createClass({
                                 mix='room-create__input'
                                 onChange={e => this.setState({promotionPoints: e.target.value})}
                                 floatingLabelText={formatMessage({id: 'RoomCreate.promotionPoints'})} />
+                            <Input
+                                type="number"
+                                value={finalsCoefficient}
+                                errorText={coefficientError && formatMessage({id: `RoomCreate.${coefficientError}`})}
+                                onChange={e => this.setState({finalsCoefficient: e.target.value})}
+                                floatingLabelText={formatMessage({id: 'RoomCreate.finalsCoefficient'})} />
                         </div>
                         <div className="room-create__charge">
                             <h2>{formatMessage({id: 'RoomCreate.whatFor'})}</h2>
