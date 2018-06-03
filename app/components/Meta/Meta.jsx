@@ -6,7 +6,7 @@ import config from 'helmconfig.js';
 
 const Meta = () => (
     <Helmet
-        title="Eurobets"
+        title="World Cup 2018"
         meta={config.meta}
         link={config.link} />
 );

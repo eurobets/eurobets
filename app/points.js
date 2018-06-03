@@ -1,12 +1,12 @@
 'use strict';
 
 const GROUP_GAMES = 3; // TODO: внести в настройки турнира
-const NOT_FINAL_GAMES = 7; // TODO: внести в настройки турнира
+const FINAL_GAMES = [6, 8]; // TODO: внести в настройки турнира
 
 function getGamePoints(result, rules, matchday) {
     let points = 0;
 
-    const coefficient = matchday > NOT_FINAL_GAMES && rules.finalsCoefficient
+    const coefficient = FINAL_GAMES.includes(matchday) && rules.finalsCoefficient
         ? rules.finalsCoefficient
         : 1;
 

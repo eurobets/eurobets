@@ -64,8 +64,8 @@ const Games = React.createClass({
                     ))}
                 </div>
                 {games.map((game, index) => {
-                    const homeClassName = b('games', 'team', {winner: game.homeWins, loser: game.awayWins});
-                    const awayClassName = b('games', 'team', {winner: game.awayWins, loser: game.homeWins});
+                    const homeClassName = b('games', 'team', { winner: game.homeWins, loser: game.awayWins});
+                    const awayClassName = b('games', 'team', { winner: game.awayWins, loser: game.homeWins});
                     const hidden = hideOld && index < oldGamesNumber;
                     return (
                         <div className={b('games', 'row', {hidden})} key={game.id}>

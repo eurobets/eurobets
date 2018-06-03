@@ -26,7 +26,7 @@ const Navigation = React.createClass({
                 <Link
                     to="/"
                     className={b('navigation', 'item', {logo: true})}
-                    activeClassName={b('navigation', 'item', {logo: true, active: true})}>Eurobets</Link>
+                    activeClassName={b('navigation', 'item', {logo: true, active: true})}>World Cup 2018</Link>
                 {user.authenticated
                     ? <Link
                         onClick={(e) => {

@@ -111,9 +111,9 @@ const BetsTable = React.createClass({
                 <div className="bets-table__main-table-wrapper">
                     <div className="bets-table__main-table">
                         <div className="bets-table__row">
-                            {games.map(game => (
+                            {games.map((game, index) => (
                                 <CellHeader
-                                    key={`${game.matchday}_${game.homeTeamName}_${game.awayTeamName}`}
+                                    key={`${game.matchday}_${game.homeTeamName}_${game.awayTeamName}_${index}`}
                                     game={game} />
                             ))}
                         </div>

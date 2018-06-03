@@ -6,7 +6,7 @@ import './Logo.scss';
 const Logo = React.createClass({
     render() {
         return (
-            <span className={b('logo', {theme: this.props.theme})}>Eurobets</span>
+            <span className={b('logo', {theme: this.props.theme})}>World Cup 2018</span>
         );
     }
 });
