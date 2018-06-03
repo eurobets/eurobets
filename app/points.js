@@ -66,7 +66,7 @@ function getTrololoPoints(trololo, points, gamesMaxPoints, rules, games) {
             }
 
             // в полуфинале и финале очки домножаются на коэффициент
-            if (game.matchday > NOT_FINAL_GAMES && rules.points.finalsCoefficient) {
+            if (FINAL_GAMES.includes(game.matchday) && rules.points.finalsCoefficient) {
                 gameMaxPoints *= rules.points.finalsCoefficient;
             }
 
@@ -82,5 +82,5 @@ export {
     getOverallPoints,
     getTrololoPoints,
     GROUP_GAMES,
-    NOT_FINAL_GAMES
-}
+    FINAL_GAMES
+};
