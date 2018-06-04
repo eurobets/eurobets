@@ -18,7 +18,8 @@ const RoomSchema = new mongoose.Schema({
         },
         charge: {
             value: {type: Number},
-            currency: {type: String}
+            currency: {type: String},
+            hosting: {type: Number}
         }
     }
 });
