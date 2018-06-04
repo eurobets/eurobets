@@ -113,7 +113,8 @@ const Room = React.createClass({
                             <FormattedHTMLMessage id="Room.overallBank" values={{
                                 fee: rules.charge && rules.charge.value,
                                 currency: rules.charge && rules.charge.currency,
-                                value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length}`
+                                hosting: rules.points.hosting || 0,
+                                value: `${(rules.charge && rules.charge.value || 0) * chargeUsers.length - (rules.charge.hosting || 0)}`
                             }} />}
                         </div>
 
@@ -123,7 +124,7 @@ const Room = React.createClass({
                                 difference: rules.points.difference,
                                 result: rules.points.result,
                                 promotion: rules.points.promotion || 0,
-                                finalsCoefficient: rules.points.finalsCoefficient
+                                finalsCoefficient: rules.points.finalsCoefficient,
                                 }} />
                         </div>
                     </div>

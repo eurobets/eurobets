@@ -12,13 +12,11 @@ export default {
         1 {1 круг}
         2 {2 круг}
         3 {3 круг}
-        4 {4 круг}
-        5 {5 круг}
-        6 {6 круг}
-        7 {1/8 финала}
-        8 {Четвертьфинал}
-        9 {Полуфинал}
-        10 {Финал}
+        4 {1/8 финала}
+        5 {Четвертьфинал}
+        6 {Полуфинал}
+        7 {Матч за 3 место}
+        8 {Финал}
     }`,
 
     'BetsTable.points': 'Очки',
@@ -112,14 +110,21 @@ export default {
         snickers {{value, plural, one {сникерс} few {сникерса} other {сникерсов}}}
         beer {{value, plural, one {пиво} few {пива} other {пив}}}
         other {}
-    }</b>, взнос <b>{fee} {currency, select,
+    }</b>: взнос <b>{fee} {currency, select,
         RUB {{fee, plural, one {рубль} few {рубля} other {рублей}}}
         USD {{fee, plural, one {доллар} few {доллара} other {долларов}}}
         EUR {евро}
         snickers {{fee, plural, one {сникерс} few {сникерса} other {сникерсов}}}
         beer {{fee, plural, one {пиво} few {пива} other {пив}}}
         other {}
-    }</b>`,
+    }</b>{hosting, select, 0 { } other {, хостинг <b>-{hosting} {currency, select,
+        RUB {{hosting, plural, one {рубль} few {рубля} other {рублей}}}
+        USD {{hosting, plural, one {доллар} few {доллара} other {долларов}}}
+        EUR {евро}
+        snickers {{hosting, plural, one {сникерс} few {сникерса} other {сникерсов}}}
+        beer {{hosting, plural, one {пиво} few {пива} other {пив}}}
+        other {}
+    }</b>}}`,
 
     'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>
         {promotion, select, 0 { } other {</br>победа в плей-офф: <b>+{promotion}</b>}}
