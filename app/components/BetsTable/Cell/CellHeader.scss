@@ -83,7 +83,7 @@ $shadowWidth: 1px;
         height: 21px;
         background-size: cover;
         background-position: center;
-        box-shadow: none;
+        box-shadow: 0 0 2px rgba(0,0,0, 0.3);
 
         &_loser
         {
