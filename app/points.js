@@ -1,7 +1,7 @@
 'use strict';
 
 const GROUP_GAMES = 3; // TODO: внести в настройки турнира
-const FINAL_GAMES = [6, 8]; // TODO: внести в настройки турнира
+const FINAL_GAMES = [4, 5, 6, 7, 8]; // TODO: внести в настройки турнира
 
 function getGamePoints(result, rules, matchday) {
     let points = 0;

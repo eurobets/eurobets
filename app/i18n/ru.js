@@ -128,7 +128,7 @@ export default {
 
     'Room.rules': `Счёт — <b>{score}</b>, разница — <b>{difference}</b>, исход — <b>{result}</b>
         {promotion, select, 0 { } other {</br>победа в плей-офф: <b>+{promotion}</b>}}
-        {finalsCoefficient, select, 1 {} other {</br>очки в полуфинале и финале: <b>×{finalsCoefficient}</b>}}`,
+        {finalsCoefficient, select, 1 {} other {</br>очки в плей-офф: <b>×{finalsCoefficient}</b>}}`,
 
 
     'RoomCreate.chargeValue': 'Цена участия',
@@ -147,7 +147,7 @@ export default {
         будет проходить турнир. Выберите, сколько очков в каком случае получат игроки, на что играем и т.п.`,
     'RoomCreate.pointsScheme': 'Схема начисления очков',
     'RoomCreate.required': 'Поле необходимо заполнить',
-    'RoomCreate.finalsCoefficient': 'Коэффициент на 1/2 и финал',
+    'RoomCreate.finalsCoefficient': 'Коэффициент на плей-офф',
     'RoomMain.overallPlayers': '{players} {players, plural, one {игрок} few {игрока} other {игроков}}',
     'RoomMain.iAmFree': 'Вы играете бесплатно и не участвуете в распределении банка. ',
 
