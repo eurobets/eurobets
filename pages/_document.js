@@ -5,7 +5,7 @@ import { globalSheet } from '../styles/globals';
 export default class JssDocument extends Document {
   static async getInitialProps(ctx) {
     const registry = new SheetsRegistry();
-    registry.add(sheet);
+    registry.add(globalSheet);
     const generateId = createGenerateId();
     const originalRenderPage = ctx.renderPage;
     ctx.renderPage = () =>
