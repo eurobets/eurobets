@@ -1,11 +1,13 @@
 import Document from 'next/document'
-import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss'
+import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss';
+import { globalSheet } from '../styles/globals';
 
 export default class JssDocument extends Document {
   static async getInitialProps(ctx) {
-    const registry = new SheetsRegistry()
-    const generateId = createGenerateId()
-    const originalRenderPage = ctx.renderPage
+    const registry = new SheetsRegistry();
+    registry.add(sheet);
+    const generateId = createGenerateId();
+    const originalRenderPage = ctx.renderPage;
     ctx.renderPage = () =>
       originalRenderPage({
         enhanceApp: (App) => (props) => (
@@ -13,8 +15,8 @@ export default class JssDocument extends Document {
             <App {...props} />
           </JssProvider>
         ),
-      })
-    const initialProps = await Document.getInitialProps(ctx)
+      });
+    const initialProps = await Document.getInitialProps(ctx);
 
     return {
       ...initialProps,

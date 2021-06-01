@@ -1,9 +1,9 @@
 import jss from 'jss';
 import preset from 'jss-preset-default';
 
-jss.setup(preset())
+jss.setup(preset());
 
-jss.createStyleSheet({
+export const globalSheet = jss.createStyleSheet({
   '@import': 'url(https://fonts.googleapis.com/css?family=Oswald|Roboto:300&subset=latin,cyrillic)',
   '@global': {
       body: {
@@ -16,4 +16,6 @@ jss.createStyleSheet({
       }
     }
   }
-).attach();
+);
+
+globalSheet.attach();
