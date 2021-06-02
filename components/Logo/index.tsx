@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { fontFamilyOswald } from '../../styles/constants';
 
 interface Props {
-  className: string;
+  className?: string;
 }
 
 const useStyles = createUseStyles({

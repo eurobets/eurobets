@@ -1,7 +1,12 @@
 import App from 'next/app';
 import '../styles/globals';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import Amplify from 'aws-amplify';
+import awsExports from '../aws-exports';
+Amplify.configure(awsExports);
 
-export default class MyApp extends App {
+
+class MyApp extends App {
   componentDidMount() {
     const style = document.getElementById('server-side-styles')
 
@@ -10,3 +15,5 @@ export default class MyApp extends App {
     }
   }
 }
+
+export default withAuthenticator(MyApp);

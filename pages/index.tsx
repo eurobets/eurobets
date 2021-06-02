@@ -1,39 +1,35 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import {createUseStyles} from 'react-jss';
-import { materialLightBlue500, materialLightBlue900 } from '../styles/constants';
-import Logo from '../components/Logo/Logo';
+import { createUseStyles } from 'react-jss';
+import { useEffect } from 'react';
+import Layout from '../components/Layout';
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { listRooms } from '../graphql/queries';
 
 const useStyles = createUseStyles({
   container: {
-    minHeight: '100vh',
-    height: '100vh',
-    display: 'flex',
-    flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    background: `linear-gradient(135deg, ${materialLightBlue500} 0%, ${materialLightBlue900} 100%)`
   },
-  logo: {
-    letterSpacing: '2px',
-    fontSize: '40px',
-  }
 });
 
-
-const Home = () => {
+const Index = () => {
   const classes = useStyles();
+  useEffect(() => {
+    fetchRooms();
+  }, [])
+
+  async function fetchRooms() {
+    try {
+      // @ts-ignore
+      const { data: { listRooms: { items } } } = await API.graphql(graphqlOperation(listRooms));
+      //const todos = roomsData.data.listRooms.items
+
+      console.log(items);
+    } catch (err) { console.log('error fetching todos', err) }
+  }
+
   return (
-    <div className={classes.container}>
-      <Head>
-        <title>Euro 2020 Bets</title>
-        <meta name="description" content="The betting tool" />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      <Logo className={classes.logo} />
-    </div>
+    <Layout>
+      <div>dashboard</div>
+    </Layout>
   )
 }
 
-export default Home;
+export default Index;

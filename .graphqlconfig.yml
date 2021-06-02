@@ -1,0 +1,12 @@
+projects:
+  eurobets:
+    schemaPath: graphql/schema.json
+    includes:
+      - graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: graphql
