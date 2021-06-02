@@ -1,0 +1,28 @@
+type User @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  room: [Room] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Room @model @key(name: "byUser", fields: ["userId"]) {
+  id: ID!
+  name: String!
+  userId: ID!
+  user: User @connection(fields: ["userId"])
+  bets: [Bet] @connection(keyName: "byRoom", fields: ["id"])
+}
+
+type Bet @model @key(name: "byRoom", fields: ["roomId"]) {
+  id: ID!
+  roomId: ID!
+  userId: ID!
+  game: String!
+  room: Room @connection(fields: ["roomId"])
+  user: User @connection(fields: ["userId"])
+  homeScore: Int!
+  awayScore: Int!
+  homeWins: Boolean
+  awayWins: Boolean
+}
