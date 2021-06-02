@@ -1,9 +1,9 @@
 import App from 'next/app';
 import '../styles/globals';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import Amplify from 'aws-amplify';
-import awsExports from '../src/aws-exports';
-Amplify.configure(awsExports);
+// import { withAuthenticator } from '@aws-amplify/ui-react';
+// import Amplify from 'aws-amplify';
+// import awsExports from '../src/aws-exports';
+// Amplify.configure(awsExports);
 
 class MyApp extends App {
   componentDidMount() {
@@ -15,4 +15,4 @@ class MyApp extends App {
   }
 }
 
-export default withAuthenticator(MyApp);
+export default MyApp
