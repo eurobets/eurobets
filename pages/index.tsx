@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 import { useEffect } from 'react';
 import Layout from '../components/Layout';
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { listRooms } from '../graphql/queries';
 
 const useStyles = createUseStyles({
