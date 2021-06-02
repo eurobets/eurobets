@@ -1,6 +1,6 @@
 {
   "name": "eurobets",
-  "version": "2.0.1",
+  "version": "2.0.4",
   "description": "Betting service for good old friends",
   "scripts": {
     "dev": "next dev",
