@@ -29,9 +29,7 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
   const [awayScore, setAway] = useState(bet.awayScore || 0);
   const [homeWins, setHomeWins] = useState(true);
   const [awayWins, setAwayWins] = useState(false);
-  const [alreadyThere, setAlreadyThere] = useState(false);
   const { query: { id } } = useRouter();
-  console.log(game);
   const isPlayoff = game.matchday >= 4;
 
   useEffect(() => {

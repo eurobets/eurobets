@@ -140,7 +140,7 @@ const RoomView = () => {
                         <TableCell key={game.id}>
                           <div
                             className={cx(classes.middleCellContent, userId === player.user.id && classes.myCell)}
-                            onClick={() => setBetDialog({ game, bet })}
+                            onClick={() => userId === player.user.id && setBetDialog({ game, bet })}
                           >
                             <BetCellContent bet={bet} />
                           </div>
