@@ -1,0 +1,43 @@
+{
+  "paths": [
+    {
+      "name": "/api/games",
+      "lambdaFunction": "eurobetsca4e1ec0",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/api/games"
+    },
+    {
+      "name": "/api/teams",
+      "lambdaFunction": "eurobetsca4e1ec0",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/api/teams"
+    }
+  ],
+  "resourceName": "api76081f40",
+  "apiName": "api76081f40",
+  "functionArns": [
+    {
+      "lambdaFunction": "eurobetsca4e1ec0"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-eurobets-dev-193407-authRole",
+    "unAuthRoleName": "amplify-eurobets-dev-193407-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "eurobetsca4e1ec0",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

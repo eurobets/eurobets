@@ -5,62 +5,24 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
+      username
+      email
       firstName
       lastName
-      email
-      room {
+      rooms {
         items {
           id
           name
           userId
+          playoffCoefficient
+          scorePoints
+          differencePoints
+          resultPoints
+          promotionPoints
           createdAt
           updatedAt
         }
         nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        firstName
-        lastName
-        email
-        room {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getRoom = /* GraphQL */ `
-  query GetRoom($id: ID!) {
-    getRoom(id: $id) {
-      id
-      name
-      userId
-      user {
-        id
-        firstName
-        lastName
-        email
-        room {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       bets {
         items {
@@ -82,6 +44,78 @@ export const getRoom = /* GraphQL */ `
     }
   }
 `;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        email
+        firstName
+        lastName
+        rooms {
+          nextToken
+        }
+        bets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getRoom = /* GraphQL */ `
+  query GetRoom($id: ID!) {
+    getRoom(id: $id) {
+      id
+      name
+      userId
+      owner {
+        id
+        username
+        email
+        firstName
+        lastName
+        rooms {
+          nextToken
+        }
+        bets {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      bets {
+        items {
+          id
+          roomId
+          userId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      playoffCoefficient
+      scorePoints
+      differencePoints
+      resultPoints
+      promotionPoints
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const listRooms = /* GraphQL */ `
   query ListRooms(
     $filter: ModelRoomFilterInput
@@ -93,17 +127,23 @@ export const listRooms = /* GraphQL */ `
         id
         name
         userId
-        user {
+        owner {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }
         bets {
           nextToken
         }
+        playoffCoefficient
+        scorePoints
+        differencePoints
+        resultPoints
+        promotionPoints
         createdAt
         updatedAt
       }
@@ -122,26 +162,36 @@ export const getBet = /* GraphQL */ `
         id
         name
         userId
-        user {
+        owner {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }
         bets {
           nextToken
         }
+        playoffCoefficient
+        scorePoints
+        differencePoints
+        resultPoints
+        promotionPoints
         createdAt
         updatedAt
       }
       user {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -172,14 +222,20 @@ export const listBets = /* GraphQL */ `
           id
           name
           userId
+          playoffCoefficient
+          scorePoints
+          differencePoints
+          resultPoints
+          promotionPoints
           createdAt
           updatedAt
         }
         user {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }

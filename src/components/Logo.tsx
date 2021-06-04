@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 
 import { createUseStyles } from 'react-jss';
-import { fontFamilyOswald } from '../../styles/constants';
+import { fontFamilyOswald } from '../styles/constants';
 
 interface Props {
   className?: string;

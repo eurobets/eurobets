@@ -1,20 +1,36 @@
-type User @model {
+type User @model
+{
   id: ID!
-  firstName: String!
-  lastName: String!
+  username: String!
   email: String!
-  room: [Room] @connection(keyName: "byUser", fields: ["id"])
+  firstName: String
+  lastName: String
+  rooms: [Room] @connection(keyName: "byUser", fields: ["id"])
+  bets: [Bet] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type Room @model @key(name: "byUser", fields: ["userId"]) {
+type Room
+@model
+@key(name: "byUser", fields: ["userId"])
+{
   id: ID!
   name: String!
   userId: ID!
-  user: User @connection(fields: ["userId"])
+  playerIds: [ID!]
+  owner: User @connection(fields: ["userId"])
   bets: [Bet] @connection(keyName: "byRoom", fields: ["id"])
+  players: [User],
+  playoffCoefficient: Int!,
+  scorePoints: Int!
+  differencePoints: Int!
+  resultPoints: Int!
+  promotionPoints: Int!
 }
 
-type Bet @model @key(name: "byRoom", fields: ["roomId"]) {
+type Bet
+@model
+@key(name: "byRoom", fields: ["roomId"])
+@key(name: "byUser", fields: ["userId"]) {
   id: ID!
   roomId: ID!
   userId: ID!

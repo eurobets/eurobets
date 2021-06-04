@@ -2,18 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 
-import Notification from '../Notification';
+import Notification from '../components/Notification';
 
-import Logo from '../Logo';
-import User from '../Logo';
-import { materialLightBlue900, materialLightBlue500, headerHeight, pageIndent } from '../../styles/constants';
+import Logo from '../components/Logo';
+import User from '../components/User';
+import { materialLightBlue900, materialLightBlue500, headerHeight, pageIndent } from '../styles/constants';
 
 interface Props {
   children: React.ReactNode;
   message?: string;
-  user?: {
-    authenticated: boolean;
-  };
 }
 
 const useStyles = createUseStyles({
@@ -34,7 +31,7 @@ const useStyles = createUseStyles({
     minHeight: headerHeight,
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'stretch',
+    alignItems: 'center',
     padding: [0, pageIndent],
   },
   logoWrapper: {
@@ -48,7 +45,7 @@ const useStyles = createUseStyles({
   }
 });
 
-const Layout = ({ children, message, user }: Props) => {
+const Layout = ({ children, message }: Props) => {
   const classes = useStyles();
 
   return (
@@ -61,7 +58,7 @@ const Layout = ({ children, message, user }: Props) => {
             </a>
           </Link>
         </div>
-        {user && user.authenticated && <User />}
+        <User />
       </div>
 
       {message && <Notification message={message} type="SUCCESS" />}

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 
 import { createUseStyles } from 'react-jss';
-import { materialGreen700, colorWhite } from '../../styles/constants';
+import { materialGreen700, colorWhite } from '../styles/constants';
 
 interface Props {
   message: string;

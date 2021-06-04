@@ -1,6 +1,6 @@
 import Document from 'next/document'
 import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss';
-import { globalSheet } from '../styles/globals';
+import { globalSheet } from '../src/styles/globals';
 
 export default class JssDocument extends Document {
   static async getInitialProps(ctx) {

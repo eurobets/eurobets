@@ -8,14 +8,35 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
+      username
+      email
       firstName
       lastName
-      email
-      room {
+      rooms {
         items {
           id
           name
           userId
+          playoffCoefficient
+          scorePoints
+          differencePoints
+          resultPoints
+          promotionPoints
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      bets {
+        items {
+          id
+          roomId
+          userId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
           createdAt
           updatedAt
         }
@@ -33,14 +54,35 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
+      username
+      email
       firstName
       lastName
-      email
-      room {
+      rooms {
         items {
           id
           name
           userId
+          playoffCoefficient
+          scorePoints
+          differencePoints
+          resultPoints
+          promotionPoints
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      bets {
+        items {
+          id
+          roomId
+          userId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
           createdAt
           updatedAt
         }
@@ -58,14 +100,35 @@ export const deleteUser = /* GraphQL */ `
   ) {
     deleteUser(input: $input, condition: $condition) {
       id
+      username
+      email
       firstName
       lastName
-      email
-      room {
+      rooms {
         items {
           id
           name
           userId
+          playoffCoefficient
+          scorePoints
+          differencePoints
+          resultPoints
+          promotionPoints
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      bets {
+        items {
+          id
+          roomId
+          userId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
           createdAt
           updatedAt
         }
@@ -85,12 +148,16 @@ export const createRoom = /* GraphQL */ `
       id
       name
       userId
-      user {
+      owner {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -111,6 +178,11 @@ export const createRoom = /* GraphQL */ `
         }
         nextToken
       }
+      playoffCoefficient
+      scorePoints
+      differencePoints
+      resultPoints
+      promotionPoints
       createdAt
       updatedAt
     }
@@ -125,12 +197,16 @@ export const updateRoom = /* GraphQL */ `
       id
       name
       userId
-      user {
+      owner {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -151,6 +227,11 @@ export const updateRoom = /* GraphQL */ `
         }
         nextToken
       }
+      playoffCoefficient
+      scorePoints
+      differencePoints
+      resultPoints
+      promotionPoints
       createdAt
       updatedAt
     }
@@ -165,12 +246,16 @@ export const deleteRoom = /* GraphQL */ `
       id
       name
       userId
-      user {
+      owner {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -191,6 +276,11 @@ export const deleteRoom = /* GraphQL */ `
         }
         nextToken
       }
+      playoffCoefficient
+      scorePoints
+      differencePoints
+      resultPoints
+      promotionPoints
       createdAt
       updatedAt
     }
@@ -210,26 +300,36 @@ export const createBet = /* GraphQL */ `
         id
         name
         userId
-        user {
+        owner {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }
         bets {
           nextToken
         }
+        playoffCoefficient
+        scorePoints
+        differencePoints
+        resultPoints
+        promotionPoints
         createdAt
         updatedAt
       }
       user {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -258,26 +358,36 @@ export const updateBet = /* GraphQL */ `
         id
         name
         userId
-        user {
+        owner {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }
         bets {
           nextToken
         }
+        playoffCoefficient
+        scorePoints
+        differencePoints
+        resultPoints
+        promotionPoints
         createdAt
         updatedAt
       }
       user {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
@@ -306,26 +416,36 @@ export const deleteBet = /* GraphQL */ `
         id
         name
         userId
-        user {
+        owner {
           id
+          username
+          email
           firstName
           lastName
-          email
           createdAt
           updatedAt
         }
         bets {
           nextToken
         }
+        playoffCoefficient
+        scorePoints
+        differencePoints
+        resultPoints
+        promotionPoints
         createdAt
         updatedAt
       }
       user {
         id
+        username
+        email
         firstName
         lastName
-        email
-        room {
+        rooms {
+          nextToken
+        }
+        bets {
           nextToken
         }
         createdAt
