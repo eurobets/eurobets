@@ -22,6 +22,8 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
   },
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     padding: [20, pageIndent],
     flexGrow: 1
   },

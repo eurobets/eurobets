@@ -5,8 +5,19 @@ type User @model
   email: String!
   firstName: String
   lastName: String
-  rooms: [Room] @connection(keyName: "byUser", fields: ["id"])
+  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
   bets: [Bet] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Player
+  @model(queries: null)
+  @key(name: "byRoom", fields: ["roomId", "userId"])
+  @key(name: "byPlayer", fields: ["userId", "roomId"]) {
+  id: ID!
+  roomId: ID!
+  userId: ID!
+  room: Room! @connection(fields: ["roomId"])
+  user: User! @connection(fields: ["userId"])
 }
 
 type Room
@@ -16,10 +27,9 @@ type Room
   id: ID!
   name: String!
   userId: ID!
-  playerIds: [ID!]
   owner: User @connection(fields: ["userId"])
   bets: [Bet] @connection(keyName: "byRoom", fields: ["id"])
-  players: [User],
+  players: [Player] @connection(keyName: "byRoom", fields: ["id"]),
   playoffCoefficient: Int!,
   scorePoints: Int!
   differencePoints: Int!
@@ -34,9 +44,7 @@ type Bet
   id: ID!
   roomId: ID!
   userId: ID!
-  game: String!
-  room: Room @connection(fields: ["roomId"])
-  user: User @connection(fields: ["userId"])
+  game: Int!
   homeScore: Int!
   awayScore: Int!
   homeWins: Boolean

@@ -1,8 +1,8 @@
-import Games from '../src/components/Games';
+import CreateRoom from '../src/components/CreateRoom';
 import { useRecoilState } from 'recoil';
 
-const Index = () => {
-  return <div />;
+const CreateRoomPage = () => {
+  return <CreateRoom />;
 }
 
-export default Index;
+export default CreateRoomPage;

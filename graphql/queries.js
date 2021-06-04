@@ -9,16 +9,53 @@ export const getUser = /* GraphQL */ `
       email
       firstName
       lastName
-      rooms {
+      players {
         items {
           id
-          name
+          roomId
           userId
-          playoffCoefficient
-          scorePoints
-          differencePoints
-          resultPoints
-          promotionPoints
+          room {
+            id
+            name
+            userId
+            owner {
+              id
+              username
+              email
+              firstName
+              lastName
+              createdAt
+              updatedAt
+            }
+            bets {
+              nextToken
+            }
+            players {
+              nextToken
+            }
+            playoffCoefficient
+            scorePoints
+            differencePoints
+            resultPoints
+            promotionPoints
+            createdAt
+            updatedAt
+          }
+          user {
+            id
+            username
+            email
+            firstName
+            lastName
+            players {
+              nextToken
+            }
+            bets {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -57,10 +94,50 @@ export const listUsers = /* GraphQL */ `
         email
         firstName
         lastName
-        rooms {
+        players {
+          items {
+            id
+            roomId
+            userId
+            room {
+              id
+              name
+              userId
+              playoffCoefficient
+              scorePoints
+              differencePoints
+              resultPoints
+              promotionPoints
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              firstName
+              lastName
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         bets {
+          items {
+            id
+            roomId
+            userId
+            game
+            homeScore
+            awayScore
+            homeWins
+            awayWins
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -82,10 +159,50 @@ export const getRoom = /* GraphQL */ `
         email
         firstName
         lastName
-        rooms {
+        players {
+          items {
+            id
+            roomId
+            userId
+            room {
+              id
+              name
+              userId
+              playoffCoefficient
+              scorePoints
+              differencePoints
+              resultPoints
+              promotionPoints
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              firstName
+              lastName
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         bets {
+          items {
+            id
+            roomId
+            userId
+            game
+            homeScore
+            awayScore
+            homeWins
+            awayWins
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -101,6 +218,58 @@ export const getRoom = /* GraphQL */ `
           awayScore
           homeWins
           awayWins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      players {
+        items {
+          id
+          roomId
+          userId
+          room {
+            id
+            name
+            userId
+            owner {
+              id
+              username
+              email
+              firstName
+              lastName
+              createdAt
+              updatedAt
+            }
+            bets {
+              nextToken
+            }
+            players {
+              nextToken
+            }
+            playoffCoefficient
+            scorePoints
+            differencePoints
+            resultPoints
+            promotionPoints
+            createdAt
+            updatedAt
+          }
+          user {
+            id
+            username
+            email
+            firstName
+            lastName
+            players {
+              nextToken
+            }
+            bets {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -133,10 +302,78 @@ export const listRooms = /* GraphQL */ `
           email
           firstName
           lastName
+          players {
+            items {
+              id
+              roomId
+              userId
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          bets {
+            items {
+              id
+              roomId
+              userId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
         bets {
+          items {
+            id
+            roomId
+            userId
+            game
+            homeScore
+            awayScore
+            homeWins
+            awayWins
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        players {
+          items {
+            id
+            roomId
+            userId
+            room {
+              id
+              name
+              userId
+              playoffCoefficient
+              scorePoints
+              differencePoints
+              resultPoints
+              promotionPoints
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              username
+              email
+              firstName
+              lastName
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         playoffCoefficient
@@ -158,45 +395,6 @@ export const getBet = /* GraphQL */ `
       roomId
       userId
       game
-      room {
-        id
-        name
-        userId
-        owner {
-          id
-          username
-          email
-          firstName
-          lastName
-          createdAt
-          updatedAt
-        }
-        bets {
-          nextToken
-        }
-        playoffCoefficient
-        scorePoints
-        differencePoints
-        resultPoints
-        promotionPoints
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        username
-        email
-        firstName
-        lastName
-        rooms {
-          nextToken
-        }
-        bets {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       homeScore
       awayScore
       homeWins
@@ -218,27 +416,6 @@ export const listBets = /* GraphQL */ `
         roomId
         userId
         game
-        room {
-          id
-          name
-          userId
-          playoffCoefficient
-          scorePoints
-          differencePoints
-          resultPoints
-          promotionPoints
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          firstName
-          lastName
-          createdAt
-          updatedAt
-        }
         homeScore
         awayScore
         homeWins

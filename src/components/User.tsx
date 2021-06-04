@@ -3,7 +3,7 @@ import { Avatar, MenuItem, Menu } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
 
 import { userState } from '../recoil/states';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 type User = {
   firstName: string;
@@ -11,7 +11,7 @@ type User = {
 } | null;
 
 const User = () => {
-  const [user] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [open, setMenuOpen] = useState(false);
   const avatarRef = useRef(null);
 

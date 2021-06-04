@@ -20,11 +20,11 @@ type AuthData = {
     email: string;
   }
 }
+
 const InitializationWrapper = ({ children }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [, setUser] = useRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
   const [, setGames] = useRecoilState(gamesState);
-
 
   async function fetchUser(authData: AuthData) {
     try {
@@ -38,17 +38,19 @@ const InitializationWrapper = ({ children }: Props) => {
   }
 
   useEffect(() => {
-    setLoading(true);
-    getGames()
-      .then((games) => {
-        setGames(games);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('error fetching footballData', error);
-        setLoading(false);
-      })
-  }, []);
+    if (user) {
+      setLoading(true);
+      getGames()
+        .then((games) => {
+          setGames(games);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('error fetching footballData', error);
+          setLoading(false);
+        })
+    }
+  }, [user]);
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
@@ -58,7 +60,7 @@ const InitializationWrapper = ({ children }: Props) => {
 
   return (
     <Layout>
-      {loading ? <Spinner /> : children}
+      {loading ? <Spinner /> : (user ? children : null)}
     </Layout>
   );
 }

@@ -35,10 +35,6 @@
         }
       },
       "function": {
-        "eurobetsca4e1ec0": {
-          "deploymentBucketName": "amplify-eurobets-dev-193407-deployment",
-          "s3Key": "amplify-builds/eurobetsca4e1ec0-4149342f523475766b44-build.zip"
-        },
         "eurobetsteams": {
           "deploymentBucketName": "amplify-eurobets-dev-193407-deployment",
           "s3Key": "amplify-builds/eurobetsteams-39713143486e47476763-build.zip"

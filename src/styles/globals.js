@@ -1,5 +1,6 @@
 import jss from 'jss';
 import preset from 'jss-preset-default';
+import { materialLightBlue900, materialLightBlue500 } from './constants';
 
 jss.setup(preset());
 
@@ -13,7 +14,10 @@ export const globalSheet = jss.createStyleSheet({
       },
       'a': {
         textDecoration: 'none',
-        color: 'inherit'
+        color: materialLightBlue900,
+        '&:hover': {
+          color: materialLightBlue500
+        }
       }
     }
   }

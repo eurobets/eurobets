@@ -1,0 +1,54 @@
+{
+  "paths": [
+    {
+      "name": "/games",
+      "lambdaFunction": "eurobetslambda",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/games"
+    },
+    {
+      "name": "/teams",
+      "lambdaFunction": "eurobetsteams",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/teams"
+    }
+  ],
+  "resourceName": "eurobetsrest",
+  "apiName": "eurobetsrest",
+  "functionArns": [
+    {
+      "lambdaFunction": "eurobetslambda"
+    },
+    {
+      "lambdaFunction": "eurobetsteams"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-eurobets-dev-193407-authRole",
+    "unAuthRoleName": "amplify-eurobets-dev-193407-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "eurobetslambda",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    },
+    {
+      "category": "function",
+      "resourceName": "eurobetsteams",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

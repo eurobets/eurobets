@@ -24,20 +24,6 @@
         }
       }
     },
-    "api76081f40": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "eurobetsca4e1ec0",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    },
     "eurobetsrest": {
       "service": "API Gateway",
       "providerPlugin": "awscloudformation",
@@ -69,11 +55,6 @@
     }
   },
   "function": {
-    "eurobetsca4e1ec0": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "eurobetslambda": {
       "build": true,
       "providerPlugin": "awscloudformation",
