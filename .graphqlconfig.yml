@@ -1,6 +1,6 @@
 projects:
   eurobets:
-    schemaPath: graphql/schema.json
+    schemaPath: amplify/backend/api/eurobets/build/schema.graphql
     includes:
       - graphql/**/*.js
     excludes:

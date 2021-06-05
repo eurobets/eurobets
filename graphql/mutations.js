@@ -22,7 +22,16 @@ export const createUser = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken
@@ -96,7 +105,16 @@ export const updateUser = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken
@@ -170,7 +188,16 @@ export const deleteUser = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken
@@ -237,19 +264,16 @@ export const createPlayer = /* GraphQL */ `
         name
         owner
         bets {
-          items {
-            id
-            roomId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            owner
-            createdAt
-            updatedAt
-          }
-          nextToken
+          id
+          roomId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
+          owner
+          createdAt
+          updatedAt
         }
         players {
           items {
@@ -364,19 +388,16 @@ export const updatePlayer = /* GraphQL */ `
         name
         owner
         bets {
-          items {
-            id
-            roomId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            owner
-            createdAt
-            updatedAt
-          }
-          nextToken
+          id
+          roomId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
+          owner
+          createdAt
+          updatedAt
         }
         players {
           items {
@@ -491,19 +512,16 @@ export const deletePlayer = /* GraphQL */ `
         name
         owner
         bets {
-          items {
-            id
-            roomId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            owner
-            createdAt
-            updatedAt
-          }
-          nextToken
+          id
+          roomId
+          game
+          homeScore
+          awayScore
+          homeWins
+          awayWins
+          owner
+          createdAt
+          updatedAt
         }
         players {
           items {
@@ -614,19 +632,16 @@ export const createRoom = /* GraphQL */ `
       name
       owner
       bets {
-        items {
-          id
-          roomId
-          game
-          homeScore
-          awayScore
-          homeWins
-          awayWins
-          owner
-          createdAt
-          updatedAt
-        }
-        nextToken
+        id
+        roomId
+        game
+        homeScore
+        awayScore
+        homeWins
+        awayWins
+        owner
+        createdAt
+        updatedAt
       }
       players {
         items {
@@ -638,7 +653,16 @@ export const createRoom = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken
@@ -691,19 +715,16 @@ export const updateRoom = /* GraphQL */ `
       name
       owner
       bets {
-        items {
-          id
-          roomId
-          game
-          homeScore
-          awayScore
-          homeWins
-          awayWins
-          owner
-          createdAt
-          updatedAt
-        }
-        nextToken
+        id
+        roomId
+        game
+        homeScore
+        awayScore
+        homeWins
+        awayWins
+        owner
+        createdAt
+        updatedAt
       }
       players {
         items {
@@ -715,7 +736,16 @@ export const updateRoom = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken
@@ -768,19 +798,16 @@ export const deleteRoom = /* GraphQL */ `
       name
       owner
       bets {
-        items {
-          id
-          roomId
-          game
-          homeScore
-          awayScore
-          homeWins
-          awayWins
-          owner
-          createdAt
-          updatedAt
-        }
-        nextToken
+        id
+        roomId
+        game
+        homeScore
+        awayScore
+        homeWins
+        awayWins
+        owner
+        createdAt
+        updatedAt
       }
       players {
         items {
@@ -792,7 +819,16 @@ export const deleteRoom = /* GraphQL */ `
             name
             owner
             bets {
-              nextToken
+              id
+              roomId
+              game
+              homeScore
+              awayScore
+              homeWins
+              awayWins
+              owner
+              createdAt
+              updatedAt
             }
             players {
               nextToken

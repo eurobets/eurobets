@@ -63,6 +63,29 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "eurobetsroomlambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "eurobets",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "eurobetsrest",
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ]
+        }
+      ]
     }
   }
 }

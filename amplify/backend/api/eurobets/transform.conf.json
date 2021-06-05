@@ -1,4 +1,7 @@
 {
     "Version": 5,
-    "ElasticsearchWarning": true
+    "ElasticsearchWarning": true,
+    "StackMapping": {
+        "RoombetsResolver": "ConnectionStack"
+    }
 }

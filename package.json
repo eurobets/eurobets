@@ -13,6 +13,8 @@
     "@material-ui/icons": "^4.11.2",
     "aws-amplify": "^4.0.3",
     "aws-amplify-react": "^5.0.1",
+    "aws-sdk": "^2.922.0",
+    "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "jss": "^10.6.0",
     "jss-preset-default": "^10.6.0",

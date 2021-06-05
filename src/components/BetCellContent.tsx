@@ -23,7 +23,7 @@ const getBetText = (bet: Bet) => {
 
 const BetCellContent = ({ bet, onClick }: Props) => {
   return bet
-    ? (onClick ? <Button onClick={onClick} size="small">{getBetText(bet)}</Button> : getBetText(bet))
+    ? (onClick ? <Button onClick={onClick} size="small">{getBetText(bet)}</Button> : <span>{getBetText(bet)}</span>)
     : (onClick ? <IconButton onClick={onClick} size="small"><AddIcon /></IconButton> : null);
 };
 

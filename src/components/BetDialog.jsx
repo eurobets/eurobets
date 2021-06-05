@@ -65,14 +65,14 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
           <TextField
             value={homeScore}
             label={game.homeTeam.name || '¯\\_(ツ)_/¯'}
-            onChange={e => setHome(e.target.value)}
+            onChange={e => setHome(Number(e.target.value))}
             type="number"
             InputLabelProps={{ shrink: true }}
           />
           <TextField
             value={awayScore}
             label={game.awayTeam.name || '¯\\_(ツ)_/¯'}
-            onChange={e => setAway(e.target.value)}
+            onChange={e => setAway(Number(e.target.value))}
             type="number"
             InputLabelProps={{ shrink: true }}
           />

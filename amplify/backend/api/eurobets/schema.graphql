@@ -33,13 +33,13 @@ type Room
   id: ID!
   name: String!
   owner: ID
-  bets: [Bet] @connection(keyName: "byRoom", fields: ["id"])
-  players: [Player] @connection(keyName: "byRoom", fields: ["id"]),
-  playoffCoefficient: Int!,
+  bets: [Bet] @function(name: "eurobetsroomlambda-${env}")
+  players: [Player] @connection(keyName: "byRoom", fields: ["id"])
+  playoffCoefficient: Int!
   scorePoints: Int!
   differencePoints: Int!
   resultPoints: Int!
-  promotionPoints: Int!
+  promotionPoints: Int!,
 }
 
 type Bet
@@ -51,8 +51,8 @@ type Bet
   id: ID!
   roomId: ID!
   game: Int!
-  homeScore: Int!
-  awayScore: Int!
+  homeScore: Int
+  awayScore: Int
   homeWins: Boolean
   awayWins: Boolean
   owner: ID

@@ -82,7 +82,7 @@ const RoomView = () => {
   if (!room) {
     return null;
   }
-  const { id: roomId, bets: { items: bets = [] }, players: { items: players = [] },
+  const { id: roomId, bets = [], players: { items: players = [] },
     scorePoints,
     differencePoints,
     resultPoints,

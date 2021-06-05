@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "api": {
+      "eurobets": [
+        "Query"
+      ],
+      "eurobetsrest": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
