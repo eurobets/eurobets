@@ -13,20 +13,11 @@ export const getUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -65,12 +56,12 @@ export const getUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -98,11 +89,11 @@ export const listUsers = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -129,12 +120,12 @@ export const listUsers = /* GraphQL */ `
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -152,72 +143,17 @@ export const getRoom = /* GraphQL */ `
     getRoom(id: $id) {
       id
       name
-      userId
-      owner {
-        id
-        username
-        email
-        firstName
-        lastName
-        players {
-          items {
-            id
-            roomId
-            userId
-            room {
-              id
-              name
-              userId
-              playoffCoefficient
-              scorePoints
-              differencePoints
-              resultPoints
-              promotionPoints
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        bets {
-          items {
-            id
-            roomId
-            userId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      owner
       bets {
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -227,20 +163,11 @@ export const getRoom = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -295,51 +222,17 @@ export const listRooms = /* GraphQL */ `
       items {
         id
         name
-        userId
-        owner {
-          id
-          username
-          email
-          firstName
-          lastName
-          players {
-            items {
-              id
-              roomId
-              userId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          bets {
-            items {
-              id
-              roomId
-              userId
-              game
-              homeScore
-              awayScore
-              homeWins
-              awayWins
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
+        owner
         bets {
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -349,11 +242,11 @@ export const listRooms = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -393,12 +286,12 @@ export const getBet = /* GraphQL */ `
     getBet(id: $id) {
       id
       roomId
-      userId
       game
       homeScore
       awayScore
       homeWins
       awayWins
+      owner
       createdAt
       updatedAt
     }
@@ -414,12 +307,12 @@ export const listBets = /* GraphQL */ `
       items {
         id
         roomId
-        userId
         game
         homeScore
         awayScore
         homeWins
         awayWins
+        owner
         createdAt
         updatedAt
       }

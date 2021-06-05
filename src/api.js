@@ -2,9 +2,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 
-export async function getUser(id) {
+export async function getUser(username) {
   const response = await API.graphql(graphqlOperation(queries.getUser, {
-    id
+    id: username
   }));
 
   return response.data.getUser;
@@ -19,21 +19,20 @@ export async function getRoom(id) {
 }
 
 
-export async function joinRoom({ roomId, userId }) {
-  await API.graphql(graphqlOperation(mutations.createPlayer, {
+export async function joinRoom(roomId) {
+  const player = await API.graphql(graphqlOperation(mutations.createPlayer, {
     input: {
       roomId,
-      userId
     }
   }));
 
-  return await getUser(userId);
+  return await getUser(player.data.createPlayer.owner);
 }
 
 export async function createUser(authData) {
   const response = await API.graphql(graphqlOperation(mutations.createUser, {
     input: {
-      id: authData.attributes.sub,
+      id: authData.username,
       username: authData.username,
       firstName: authData.attributes.given_name,
       lastName: authData.attributes.family_name,
@@ -54,12 +53,9 @@ export async function createBet(input) {
 }
 
 
-export async function createRoom(roomData, userId) {
+export async function createRoom(roomData) {
   const room = await API.graphql(graphqlOperation(mutations.createRoom, {input: roomData}));
-  return await joinRoom({
-    roomId: room.data.createRoom.id,
-    userId
-  });
+  return await joinRoom(room.data.createRoom.id);
 }
 
 export async function getGames() {

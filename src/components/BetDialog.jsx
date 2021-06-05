@@ -39,7 +39,20 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
   return (
     <Dialog open={!!game} onClose={onClose}>
       <DialogContent>
-        <div>
+        <form
+          id="bet-form"
+          onSubmit={e => {
+            e.preventDefault();
+            createBet({
+              homeScore,
+              awayScore,
+              game: game.id,
+              roomId: roomId,
+              homeWins: isPlayoff && homeWins,
+              awayWins: isPlayoff && awayWins
+            }).then(onSave)
+          }}
+        >
           {isPlayoff && (
             <Radio
               checked={homeWins}
@@ -72,21 +85,14 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
               }}
             />
           )}
-        </div>
+        </form>
       </DialogContent>
       <DialogActions>
         <Button
+          form="bet-form"
+          type="submit"
           color="primary"
           variant="contained"
-          onClick={() => createBet({
-            homeScore,
-            awayScore,
-            userId: user.id,
-            game: game.id,
-            roomId: roomId,
-            homeWins: isPlayoff && homeWins,
-            awayWins: isPlayoff && awayWins
-          }).then(onSave)}
         >
           Save
         </Button>

@@ -31,8 +31,26 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between'
   },
+  table: {
+    '&&': {
+      width: 'auto'
+    },
+  },
   menuItem: {
     marginRight: 36
+  },
+  dateCell: {
+    width: 200
+  },
+  gameCell: {
+    width: 200
+  },
+  scoreCell: {
+    width: 100,
+  },
+  betCell: {
+    width: 100,
+    borderLeft: [1, 'solid', '#dadada']
   }
 });
 
@@ -51,7 +69,9 @@ const Games = () => {
       <div className={classes.subHeader}>
         <div>
           {players.map((player: any) => (
-            <Link href={`/rooms/${player.room.id}`}><a className={classes.menuItem}>{player.room.name}</a></Link>
+            <Link href={`/rooms/${player.room.id}`} key={player.id}>
+              <a className={classes.menuItem}>{player.room.name}</a>
+            </Link>
           ))}
         </div>
         <Link href="/create-room">
@@ -65,12 +85,14 @@ const Games = () => {
           </Button>
         </Link>
       </div>
-      <Table>
+      <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
-            <TableCell>Game</TableCell>
-            <TableCell>Score</TableCell>
+            <TableCell />
+            <TableCell />
+            <TableCell align="center">
+              Score
+            </TableCell>
             {players.map((player: any) => (
               <TableCell key={player.id}>
                 <Link href={`/rooms/${player.room.id}`}><a>{player.room.name}</a></Link>
@@ -79,22 +101,21 @@ const Games = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(games || []).map((game: Game) => {
-            console.log(game);
+          {games.map((game: Game) => {
             return (
               <TableRow key={game.id}>
-                <TableCell>{(new Date(game.utcDate)).toLocaleString()}</TableCell>
-                <TableCell>{game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}</TableCell>
-                <TableCell>{game.score.fullTime.homeTeam || '-'} : {game.score.fullTime.awayTeam || '-'}</TableCell>
+                <TableCell className={classes.dateCell}>{(new Date(game.utcDate)).toLocaleString()}</TableCell>
+                <TableCell className={classes.gameCell}>{game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}</TableCell>
+                <TableCell align="center" className={classes.scoreCell}>
+                  {game.score.fullTime.homeTeam || '-'} : {game.score.fullTime.awayTeam || '-'}
+                </TableCell>
                 {players.map((player: any) => {
-                  console.log(game.id, bets);
-
                   const bet = bets.find((bet: { userId: string; roomId: string; }) => (
                       //@ts-ignore
-                    bet.userId === user.id && bet.roomId === player.room.id && game.id === Number(bet.game)))
+                    bet.owner === user.id && bet.roomId === player.room.id && game.id === Number(bet.game)))
 
                     return (
-                      <TableCell key={player.id}>
+                      <TableCell key={player.id} align="center" className={classes.betCell}>
                         <BetCellContent bet={bet} />
                       </TableCell>
                     );

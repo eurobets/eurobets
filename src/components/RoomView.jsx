@@ -51,24 +51,19 @@ const useStyles = createUseStyles({
     borderLeft: [1, 'solid', '#efefef']
 
   },
-  middleCellContent: {
-    maxWidth: 100,
-    minWidth: 100,
-    display: 'flex',
-    justifyContent: 'center'
-  },
   icon: {
     height: 20,
     margin: [0, 8],
     boxShadow: [0, 0, 2, '#777']
   },
-  myCell: {
-    cursor: 'pointer',
-    color: materialLightBlue900,
-    fontWeight: 'bold'
-  },
   list: {
     margin: [0, 0, 0, 24]
+  },
+  betCell: {
+    '&&': {
+      padding: [0, 0],
+      height: 52
+    }
   }
 });
 
@@ -117,7 +112,7 @@ const RoomView = () => {
             <TableHead>
               <TableRow>
                 {games.map((game) => (
-                  <TableCell key={game.id}>
+                  <TableCell key={game.id} align="center">
                     <div className={classes.headerCell}>
                       <img className={classes.icon} src={game.homeTeam.icon} title={game.homeTeam.name} />
                       {game.score.fullTime.homeTeam}
@@ -134,16 +129,15 @@ const RoomView = () => {
                   <TableRow key={player.id}>
                     {games.map((game) => {
                         //@ts-ignore
-                        const bet = bets.find((bet) => (bet.userId === player.user.id && game.id === Number(bet.game)))
+                        const bet = bets.find((bet) => (bet.owner === player.user.id && game.id === Number(bet.game)))
 
                         return (
-                        <TableCell key={game.id}>
-                          <div
-                            className={cx(classes.middleCellContent, userId === player.user.id && classes.myCell)}
-                            onClick={() => userId === player.user.id && setBetDialog({ game, bet })}
-                          >
-                            <BetCellContent bet={bet} />
-                          </div>
+                        <TableCell key={game.id} align="center" className={classes.betCell}>
+                          <BetCellContent
+                            bet={bet}
+                            mine={userId === player.user.id}
+                            onClick={userId === player.owner ? () => setBetDialog({ game, bet }) : undefined}
+                          />
                         </TableCell>
                       )
                     })}
@@ -156,7 +150,7 @@ const RoomView = () => {
         <Table className={classes.rightTable}>
           <TableHead>
             <TableRow>
-              <TableCell>Score</TableCell>
+              <TableCell align="center">Score</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -164,7 +158,7 @@ const RoomView = () => {
               //@ts-ignore
               players.map((player) => (
                 <TableRow key={player.id}>
-                  <TableCell>{0}</TableCell>
+                  <TableCell align="center">{0}</TableCell>
                 </TableRow>
               ))}
           </TableBody>

@@ -16,20 +16,11 @@ export const createUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -68,12 +59,12 @@ export const createUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -99,20 +90,11 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -151,12 +133,12 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -182,20 +164,11 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -234,12 +207,12 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -258,55 +231,21 @@ export const createPlayer = /* GraphQL */ `
     createPlayer(input: $input, condition: $condition) {
       id
       roomId
-      userId
+      owner
       room {
         id
         name
-        userId
-        owner {
-          id
-          username
-          email
-          firstName
-          lastName
-          players {
-            items {
-              id
-              roomId
-              userId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          bets {
-            items {
-              id
-              roomId
-              userId
-              game
-              homeScore
-              awayScore
-              homeWins
-              awayWins
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
+        owner
         bets {
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -316,11 +255,11 @@ export const createPlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -361,11 +300,11 @@ export const createPlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -392,12 +331,12 @@ export const createPlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -419,55 +358,21 @@ export const updatePlayer = /* GraphQL */ `
     updatePlayer(input: $input, condition: $condition) {
       id
       roomId
-      userId
+      owner
       room {
         id
         name
-        userId
-        owner {
-          id
-          username
-          email
-          firstName
-          lastName
-          players {
-            items {
-              id
-              roomId
-              userId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          bets {
-            items {
-              id
-              roomId
-              userId
-              game
-              homeScore
-              awayScore
-              homeWins
-              awayWins
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
+        owner
         bets {
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -477,11 +382,11 @@ export const updatePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -522,11 +427,11 @@ export const updatePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -553,12 +458,12 @@ export const updatePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -580,55 +485,21 @@ export const deletePlayer = /* GraphQL */ `
     deletePlayer(input: $input, condition: $condition) {
       id
       roomId
-      userId
+      owner
       room {
         id
         name
-        userId
-        owner {
-          id
-          username
-          email
-          firstName
-          lastName
-          players {
-            items {
-              id
-              roomId
-              userId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          bets {
-            items {
-              id
-              roomId
-              userId
-              game
-              homeScore
-              awayScore
-              homeWins
-              awayWins
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
+        owner
         bets {
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -638,11 +509,11 @@ export const deletePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -683,11 +554,11 @@ export const deletePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
+            owner
             room {
               id
               name
-              userId
+              owner
               playoffCoefficient
               scorePoints
               differencePoints
@@ -714,12 +585,12 @@ export const deletePlayer = /* GraphQL */ `
           items {
             id
             roomId
-            userId
             game
             homeScore
             awayScore
             homeWins
             awayWins
+            owner
             createdAt
             updatedAt
           }
@@ -741,72 +612,17 @@ export const createRoom = /* GraphQL */ `
     createRoom(input: $input, condition: $condition) {
       id
       name
-      userId
-      owner {
-        id
-        username
-        email
-        firstName
-        lastName
-        players {
-          items {
-            id
-            roomId
-            userId
-            room {
-              id
-              name
-              userId
-              playoffCoefficient
-              scorePoints
-              differencePoints
-              resultPoints
-              promotionPoints
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        bets {
-          items {
-            id
-            roomId
-            userId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      owner
       bets {
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -816,20 +632,11 @@ export const createRoom = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -882,72 +689,17 @@ export const updateRoom = /* GraphQL */ `
     updateRoom(input: $input, condition: $condition) {
       id
       name
-      userId
-      owner {
-        id
-        username
-        email
-        firstName
-        lastName
-        players {
-          items {
-            id
-            roomId
-            userId
-            room {
-              id
-              name
-              userId
-              playoffCoefficient
-              scorePoints
-              differencePoints
-              resultPoints
-              promotionPoints
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        bets {
-          items {
-            id
-            roomId
-            userId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      owner
       bets {
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -957,20 +709,11 @@ export const updateRoom = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -1023,72 +766,17 @@ export const deleteRoom = /* GraphQL */ `
     deleteRoom(input: $input, condition: $condition) {
       id
       name
-      userId
-      owner {
-        id
-        username
-        email
-        firstName
-        lastName
-        players {
-          items {
-            id
-            roomId
-            userId
-            room {
-              id
-              name
-              userId
-              playoffCoefficient
-              scorePoints
-              differencePoints
-              resultPoints
-              promotionPoints
-              createdAt
-              updatedAt
-            }
-            user {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        bets {
-          items {
-            id
-            roomId
-            userId
-            game
-            homeScore
-            awayScore
-            homeWins
-            awayWins
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      owner
       bets {
         items {
           id
           roomId
-          userId
           game
           homeScore
           awayScore
           homeWins
           awayWins
+          owner
           createdAt
           updatedAt
         }
@@ -1098,20 +786,11 @@ export const deleteRoom = /* GraphQL */ `
         items {
           id
           roomId
-          userId
+          owner
           room {
             id
             name
-            userId
-            owner {
-              id
-              username
-              email
-              firstName
-              lastName
-              createdAt
-              updatedAt
-            }
+            owner
             bets {
               nextToken
             }
@@ -1164,12 +843,12 @@ export const createBet = /* GraphQL */ `
     createBet(input: $input, condition: $condition) {
       id
       roomId
-      userId
       game
       homeScore
       awayScore
       homeWins
       awayWins
+      owner
       createdAt
       updatedAt
     }
@@ -1183,12 +862,12 @@ export const updateBet = /* GraphQL */ `
     updateBet(input: $input, condition: $condition) {
       id
       roomId
-      userId
       game
       homeScore
       awayScore
       homeWins
       awayWins
+      owner
       createdAt
       updatedAt
     }
@@ -1202,12 +881,12 @@ export const deleteBet = /* GraphQL */ `
     deleteBet(input: $input, condition: $condition) {
       id
       roomId
-      userId
       game
       homeScore
       awayScore
       homeWins
       awayWins
+      owner
       createdAt
       updatedAt
     }

@@ -21,14 +21,19 @@ type AuthData = {
   }
 }
 
+// to bypass double signedin state
+// https://github.com/aws-amplify/amplify-js/issues/7635
+let signedIn = false;
+
 const InitializationWrapper = ({ children }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const [loadingGames, setLoadingGames] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(false);
   const [user, setUser] = useRecoilState(userState);
   const [, setGames] = useRecoilState(gamesState);
 
   async function fetchUser(authData: AuthData) {
     try {
-      const user = await getUser(authData.attributes.sub);
+      const user = await getUser(authData.username);
       if (user) {
         return user;
       }
@@ -39,28 +44,42 @@ const InitializationWrapper = ({ children }: Props) => {
 
   useEffect(() => {
     if (user) {
-      setLoading(true);
+      setLoadingGames(true);
       getGames()
         .then((games) => {
           setGames(games);
-          setLoading(false);
+          setLoadingGames(false);
         })
         .catch(error => {
           console.error('error fetching footballData', error);
-          setLoading(false);
+          setLoadingGames(false);
         })
     }
   }, [user]);
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
-      fetchUser(authData as AuthData).then(setUser);
+      if (nextAuthState === 'signedin' && !signedIn) {
+        signedIn = true;
+        setLoadingUser(true);
+        fetchUser(authData as AuthData)
+          .then(setUser)
+          .finally(() => setLoadingUser(false));
+        // todo: catch case with error
+      }
     });
   }, []);
 
+  if (loadingUser) {
+    return <Spinner />
+  }
+  if (!user) {
+    return null;
+  }
   return (
     <Layout>
-      {loading ? <Spinner /> : (user ? children : null)}
+      {loadingGames && <Spinner />}
+      {children}
     </Layout>
   );
 }

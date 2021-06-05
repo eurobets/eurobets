@@ -68,7 +68,7 @@ const JoinRoom = () => {
             color="primary"
             variant="contained"
             onClick={() => {
-              joinRoom({userId: user?.id, roomId: room.id})
+              joinRoom(room.id)
                 .then(setUser)
                 .then(() => router.push(`/rooms/${room.id}`));
             }}

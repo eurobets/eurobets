@@ -1,6 +1,9 @@
-type User @model
+type User
+@model
+@key(name: "byPlayer", fields: ["id"])
+@auth(rules: [{ allow: owner, ownerField: "id", operations: [delete, update] }])
 {
-  id: ID!
+  id: ID
   username: String!
   email: String!
   firstName: String
@@ -11,23 +14,25 @@ type User @model
 
 type Player
   @model(queries: null)
-  @key(name: "byRoom", fields: ["roomId", "userId"])
-  @key(name: "byPlayer", fields: ["userId", "roomId"]) {
+  @key(name: "byRoom", fields: ["roomId", "owner"])
+  @key(name: "byPlayer", fields: ["owner", "roomId"])
+  @auth(rules: [{ allow: owner, operations: [create] }])
+{
   id: ID!
   roomId: ID!
-  userId: ID!
+  owner: ID
   room: Room! @connection(fields: ["roomId"])
-  user: User! @connection(fields: ["userId"])
+  user: User! @connection(fields: ["owner"])
 }
 
 type Room
 @model
-@key(name: "byUser", fields: ["userId"])
+@key(name: "byUser", fields: ["owner"])
+@auth(rules: [{ allow: owner, operations: [create, update, delete] }])
 {
   id: ID!
   name: String!
-  userId: ID!
-  owner: User @connection(fields: ["userId"])
+  owner: ID
   bets: [Bet] @connection(keyName: "byRoom", fields: ["id"])
   players: [Player] @connection(keyName: "byRoom", fields: ["id"]),
   playoffCoefficient: Int!,
@@ -40,13 +45,15 @@ type Room
 type Bet
 @model
 @key(name: "byRoom", fields: ["roomId"])
-@key(name: "byUser", fields: ["userId"]) {
+@key(name: "byUser", fields: ["owner"])
+@auth(rules: [{ allow: owner, operations: [create, update, delete] }])
+{
   id: ID!
   roomId: ID!
-  userId: ID!
   game: Int!
   homeScore: Int!
   awayScore: Int!
   homeWins: Boolean
   awayWins: Boolean
+  owner: ID
 }

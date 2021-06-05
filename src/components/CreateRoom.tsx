@@ -52,8 +52,6 @@ const CreateRoom = () => {
           e.preventDefault();
             createRoom(
             {
-              // @ts-ignore
-              userId: user?.id,
               name,
               playoffCoefficient,
               scorePoints,

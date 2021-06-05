@@ -1,5 +1,5 @@
 import App from 'next/app';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import '../src/styles/globals';
 import { RecoilRoot } from 'recoil';
 import { AmplifyAuthenticator, AmplifySignUp } from '@aws-amplify/ui-react';
@@ -10,7 +10,6 @@ import InitializationWrapper from '../src/components/InitializationWrapper';
 Amplify.configure(awsExports);
 
 const MyApp = (props) => {
-  const [user, setUser] = useState(null);
   useEffect(() => {
     const style = document.getElementById('server-side-styles')
 
@@ -21,6 +20,7 @@ const MyApp = (props) => {
 
 
   return (
+    <>
     <AmplifyAuthenticator usernameAlias="email">
       <AmplifySignUp
         slot="sign-up"
@@ -50,12 +50,13 @@ const MyApp = (props) => {
           },
         ]}
       />
-      <RecoilRoot>
-        <InitializationWrapper>
-          <App {...props} />
-        </InitializationWrapper>
-      </RecoilRoot>
     </AmplifyAuthenticator>
+    <RecoilRoot>
+      <InitializationWrapper>
+        <App {...props} />
+      </InitializationWrapper>
+    </RecoilRoot>
+    </>
   );
 }
 
