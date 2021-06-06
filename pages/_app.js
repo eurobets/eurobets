@@ -6,6 +6,7 @@ import { AmplifyAuthenticator, AmplifySignUp } from '@aws-amplify/ui-react';
 import Amplify from 'aws-amplify';
 import awsExports from '../aws-exports';
 import InitializationWrapper from '../src/components/InitializationWrapper';
+import Head from 'next/head';
 
 Amplify.configure(awsExports);
 
@@ -21,6 +22,10 @@ const MyApp = (props) => {
 
   return (
     <>
+    <Head>
+      <title>Euro 2020</title>
+      <meta name="viewport" content="initial-scale=0.4 width=device-width height=device-height" />
+    </Head>
     <AmplifyAuthenticator usernameAlias="email">
       <AmplifySignUp
         slot="sign-up"

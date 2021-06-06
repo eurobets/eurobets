@@ -59,10 +59,11 @@ const useStyles = createUseStyles({
   list: {
     margin: [0, 0, 0, 24]
   },
-  betCell: {
+  cell: {
     '&&': {
       padding: [0, 0],
-      height: 52
+      height: 52,
+      minWidth: 100
     }
   }
 });
@@ -93,26 +94,28 @@ const RoomView = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <Table className={classes.leftTable}>
-          <TableHead>
-            <TableRow>
-              <TableCell>&nbsp;</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {players.map((player) => (
-              <TableRow key={player.id}>
-                <TableCell>{player.user.firstName} {player.user.lastName}</TableCell>
+        <div>
+          <Table className={classes.leftTable}>
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.cell}>&nbsp;</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {players.map((player) => (
+                <TableRow key={player.id}>
+                  <TableCell className={classes.cell}>{player.user.firstName} {player.user.lastName}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
         <div className={classes.scrollable}>
           <Table>
             <TableHead>
               <TableRow>
                 {games.map((game) => (
-                  <TableCell key={game.id} align="center">
+                  <TableCell key={game.id} align="center" className={classes.cell}>
                     <div className={classes.headerCell}>
                       <img className={classes.icon} src={game.homeTeam.icon} title={game.homeTeam.name} />
                       {game.score.fullTime.homeTeam}
@@ -132,7 +135,7 @@ const RoomView = () => {
                         const bet = bets.find((bet) => (bet.owner === player.user.id && game.id === Number(bet.game)))
 
                         return (
-                        <TableCell key={game.id} align="center" className={classes.betCell}>
+                        <TableCell key={game.id} align="center" className={classes.cell}>
                           <BetCellContent
                             bet={bet}
                             mine={userId === player.user.id}
@@ -147,22 +150,24 @@ const RoomView = () => {
             </TableBody>
           </Table>
         </div>
-        <Table className={classes.rightTable}>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Score</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              //@ts-ignore
-              players.map((player) => (
-                <TableRow key={player.id}>
-                  <TableCell align="center">{0}</TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+        <div>
+          <Table className={classes.rightTable}>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" className={classes.cell}>Score</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                //@ts-ignore
+                players.map((player) => (
+                  <TableRow key={player.id}>
+                    <TableCell align="center" className={classes.cell}>{0}</TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
       <div className={classes.footer}>
         {!inviteMode

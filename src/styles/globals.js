@@ -10,7 +10,7 @@ export const globalSheet = jss.createStyleSheet({
       body: {
         padding: 0,
         margin: 0,
-        fontFamily: 'Roboto'
+        fontFamily: 'Roboto',
       },
       'a': {
         textDecoration: 'none',

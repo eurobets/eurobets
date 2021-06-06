@@ -79,7 +79,8 @@ exports.handler = async (event) => {
                   homeWins: null,
                   awayWins: null
               }
-        });
+        })
+          .sort((a, b) => (new Date(b.updatedAt) - new Date(a.updatedAt)));
     } catch (error) {
         console.error('error', error.response.status);
 
