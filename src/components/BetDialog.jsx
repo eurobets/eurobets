@@ -28,7 +28,7 @@ const useStyles = createUseStyles({
     '&&': {
       flexDirection: 'row',
       alignItems: 'center',
-      margin: [0, 16, 16, 16],
+      margin: [16, 0],
     }
   },
   scoreInput: {
