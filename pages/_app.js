@@ -36,6 +36,7 @@ const MyApp = (props) => {
     <Head>
       <title>Euro 2020</title>
       <meta name="viewport" content="initial-scale=0.4 width=device-width height=device-height" />
+      <link rel="shortcut icon" href="../favicon.png" />
     </Head>
     <AmplifyAuthenticator usernameAlias="email">
       <AmplifySignUp

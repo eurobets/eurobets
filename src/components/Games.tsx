@@ -75,7 +75,7 @@ const Games = () => {
           {players.map((player: any) => (
             <Link href={`/rooms/${player.room.id}`} key={player.id}>
               <a className={classes.menuItem}>
-                <MaterialLink>{player.room.name}</MaterialLink>
+                <MaterialLink component="span">{player.room.name}</MaterialLink>
               </a>
             </Link>
           ))}
@@ -103,7 +103,7 @@ const Games = () => {
               <TableCell key={player.id} className={classes.roomHeaderCell} align="center">
                 <Link href={`/rooms/${player.room.id}`} key={player.id}>
                   <a>
-                    <MaterialLink>{player.room.name}</MaterialLink>
+                    <MaterialLink component="span">{player.room.name}</MaterialLink>
                   </a>
                 </Link>
               </TableCell>
