@@ -163,6 +163,12 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
       <DialogActions>
         <Button
           form="bet-form"
+          onClick={onClose}
+        >
+          Close
+        </Button>
+        <Button
+          form="bet-form"
           type="submit"
           color="primary"
           variant="contained"
