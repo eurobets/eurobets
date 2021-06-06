@@ -1,12 +1,23 @@
 import App from 'next/app';
 import React, {useEffect} from 'react';
-import '../src/styles/globals';
 import { RecoilRoot } from 'recoil';
 import { AmplifyAuthenticator, AmplifySignUp } from '@aws-amplify/ui-react';
 import Amplify from 'aws-amplify';
+import blue from '@material-ui/core/colors/lightBlue';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
+import Head from 'next/head';
+
 import awsExports from '../aws-exports';
 import InitializationWrapper from '../src/components/InitializationWrapper';
-import Head from 'next/head';
+import '../src/styles/globals';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blue[800],
+    },
+  },
+});
 
 Amplify.configure(awsExports);
 
@@ -56,11 +67,13 @@ const MyApp = (props) => {
         ]}
       />
     </AmplifyAuthenticator>
-    <RecoilRoot>
-      <InitializationWrapper>
-        <App {...props} />
-      </InitializationWrapper>
-    </RecoilRoot>
+      <ThemeProvider theme={theme}>
+      <RecoilRoot>
+        <InitializationWrapper>
+          <App {...props} />
+        </InitializationWrapper>
+      </RecoilRoot>
+      </ThemeProvider>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { createUseStyles } from 'react-jss';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, CircularProgressProps } from '@material-ui/core';
 
 const useStyles = createUseStyles({
   root: {
@@ -12,10 +12,10 @@ const useStyles = createUseStyles({
   },
 });
 
-const Spinner = () => {
+const Spinner = (props: JSX.IntrinsicAttributes & CircularProgressProps) => {
   const classes = useStyles();
 
-  return <CircularProgress className={classes.root} />;
+  return <CircularProgress className={classes.root} {...props} />;
 }
 
 export default Spinner;

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import cx from 'classnames';
 import { createUseStyles } from 'react-jss';
-import { Table, TableBody, TableCell, TableHead, TableRow, IconButton, Button, Input } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, Input } from '@material-ui/core';
 
-import { materialLightBlue900, materialLightBlue500, headerHeight, pageIndent } from '../styles/constants';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { gamesState, roomsState, userState } from '../recoil/states';
+import { useRecoilValue } from 'recoil';
+import { gamesState, userState } from '../recoil/states';
 import { getRoom } from '../api';
 import BetDialog from './BetDialog';
 import BetCellContent from './BetCellContent';
+import Head from 'next/head';
 
 const useStyles = createUseStyles({
   root: {
@@ -88,11 +86,15 @@ const RoomView = () => {
     differencePoints,
     resultPoints,
     promotionPoints,
-    playoffCoefficient
+    playoffCoefficient,
+    name
   } = room || {};
 
   return (
     <div className={classes.root}>
+      <Head>
+        <title>{name} — Euro 2020</title>
+      </Head>
       <div className={classes.content}>
         <div>
           <Table className={classes.leftTable}>

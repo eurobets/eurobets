@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import router, { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { DialogTitle } from '@material-ui/core';
 
 import { createUseStyles } from 'react-jss';
-import { Button, Typography, TextField, Dialog, DialogActions, DialogContent, Radio } from '@material-ui/core';
+import {
+  Button, Dialog, DialogActions, DialogContent, Radio,
+  FormControl, OutlinedInput, FormLabel
+} from '@material-ui/core';
 import { useRecoilState } from 'recoil';
 import { userState } from '../recoil/states';
 import { createBet } from '../api';
@@ -20,13 +23,44 @@ const useStyles = createUseStyles({
       margin: [16, 0],
     },
     width: 300
+  },
+  formInput: {
+    '&&': {
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin: [0, 16, 16, 16],
+    }
+  },
+  scoreInput: {
+    '&&': {
+      textAlign: 'center',
+      padding: 8
+    }
+  },
+  scoreInputWrapper: {
+    '&&': {
+      fontSize: 24,
+      margin: [0, 16],
+      width: 60,
+      minWidth: 60
+    }
+  },
+  scoreRow: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  flag: {
+    boxShadow: [0, 0, 2, '#777'],
+    height: 35,
+    margin: [0, 12]
   }
 });
 const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
   const classes = useStyles();
   const [user] = useRecoilState(userState);
-  const [homeScore, setHome] = useState(bet.homeScore || 0);
-  const [awayScore, setAway] = useState(bet.awayScore || 0);
+  const [loading, setLoading] = useState(false);
+  const [homeScore, setHome] = useState(bet.homeScore || '0');
+  const [awayScore, setAway] = useState(bet.awayScore || '0');
   const [homeWins, setHomeWins] = useState(true);
   const [awayWins, setAwayWins] = useState(false);
   const { query: { id } } = useRouter();
@@ -38,53 +72,92 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
 
   return (
     <Dialog open={!!game} onClose={onClose}>
+      <DialogTitle>Place your bet</DialogTitle>
       <DialogContent>
         <form
           id="bet-form"
           onSubmit={e => {
             e.preventDefault();
+            setLoading(true);
             createBet({
-              homeScore,
-              awayScore,
+              homeScore: Number(homeScore),
+              awayScore: Number(awayScore),
               game: game.id,
               roomId: roomId,
               homeWins: isPlayoff && homeWins,
               awayWins: isPlayoff && awayWins
-            }).then(onSave)
+            })
+              .then(onSave)
+              .catch(() => setLoading(false))
           }}
         >
-          {isPlayoff && (
-            <Radio
-              checked={homeWins}
-              onChange={() => {
-                setHomeWins(true);
-                setAwayWins(false);
-              }}
-            />
-          )}
-          <TextField
-            value={homeScore}
-            label={game.homeTeam.name || '¯\\_(ツ)_/¯'}
-            onChange={e => setHome(Number(e.target.value))}
-            type="number"
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
-            value={awayScore}
-            label={game.awayTeam.name || '¯\\_(ツ)_/¯'}
-            onChange={e => setAway(Number(e.target.value))}
-            type="number"
-            InputLabelProps={{ shrink: true }}
-          />
-          {isPlayoff && (
-            <Radio
-              checked={awayWins}
-              onChange={() => {
-                setHomeWins(false);
-                setAwayWins(true);
-              }}
-            />
-          )}
+          <div className={classes.scoreRow}>
+            {isPlayoff && (
+              <Radio
+                checked={homeWins}
+                onChange={() => {
+                  setHomeWins(true);
+                  setAwayWins(false);
+                }}
+              />
+            )}
+            <FormControl className={classes.formInput}>
+              {game.homeTeam.icon && (
+                <img src={game.homeTeam.icon} className={classes.flag} alt={game.homeTeam.name} />
+              )}
+              <div>
+                <FormLabel htmlFor="home-input">{game.homeTeam.name || '¯\\_(ツ)_/¯'}</FormLabel>
+              </div>
+              <OutlinedInput
+                inputProps={{
+                  min: 0,
+                  max: 99
+                }}
+                value={homeScore}
+                onChange={e => setHome(Number(e.target.value).toString())}
+                type="number"
+                variant="outlined"
+                id="home-input"
+                classes={{
+                  root: classes.scoreInputWrapper,
+                  input: classes.scoreInput
+                }}
+              />
+            </FormControl>
+            :
+            <FormControl className={classes.formInput}>
+              <OutlinedInput
+                inputProps={{
+                  min: 0,
+                  max: 99
+                }}
+                value={awayScore}
+                onChange={e => setAway(Number(e.target.value).toString())}
+                classes={{
+                  root: classes.scoreInputWrapper,
+                  input: classes.scoreInput
+                }}
+                type="number"
+                variant="outlined"
+                id="away-input"
+              />
+              <div>
+                <FormLabel htmlFor="away-input">{game.awayTeam.name || '¯\\_(ツ)_/¯'}</FormLabel>
+              </div>
+              {game.awayTeam.icon && (
+                <img src={game.awayTeam.icon} className={classes.flag} alt={game.awayTeam.name} />
+              )}
+            </FormControl>
+            {isPlayoff && (
+              <Radio
+                checked={awayWins}
+                onChange={() => {
+                  setHomeWins(false);
+                  setAwayWins(true);
+                }}
+              />
+            )}
+          </div>
         </form>
       </DialogContent>
       <DialogActions>
@@ -93,7 +166,9 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
           type="submit"
           color="primary"
           variant="contained"
+          disabled={loading}
         >
+          {loading && <Spinner size={24} />}
           Save
         </Button>
       </DialogActions>

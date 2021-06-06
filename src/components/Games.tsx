@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { Link as MaterialLink } from '@material-ui/core';
+
 import { createUseStyles } from 'react-jss';
 import { Table, TableBody, TableCell, TableHead, TableRow, IconButton, Button } from '@material-ui/core';
 
-import { materialLightBlue900, materialLightBlue500, headerHeight, pageIndent } from '../styles/constants';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { gamesState, roomsState, userState } from '../recoil/states';
+import { useRecoilValue } from 'recoil';
+import { gamesState, userState } from '../recoil/states';
 import BetCellContent from './BetCellContent';
 
 type Game = {
@@ -51,6 +52,9 @@ const useStyles = createUseStyles({
   betCell: {
     width: 100,
     borderLeft: [1, 'solid', '#dadada']
+  },
+  roomHeaderCell: {
+    whiteSpace: 'nowrap',
   }
 });
 
@@ -70,7 +74,9 @@ const Games = () => {
         <div>
           {players.map((player: any) => (
             <Link href={`/rooms/${player.room.id}`} key={player.id}>
-              <a className={classes.menuItem}>{player.room.name}</a>
+              <a className={classes.menuItem}>
+                <MaterialLink>{player.room.name}</MaterialLink>
+              </a>
             </Link>
           ))}
         </div>
@@ -94,8 +100,12 @@ const Games = () => {
               Score
             </TableCell>
             {players.map((player: any) => (
-              <TableCell key={player.id}>
-                <Link href={`/rooms/${player.room.id}`}><a>{player.room.name}</a></Link>
+              <TableCell key={player.id} className={classes.roomHeaderCell} align="center">
+                <Link href={`/rooms/${player.room.id}`} key={player.id}>
+                  <a>
+                    <MaterialLink>{player.room.name}</MaterialLink>
+                  </a>
+                </Link>
               </TableCell>
             ))}
           </TableRow>

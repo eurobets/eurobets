@@ -1,6 +1,7 @@
 import jss from 'jss';
 import preset from 'jss-preset-default';
-import { materialLightBlue900, materialLightBlue500 } from './constants';
+
+import { fontFamily } from './constants';
 
 jss.setup(preset());
 
@@ -10,14 +11,11 @@ export const globalSheet = jss.createStyleSheet({
       body: {
         padding: 0,
         margin: 0,
-        fontFamily: 'Roboto',
+        fontFamily: fontFamily,
       },
       'a': {
         textDecoration: 'none',
-        color: materialLightBlue900,
-        '&:hover': {
-          color: materialLightBlue500
-        }
+        color: 'inherit',
       }
     }
   }

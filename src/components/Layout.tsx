@@ -1,12 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
-
-import Notification from '../components/Notification';
+import blue from '@material-ui/core/colors/lightBlue';
 
 import Logo from '../components/Logo';
 import User from '../components/User';
-import { materialLightBlue900, materialLightBlue500, headerHeight, pageIndent } from '../styles/constants';
 
 interface Props {
   children: React.ReactNode;
@@ -24,20 +22,19 @@ const useStyles = createUseStyles({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    padding: [20, pageIndent],
+    padding: [20, 40],
     flexGrow: 1
   },
   header: {
-    background: `linear-gradient(135deg, ${materialLightBlue900} 0%, ${materialLightBlue500} 100%)`,
-    height: headerHeight,
-    minHeight: headerHeight,
+    background: `linear-gradient(135deg, ${blue[900]} 0%, ${blue[500]} 100%)`,
+    height: 60,
+    minHeight: 60,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: [0, pageIndent],
+    padding: [0, 40],
   },
   logoWrapper: {
-    fontFamily: 'Oswald',
     fontSize: '24px',
     letterSpacing: '.7px',
     textTransform: 'uppercase',
@@ -62,8 +59,6 @@ const Layout = ({ children, message }: Props) => {
         </div>
         <User />
       </div>
-
-      {message && <Notification message={message} type="SUCCESS" />}
       <div className={classes.content}>{children}</div>
     </div>
   );
