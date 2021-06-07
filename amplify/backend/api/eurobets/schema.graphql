@@ -6,7 +6,7 @@ type User
   id: ID
   username: String!
   email: String!
-  firstName: String
+  firstName: String!
   lastName: String
   players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
   bets: [Bet] @connection(keyName: "byUser", fields: ["id"])

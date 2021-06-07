@@ -49,17 +49,16 @@ const MyApp = (props) => {
           },
           {
             type: "given_name",
-            label: "First Name",
-            placeholder: "enter first name",
+            label: "First Name *",
+            placeholder: "Enter first name",
             hint: null,
-            required: true,
+            inputProps: { required: true },
           },
           {
             type: "family_name",
             label: "Last Name",
-            placeholder: "enter last name",
+            placeholder: "Enter last name",
             hint: null,
-            required: true,
           },
           {
             type: "password",

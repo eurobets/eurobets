@@ -31,7 +31,7 @@ const User = () => {
       >
         {
           // @ts-ignore
-          `${user.firstName[0].toUpperCase()}${user.lastName[0].toUpperCase()}`
+          `${user.firstName[0].toUpperCase()}${user.lastName ? user.lastName[0].toUpperCase() : ''}`
         }
       </Avatar>
       <Menu
