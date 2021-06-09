@@ -12,7 +12,7 @@ import { selectRoomTable } from '../../recoil/selectors';
 import { getRoom } from '../../api';
 import BetDialog from '../BetDialog';
 import BetCellContent from '../BetCellContent';
-import { Bet, Game, TableGame, TableRow as TableRowType } from '../../types';
+import { Bet, Game, TableGame, RoomTableRow } from '../../types';
 
 const useStyles = createUseStyles({
   root: {
@@ -98,7 +98,7 @@ const useStyles = createUseStyles({
 
 type BetDialogInput = {
   game: Game,
-  bet: Bet
+  bet?: Bet
 } | undefined;
 
 const RoomView = () => {
@@ -144,12 +144,12 @@ const RoomView = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {table.map((player) => (
-                <TableRow key={player.id}>
+              {table.map((row) => (
+                <TableRow key={row.id}>
                   <TableCell className={classes.cell}>
                     <div className={classes.userWrapper}>
-                      {player.name}
-                      <img src={player.avatar} className={classes.avatar} />
+                      {row.name}
+                      <img src={row.avatar} className={classes.avatar} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -188,25 +188,25 @@ const RoomView = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {table.map((player: TableRowType) => (
-                  <TableRow key={player.id}>
-                    {player.games.map((game: TableGame) => {
-                      return (
-                        <TableCell key={game.id} align="center" className={classes.cell}>
-                          <BetCellContent
-                            points={game.points}
-                            started={game.started}
-                            onlyPoints={player.bot}
-                            bet={game.bet}
-                            onClick={user.id === player.id
-                              ? () => setBetDialog({ game, bet: game.bet })
-                              : undefined}
-                          />
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                ))}
+              {table.map((row) => (
+                <TableRow key={row.id}>
+                  {row.games.map((game: TableGame) => {
+                    return (
+                      <TableCell key={game.id} align="center" className={classes.cell}>
+                        <BetCellContent
+                          points={game.points}
+                          started={game.started}
+                          onlyPoints={row.bot}
+                          bet={game.bet}
+                          onClick={user.id === row.id
+                            ? () => setBetDialog({ game, bet: game.bet })
+                            : undefined}
+                        />
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </section>
@@ -219,10 +219,10 @@ const RoomView = () => {
             </TableHead>
             <TableBody>
               {
-                table.map((player) => (
-                  <TableRow key={player.id}>
+                table.map((row: RoomTableRow) => (
+                  <TableRow key={row.id}>
                     <TableCell align="center" className={classes.cell}>
-                      {player.score || 0}
+                      {row.score || 0}
                     </TableCell>
                   </TableRow>
                 ))}

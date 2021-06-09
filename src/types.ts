@@ -63,15 +63,16 @@ export interface Room {
 
 export interface TableGame extends Game {
   points?: number | null;
-  started: boolean;
+  started?: boolean;
   bet?: Bet;
   bot?: boolean
 }
 
-export interface TableRow {
+export interface RoomTableRow {
   id: string;
+  name: string;
   games: TableGame[];
   score: number;
   bot?: boolean;
-  name: string;
+  avatar?: string;
 }

@@ -3,18 +3,18 @@ import { gamesState, roomState } from './states';
 import uniqWith from 'lodash/uniqWith';
 
 import { calculatePoints, getTotalScore, getTrololoPoints } from '../utils/pointsCalculation';
-import { Bet, Game, Room, TableRow, Player } from '../types';
+import { Bet, Game, Room, RoomTableRow, Player } from '../types';
 
-const addTrololo = (table: TableRow[], games: Game[], room: Room) => {
+function addTrololo(table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] {
   const gamesWithResults = games.map((game, index) => ({
-    id: game.id,
-    points: getTrololoPoints(table, index, room, game.matchday)
+    points: getTrololoPoints(table, index, room, game.matchday),
+    ...game
   }));
 
   return [
     ...table,
     {
-      id: 'trololo',
+      id: 'txrololo',
       name: 'Trololo',
       bot: true,
       avatar: '/trollface.png',
@@ -32,7 +32,7 @@ interface RoomBetsByUser {
 
 export const selectRoomTable = selector({
   key: 'selectRoomTable', // unique ID (with respect to other atoms/selectors)
-  get: ({ get}) => {
+  get({ get }): RoomTableRow[] | null {
     const games = get(gamesState);
     const room = get(roomState);
 
