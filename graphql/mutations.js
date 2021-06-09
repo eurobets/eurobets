@@ -25,6 +25,7 @@ export const createUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -69,6 +70,7 @@ export const createUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -108,6 +110,7 @@ export const updateUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -152,6 +155,7 @@ export const updateUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -191,6 +195,7 @@ export const deleteUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -235,6 +240,7 @@ export const deleteUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -267,6 +273,7 @@ export const createPlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -356,6 +363,7 @@ export const createPlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -391,6 +399,7 @@ export const updatePlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -480,6 +489,7 @@ export const updatePlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -515,6 +525,7 @@ export const deletePlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -604,6 +615,7 @@ export const deletePlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -635,6 +647,7 @@ export const createRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -656,6 +669,7 @@ export const createRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -718,6 +732,7 @@ export const updateRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -739,6 +754,7 @@ export const updateRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -801,6 +817,7 @@ export const deleteRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -822,6 +839,7 @@ export const deleteRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -880,6 +898,7 @@ export const createBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins
@@ -899,6 +918,7 @@ export const updateBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins
@@ -918,6 +938,7 @@ export const deleteBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins

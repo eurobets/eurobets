@@ -22,6 +22,7 @@ export const getUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -66,6 +67,7 @@ export const getUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -130,6 +132,7 @@ export const listUsers = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -157,6 +160,7 @@ export const getRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -178,6 +182,7 @@ export const getRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -242,6 +247,7 @@ export const listRooms = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -299,6 +305,7 @@ export const getBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins
@@ -320,6 +327,7 @@ export const listBets = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins

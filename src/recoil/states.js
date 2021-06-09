@@ -5,9 +5,9 @@ export const gamesState = atom({
   default: [],
 });
 
-export const roomsState = atom({
-  key: 'roomsState',
-  default: [],
+export const roomState = atom({
+  key: 'roomState',
+  default: null,
 });
 
 export const userState = atom({

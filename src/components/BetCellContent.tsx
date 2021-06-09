@@ -1,30 +1,37 @@
 import React from 'react';
 import { Button, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import CheckIcon from '@material-ui/icons/Check';
+import BetText from './BetText';
 
 type Bet = {
   homeWins: boolean;
   homeScore: number;
   awayScore: number;
   awayWins: boolean;
+  disabled: boolean;
 }
 interface Props {
   bet?: Bet,
   onClick?: (e: any) => void;
+  started?: boolean;
+  onlyPoints?: boolean;
+  points?: number;
 }
 
-const getBetText = (bet: Bet) => {
-  if (typeof bet.homeScore !== 'number' || typeof bet.awayScore !== 'number') {
-    return <CheckIcon />
-  };
-  return `${bet.homeWins ? '🚀 ' : ' '}${bet.homeScore} : ${bet.awayScore}${bet.awayWins ? ' 🚀' : ' '}`;
-}
-
-const BetCellContent = ({ bet, onClick }: Props) => {
+const BetCellContent = ({ bet, onClick, started, points, onlyPoints }: Props) => {
+  if (onlyPoints && points !== null) {
+    return <div>{points}</div>;
+  }
   return bet
-    ? (onClick ? <Button onClick={onClick} size="small" color="primary">{getBetText(bet)}</Button> : <span>{getBetText(bet)}</span>)
-    : (onClick ? <IconButton onClick={onClick} size="small" color="primary"><AddIcon /></IconButton> : null);
+    ? (onClick && !started && !bet.disabled
+      ? <Button onClick={onClick} size="small" color="primary"><BetText {...bet} /></Button>
+      : <div>
+        <div><BetText {...bet} /></div>
+        <div>{points}</div>
+      </div>)
+    : (onClick && !started
+      ? <IconButton onClick={onClick} size="small" color="primary"><AddIcon /></IconButton>
+      : null);
 };
 
 export default BetCellContent;

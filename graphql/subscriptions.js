@@ -22,6 +22,7 @@ export const onCreateUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -66,6 +67,7 @@ export const onCreateUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -102,6 +104,7 @@ export const onUpdateUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -146,6 +149,7 @@ export const onUpdateUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -182,6 +186,7 @@ export const onDeleteUser = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -226,6 +231,7 @@ export const onDeleteUser = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -255,6 +261,7 @@ export const onCreatePlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -344,6 +351,7 @@ export const onCreatePlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -376,6 +384,7 @@ export const onUpdatePlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -465,6 +474,7 @@ export const onUpdatePlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -497,6 +507,7 @@ export const onDeletePlayer = /* GraphQL */ `
           id
           roomId
           game
+          disabled
           homeScore
           awayScore
           homeWins
@@ -586,6 +597,7 @@ export const onDeletePlayer = /* GraphQL */ `
             id
             roomId
             game
+            disabled
             homeScore
             awayScore
             homeWins
@@ -614,6 +626,7 @@ export const onCreateRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -635,6 +648,7 @@ export const onCreateRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -694,6 +708,7 @@ export const onUpdateRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -715,6 +730,7 @@ export const onUpdateRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -774,6 +790,7 @@ export const onDeleteRoom = /* GraphQL */ `
         id
         roomId
         game
+        disabled
         homeScore
         awayScore
         homeWins
@@ -795,6 +812,7 @@ export const onDeleteRoom = /* GraphQL */ `
               id
               roomId
               game
+              disabled
               homeScore
               awayScore
               homeWins
@@ -850,6 +868,7 @@ export const onCreateBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins
@@ -866,6 +885,7 @@ export const onUpdateBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins
@@ -882,6 +902,7 @@ export const onDeleteBet = /* GraphQL */ `
       id
       roomId
       game
+      disabled
       homeScore
       awayScore
       homeWins

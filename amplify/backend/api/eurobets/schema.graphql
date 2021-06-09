@@ -51,6 +51,7 @@ type Bet
   id: ID!
   roomId: ID!
   game: Int!
+  disabled: Boolean
   homeScore: Int
   awayScore: Int
   homeWins: Boolean
