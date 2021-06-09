@@ -1,14 +1,9 @@
 import React, {MouseEvent, useRef, useState} from 'react';
 import { Avatar, MenuItem, Menu } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
-
-import { userState } from '../recoil/states';
 import { useRecoilValue } from 'recoil';
 
-type User = {
-  firstName: string;
-  lastName: string;
-} | null;
+import { userState } from '../../recoil/states';
 
 const User = () => {
   const user = useRecoilValue(userState);
@@ -30,7 +25,6 @@ const User = () => {
         ref={avatarRef}
       >
         {
-          // @ts-ignore
           `${user.firstName[0].toUpperCase()}${user.lastName ? user.lastName[0].toUpperCase() : ''}`
         }
       </Avatar>

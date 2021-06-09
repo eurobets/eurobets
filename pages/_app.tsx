@@ -1,5 +1,5 @@
-import App from 'next/app';
-import React, {useEffect} from 'react';
+import App, { AppProps } from 'next/app';
+import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
 import { AmplifyAuthenticator, AmplifySignUp } from '@aws-amplify/ui-react';
 import Amplify from 'aws-amplify';
@@ -21,15 +21,14 @@ const theme = createMuiTheme({
 
 Amplify.configure(awsExports);
 
-const MyApp = (props) => {
+const MyApp = (props: AppProps) => {
   useEffect(() => {
     const style = document.getElementById('server-side-styles')
 
     if (style) {
-      style.parentNode.removeChild(style)
+      style.parentNode?.removeChild(style)
     }
   }, []);
-
 
   return (
     <>

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, FC } from 'react';
 import { useRecoilState } from 'recoil';
-import Spinner from '../components/Spinner';
-import { gamesState, userState } from '../recoil/states';
-import Layout from './Layout';
 import { onAuthUIStateChange } from '@aws-amplify/ui-components';
-import { getUser, createUser, getGames } from '../../src/api';
 
-interface Props {
-  children: React.ReactNode;
-}
+import Spinner from '../../components/Spinner';
+import { gamesState, userState } from '../../recoil/states';
+import Layout from '../Layout';
+import { getUser, createUser, getGames } from '../../api';
 
 type AuthData = {
   username: string;
@@ -25,7 +21,7 @@ type AuthData = {
 // https://github.com/aws-amplify/amplify-js/issues/7635
 let signedIn = false;
 
-const InitializationWrapper = ({ children }: Props) => {
+const InitializationWrapper: FC = ({ children }) => {
   const [loadingGames, setLoadingGames] = useState(false);
   const [loadingUser, setLoadingUser] = useState(false);
   const [user, setUser] = useRecoilState(userState);

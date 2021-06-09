@@ -1,12 +1,11 @@
-import cx from 'classnames';
 import React, { useState } from 'react';
 import router from 'next/router';
 
 import { createUseStyles } from 'react-jss';
 import { TextField, Button, Typography } from '@material-ui/core';
 import { useRecoilState } from 'recoil';
-import { userState } from '../recoil/states';
-import { createRoom } from '../api';
+import { userState } from '../../recoil/states';
+import { createRoom } from '../../api';
 
 const useStyles = createUseStyles({
   root: {
@@ -22,7 +21,7 @@ const useStyles = createUseStyles({
   }
 });
 const CreateRoom = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const [, setUser] = useRecoilState(userState);
   const classes = useStyles();
   const [name, setName] = useState('');
   const [playoffCoefficient, setPlayoffCoefficient] = useState(1);
@@ -58,16 +57,11 @@ const CreateRoom = () => {
               differencePoints,
               resultPoints,
               promotionPoints
-            },
-            // @ts-ignore
-            user?.id
+            }
           )
             .then(setUser)
             .then(() => router.push('/'));
-
-
-          console.log(name, playoffCoefficient, scorePoints, differencePoints, resultPoints);
-        }}
+          }}
       >
         <TextField
           {...commonTextFieldProps}

@@ -1,30 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Link as MaterialLink } from '@material-ui/core';
 
 import { createUseStyles } from 'react-jss';
-import { Table, TableBody, TableCell, TableHead, TableRow, IconButton, Button } from '@material-ui/core';
-
+import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
+import grey from '@material-ui/core/colors/grey';
 import { useRecoilValue } from 'recoil';
-import { gamesState, userState } from '../recoil/states';
-import BetCellContent from './BetCellContent';
 
-type Game = {
-  id: string;
-  utcDate: string;
-  score: {
-    fullTime: {
-      homeTeam: number;
-      awayTeam: number;
-    };
-  }
-  homeTeam: {
-    name: string;
-  }
-  awayTeam: {
-    name: string;
-  }
-}
+import { gamesState, userState } from '../../recoil/states';
+import { Bet, Game, Player } from '../../types';
+import BetCellContent from './../BetCellContent';
 
 const useStyles = createUseStyles({
   root: {},
@@ -51,22 +36,21 @@ const useStyles = createUseStyles({
   },
   betCell: {
     width: 100,
-    borderLeft: [1, 'solid', '#dadada']
+    borderLeft: [1, 'solid', grey[300]]
   },
   roomHeaderCell: {
     whiteSpace: 'nowrap',
   }
 });
 
-const Games = () => {
+const Dashboard = () => {
   const classes = useStyles();
-  useEffect(() => {
-
-  }, []);
   const games = useRecoilValue(gamesState);
   const user = useRecoilValue(userState);
-  // @ts-ignore
-  const { bets: { items: bets = [] }, players: { items: players = [] } } = useRecoilValue(userState);
+  if (!user || games.length === 0) {
+    return null;
+  }
+  const { bets: { items: bets = [] }, players: { items: players = [] } } = user;
 
   return (
     <div className={classes.root}>
@@ -111,32 +95,33 @@ const Games = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {games.map((game: Game) => {
-            return (
-              <TableRow key={game.id}>
-                <TableCell className={classes.dateCell}>{(new Date(game.utcDate)).toLocaleString()}</TableCell>
-                <TableCell className={classes.gameCell}>{game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}</TableCell>
-                <TableCell align="center" className={classes.scoreCell}>
-                  {game.score.fullTime.homeTeam || '-'} : {game.score.fullTime.awayTeam || '-'}
-                </TableCell>
-                {players.map((player: any) => {
-                  const bet = bets.find((bet: { userId: string; roomId: string; }) => (
-                      //@ts-ignore
-                    bet.owner === user.id && bet.roomId === player.room.id && game.id === Number(bet.game)))
+          {games.map((game: Game) => (
+            <TableRow key={game.id}>
+              <TableCell className={classes.dateCell}>
+                {(new Date(game.utcDate)).toLocaleString()}
+              </TableCell>
+              <TableCell className={classes.gameCell}>
+                {game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}
+              </TableCell>
+              <TableCell align="center" className={classes.scoreCell}>
+                {game.score.fullTime.homeTeam || '-'} : {game.score.fullTime.awayTeam || '-'}
+              </TableCell>
+              {players.map((player: Player) => {
+                const bet = bets.find((bet: Bet) => (
+                  bet.owner === user?.id && bet.roomId === player.room.id && game.id === Number(bet.game)))
 
-                    return (
-                      <TableCell key={player.id} align="center" className={classes.betCell}>
-                        <BetCellContent bet={bet} />
-                      </TableCell>
-                    );
-                })}
-              </TableRow>
-            )
-          })}
+                  return (
+                    <TableCell key={player.id} align="center" className={classes.betCell}>
+                      <BetCellContent bet={bet} />
+                    </TableCell>
+                  );
+              })}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
   );
 };
 
-export default Games;
+export default Dashboard;

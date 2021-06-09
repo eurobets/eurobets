@@ -1,9 +1,9 @@
-import Document from 'next/document'
+import Document, { DocumentContext } from 'next/document'
 import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss';
 import { globalSheet } from '../src/styles/globals';
 
 export default class JssDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const registry = new SheetsRegistry();
     registry.add(globalSheet);
     const generateId = createGenerateId();

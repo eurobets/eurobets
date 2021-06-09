@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { DialogTitle } from '@material-ui/core';
 
@@ -7,10 +7,10 @@ import {
   Button, Dialog, DialogActions, DialogContent, Radio,
   FormControl, OutlinedInput, FormLabel
 } from '@material-ui/core';
-import { useRecoilState } from 'recoil';
-import { userState } from '../recoil/states';
-import { createBet } from '../api';
-import Spinner from './Spinner';
+import { createBet } from '../../api';
+import Spinner from '../Spinner';
+import { Bet, Game } from '../../types';
+import { FIRST_PLAYOFF_DAY } from '../../utils/pointsCalculation';
 
 const useStyles = createUseStyles({
   root: {
@@ -55,16 +55,30 @@ const useStyles = createUseStyles({
     margin: [0, 12]
   }
 });
-const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
+
+interface BetDialogProps {
+  bet?: Bet,
+  game: Game,
+  roomId: string,
+  onClose: () => void,
+  onSave: () => void
+}
+
+const BetDialog: FC<BetDialogProps> = ({
+  roomId,
+  bet = {},
+  game,
+  onClose,
+  onSave
+}) => {
   const classes = useStyles();
-  const [user] = useRecoilState(userState);
   const [loading, setLoading] = useState(false);
   const [homeScore, setHome] = useState(bet.homeScore || '0');
   const [awayScore, setAway] = useState(bet.awayScore || '0');
   const [homeWins, setHomeWins] = useState(true);
   const [awayWins, setAwayWins] = useState(false);
   const { query: { id } } = useRouter();
-  const isPlayoff = game.matchday >= 4;
+  const isPlayoff = game.matchday >= FIRST_PLAYOFF_DAY;
 
   useEffect(() => {
 
@@ -116,7 +130,6 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
                 value={homeScore}
                 onChange={e => setHome(Number(e.target.value).toString())}
                 type="number"
-                variant="outlined"
                 id="home-input"
                 classes={{
                   root: classes.scoreInputWrapper,
@@ -138,7 +151,6 @@ const BetDialog = ({ roomId, bet = {}, game, onClose, onSave }) => {
                   input: classes.scoreInput
                 }}
                 type="number"
-                variant="outlined"
                 id="away-input"
               />
               <div>

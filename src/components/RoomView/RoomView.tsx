@@ -3,15 +3,16 @@ import { useRouter } from 'next/router';
 import { createUseStyles } from 'react-jss';
 import grey from '@material-ui/core/colors/grey';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button, Input, Tooltip } from '@material-ui/core';
-
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { gamesState, userState, roomState } from '../recoil/states';
-import { selectRoomTable } from '../recoil/selectors';
-import { getRoom } from '../api';
-import BetDialog from './BetDialog';
-import BetCellContent from './BetCellContent';
 import Head from 'next/head';
 import { FlagOutlined } from '@material-ui/icons';
+
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { gamesState, userState, roomState } from '../../recoil/states';
+import { selectRoomTable } from '../../recoil/selectors';
+import { getRoom } from '../../api';
+import BetDialog from '../BetDialog';
+import BetCellContent from '../BetCellContent';
+import { Bet, Game, TableGame, TableRow as TableRowType } from '../../types';
 
 const useStyles = createUseStyles({
   root: {
@@ -95,11 +96,16 @@ const useStyles = createUseStyles({
   }
 });
 
+type BetDialogInput = {
+  game: Game,
+  bet: Bet
+} | undefined;
+
 const RoomView = () => {
   const classes = useStyles();
-  const [betDialog, setBetDialog] = useState(null);
+  const [betDialog, setBetDialog] = useState<BetDialogInput>();
   const [inviteMode, setInviteMode] = useState(false);
-  const { id: userId } = useRecoilValue(userState);
+  const user = useRecoilValue(userState);
   const { query: { id } } = useRouter();
   const games = useRecoilValue(gamesState);
   const [room, setRoom] = useRecoilState(roomState);
@@ -107,9 +113,11 @@ const RoomView = () => {
 
   useEffect(() => {
     getRoom(id).then(setRoom);
+
+    return () => setRoom(null);
   }, [id]);
 
-  if (!room) {
+  if (!room || !user || !table) {
     return null;
   }
   const {
@@ -120,7 +128,7 @@ const RoomView = () => {
     promotionPoints,
     playoffCoefficient,
     name
-  } = room || {};
+  } = room;
 
   return (
     <div className={classes.root}>
@@ -180,18 +188,19 @@ const RoomView = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {table.map((player) => (
+              {table.map((player: TableRowType) => (
                   <TableRow key={player.id}>
-                    {player.games.map((game) => {
-                        return (
+                    {player.games.map((game: TableGame) => {
+                      return (
                         <TableCell key={game.id} align="center" className={classes.cell}>
                           <BetCellContent
                             points={game.points}
                             started={game.started}
                             onlyPoints={player.bot}
                             bet={game.bet}
-                            mine={userId === player.id}
-                            onClick={userId === player.id ? () => setBetDialog({ game, bet: game.bet }) : undefined}
+                            onClick={user.id === player.id
+                              ? () => setBetDialog({ game, bet: game.bet })
+                              : undefined}
                           />
                         </TableCell>
                       )
@@ -242,9 +251,9 @@ const RoomView = () => {
         <BetDialog
           {...betDialog}
           roomId={roomId}
-          onClose={() => setBetDialog(null)}
+          onClose={() => setBetDialog(undefined)}
           onSave={() => {
-            getRoom(id).then(setRoom).then(() => setBetDialog(null));
+            getRoom(id).then(setRoom).then(() => setBetDialog(undefined));
           }}
         />
       )}

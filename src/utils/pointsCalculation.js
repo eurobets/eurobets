@@ -1,4 +1,4 @@
-const FIRST_PLAYOFF_DAY = 4;
+export const FIRST_PLAYOFF_DAY = 4;
 
 const isCorrectScore = ({ homeScore, awayScore }, { homeTeam, awayTeam }) => (
   homeScore === homeTeam &&

@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Spinner = (props: JSX.IntrinsicAttributes & CircularProgressProps) => {
+const Spinner = (props: CircularProgressProps) => {
   const classes = useStyles();
 
   return <CircularProgress className={classes.root} {...props} />;

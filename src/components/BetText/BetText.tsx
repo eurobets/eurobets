@@ -1,17 +1,8 @@
-import React from 'react';
-import { Button, IconButton } from '@material-ui/core';
+import React, { FC } from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import cx from 'classnames';
 import { createUseStyles } from 'react-jss';
-
-interface Props {
-  homeWins: boolean;
-  homeScore?: number;
-  awayScore?: number;
-  awayWins: boolean;
-}
-
-
+import { Bet } from '../../types';
 
 const useStyles = createUseStyles({
   root: {
@@ -41,7 +32,12 @@ const useStyles = createUseStyles({
   }
 });
 
-const BetText = ({ homeScore, awayScore, homeWins, awayWins }: Props) => {
+const BetText: FC<Bet> = ({
+  homeScore,
+  awayScore,
+  homeWins,
+  awayWins
+}) => {
   const classes = useStyles();
 
   if (typeof homeScore !== 'number' || typeof awayScore !== 'number') {
@@ -50,9 +46,7 @@ const BetText = ({ homeScore, awayScore, homeWins, awayWins }: Props) => {
 
   return (
     <div className={classes.root}>
-      <div
-        className={cx(classes.text, homeWins && classes.homeWins, awayWins && classes.awayWins)}
-      >
+      <div className={cx(classes.text, homeWins && classes.homeWins, awayWins && classes.awayWins)}>
         {homeScore} : {awayScore}
       </div>
     </div>

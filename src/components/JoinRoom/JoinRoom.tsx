@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import router, { useRouter } from 'next/router';
 import Link from 'next/link';
-
 import { createUseStyles } from 'react-jss';
 import { Button, Typography } from '@material-ui/core';
-import { useRecoilState } from 'recoil';
-import { userState } from '../recoil/states';
-import { joinRoom, getRoom } from '../api';
-import Spinner from './Spinner';
+import { SetterOrUpdater, useRecoilState } from 'recoil';
+
+import { userState } from '../../recoil/states';
+import { joinRoom, getRoom } from '../../api';
+import Spinner from '../Spinner';
+import { Player, Room } from '../../types';
 
 const useStyles = createUseStyles({
   root: {
@@ -24,22 +25,31 @@ const useStyles = createUseStyles({
 });
 const JoinRoom = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useRecoilState(userState);
-  const [room, setRoom] = useState({});
+  const [room, setRoom] = useState<Room | null>(null);
   const [alreadyThere, setAlreadyThere] = useState(false);
   const { query: { id } } = useRouter();
 
   useEffect(() => {
-    getRoom(id).then(room => {
-      if (room.players.items.find(player => player.user.id === user.id)) {
-        setAlreadyThere(true);
-      }
-      setRoom(room);
-    });
+    setLoading(true);
+    getRoom(id)
+      .then(room => {
+        if (room?.players.items.find((player: Player) => player.user.id === user?.id)) {
+          setAlreadyThere(true);
+        }
+        setRoom(room);
+      })
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (!room.id) {
+
+  if (loading) {
     return <Spinner />;
+  }
+
+  if (!room) {
+    return null;
   }
 
   return (

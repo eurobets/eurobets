@@ -1,10 +1,10 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { FC } from 'react';
 
 import { createUseStyles } from 'react-jss';
-import { fontFamilyOswald } from '../styles/constants';
+import { fontFamilyOswald } from '../../styles/constants';
 
-interface Props {
+interface LogoProps {
   className?: string;
 }
 
@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
   }
 });
 
-const Logo = ({ className }: Props) => {
+const Logo: FC<LogoProps> = ({ className }) => {
   const classes = useStyles();
 
   return (

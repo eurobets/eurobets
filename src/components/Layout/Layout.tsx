@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 import blue from '@material-ui/core/colors/lightBlue';
 
-import Logo from '../components/Logo';
-import User from '../components/User';
-
-interface Props {
-  children: React.ReactNode;
-  message?: string;
-}
+import Logo from '../Logo';
+import User from '../User';
 
 const useStyles = createUseStyles({
   root: {
@@ -44,7 +39,7 @@ const useStyles = createUseStyles({
   }
 });
 
-const Layout = ({ children, message }: Props) => {
+const Layout: FC = ({ children }) => {
   const classes = useStyles();
 
   return (
