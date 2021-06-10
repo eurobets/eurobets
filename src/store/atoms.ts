@@ -15,3 +15,8 @@ export const userState = atom<User | null>({
   key: 'userState',
   default: null,
 });
+
+export const sortingState = atom<'DEFAULT' | 'SCORE'>({
+  key: 'sortingState',
+  default: 'DEFAULT',
+});

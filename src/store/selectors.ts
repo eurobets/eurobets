@@ -1,15 +1,25 @@
 import {selector} from 'recoil';
-import { gamesState, roomState } from './atoms';
+import { gamesState, roomState, sortingState, userState } from './atoms';
 import uniqWith from 'lodash/uniqWith';
 
 import { getTotalScore, addTrololo, getRoomBetsByUser } from '../utils/pointsCalculation';
-import { Bet, Game, RoomTableRow, Player } from '../types';
+import { Bet, Game, RoomTableRow, Player, User } from '../types';
+
+const sortByScore = (a: RoomTableRow, b: RoomTableRow) => {
+ return a.score > b.score ? -1 : 1
+}
+
+const sortByDefault = (a: RoomTableRow, b: RoomTableRow, user: User | null) => {
+  return a.id === user?.id ? -1 : 1
+}
 
 export const selectRoomTable = selector({
   key: 'selectRoomTable', // unique ID (with respect to other atoms/selectors)
   get({ get }): RoomTableRow[] | null {
     const games = get(gamesState);
     const room = get(roomState);
+    const sorting = get(sortingState);
+    const user = get(userState);
 
     if (!room) {
       return null;
@@ -30,6 +40,10 @@ export const selectRoomTable = selector({
       }
     });
 
-    return addTrololo(table, games, room);
+    return addTrololo(table, games, room)
+      .sort((a, b) => sorting === 'SCORE'
+        ? sortByScore(a, b)
+        : sortByDefault(a, b, user)
+      );
   },
 });
