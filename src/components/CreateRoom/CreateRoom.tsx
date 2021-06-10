@@ -4,7 +4,7 @@ import router from 'next/router';
 import { createUseStyles } from 'react-jss';
 import { TextField, Button, Typography } from '@material-ui/core';
 import { useRecoilState } from 'recoil';
-import { userState } from '../../recoil/states';
+import { userState } from '../../store/atoms';
 import { createRoom } from '../../api';
 
 const useStyles = createUseStyles({

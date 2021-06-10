@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mater
 import grey from '@material-ui/core/colors/grey';
 import { useRecoilValue } from 'recoil';
 
-import { gamesState, userState } from '../../recoil/states';
+import { gamesState, userState } from '../../store/atoms';
 import { Bet, Game, Player } from '../../types';
 import BetCellContent from './../BetCellContent';
 

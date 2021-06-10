@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { Button, Typography } from '@material-ui/core';
 import { SetterOrUpdater, useRecoilState } from 'recoil';
 
-import { userState } from '../../recoil/states';
+import { userState } from '../../store/atoms';
 import { joinRoom, getRoom } from '../../api';
 import Spinner from '../Spinner';
 import { Player, Room } from '../../types';

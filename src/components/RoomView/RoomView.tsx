@@ -7,8 +7,8 @@ import Head from 'next/head';
 import { FlagOutlined } from '@material-ui/icons';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { gamesState, userState, roomState } from '../../recoil/states';
-import { selectRoomTable } from '../../recoil/selectors';
+import { gamesState, userState, roomState } from '../../store/atoms';
+import { selectRoomTable } from '../../store/selectors';
 import { getRoom } from '../../api';
 import BetDialog from '../BetDialog';
 import BetCellContent from '../BetCellContent';

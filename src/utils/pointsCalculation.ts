@@ -1,6 +1,9 @@
 import { Room, RoomTableRow, TableGame, Bet, GameFullTime, Game } from '../types';
+import uniqWith from 'lodash/uniqWith';
 
 export const FIRST_PLAYOFF_DAY = 4;
+
+
 
 const isCorrectScore = ({ homeScore, awayScore }: Bet, { homeTeam, awayTeam }: GameFullTime): boolean => (
   homeScore === homeTeam &&
@@ -19,7 +22,7 @@ const isCorrectPromotion = ({ homeWins, awayWins }: Bet, { matchday, score: { wi
   matchday >= FIRST_PLAYOFF_DAY && ((winner === 'HOME_TEAM' && homeWins) || (winner === 'AWAY_TEAM' && awayWins))
 );
 
-export const calculatePoints = (
+const calculatePoints = (
   bet: Bet,
   game: Game | undefined,
   {
@@ -62,7 +65,7 @@ export const getTotalScore = (items: TableGame[]) => (
   items.reduce((sum: number, item) => (sum + (item.points || 0)), 0)
 );
 
-export const getMaxPossiblePoints = (
+const getMaxPossiblePoints = (
   { scorePoints, playoffCoefficient, promotionPoints }: Room,
   matchday: number
 ) => (
@@ -71,7 +74,7 @@ export const getMaxPossiblePoints = (
     : scorePoints
 );
 
-export const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matchday: number) => {
+const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matchday: number) => {
   const maxPossiblePoints = getMaxPossiblePoints(room, matchday);
 
   const maxPoints = table.reduce((result: number | null, row) => {
@@ -87,3 +90,42 @@ export const getTrololoPoints = (table: RoomTableRow[], index: number, room: Roo
 
   return maxPoints === null ? null : maxPossiblePoints - maxPoints;
 }
+
+export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => {
+  const gamesWithResults = games.map((game, index) => ({
+    points: getTrololoPoints(table, index, room, game.matchday),
+    ...game
+  }));
+
+  return [
+    ...table,
+    {
+      id: 'trololo',
+      name: 'Trololo',
+      bot: true,
+      avatar: '/trollface.png',
+      games: gamesWithResults,
+      score: getTotalScore(gamesWithResults)
+    }
+  ];
+};
+
+interface RoomBetsByUser {
+  [key: string]: {
+    [key: string]: Bet
+  };
+}
+
+export const getRoomBetsByUser = (room: Room, games: Game[]) => uniqWith(
+  room.bets, (a, b) => a.game === b.game && a.owner === b.owner
+)
+  .reduce((result: RoomBetsByUser, bet: Bet) => ({
+    ...result,
+    [bet.owner]: {
+      ...result[bet.owner],
+      [bet.game]: {
+        bet,
+        points: calculatePoints(bet, games.find(game => game.id === bet.game), room)
+      }
+    }
+  }), {});

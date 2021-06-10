@@ -3,7 +3,7 @@ import { Avatar, MenuItem, Menu } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
 import { useRecoilValue } from 'recoil';
 
-import { userState } from '../../recoil/states';
+import { userState } from '../../store/atoms';
 
 const User = () => {
   const user = useRecoilValue(userState);

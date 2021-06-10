@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { onAuthUIStateChange } from '@aws-amplify/ui-components';
 
 import Spinner from '../../components/Spinner';
-import { gamesState, userState } from '../../recoil/states';
+import { gamesState, userState } from '../../store/atoms';
 import Layout from '../Layout';
 import { getUser, createUser, getGames } from '../../api';
 import { AuthorizationData } from '../../types';
