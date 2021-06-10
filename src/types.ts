@@ -1,3 +1,12 @@
+export interface BetRequest {
+  homeWins: boolean;
+  homeScore: number;
+  awayScore: number;
+  awayWins: boolean;
+  roomId: string;
+  game: number;
+}
+
 export interface Bet {
   homeWins: boolean;
   homeScore: number | null;
@@ -42,9 +51,19 @@ export interface User {
 }
 
 export interface Player {
+  owner: string;
   id: string;
   user: User;
   room: Room;
+}
+
+export interface RoomRequest {
+  name: string;
+  scorePoints: number;
+  differencePoints: number;
+  resultPoints: number;
+  promotionPoints: number;
+  playoffCoefficient: number;
 }
 
 export interface Room {
@@ -75,4 +94,13 @@ export interface RoomTableRow {
   score: number;
   bot?: boolean;
   avatar?: string;
+}
+
+export interface AuthorizationData {
+  username: string;
+  attributes: {
+    given_name: string;
+    family_name: string;
+    email: string;
+  }
 }

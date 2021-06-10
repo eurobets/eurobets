@@ -6,16 +6,7 @@ import Spinner from '../../components/Spinner';
 import { gamesState, userState } from '../../recoil/states';
 import Layout from '../Layout';
 import { getUser, createUser, getGames } from '../../api';
-
-type AuthData = {
-  username: string;
-  attributes: {
-    sub: string;
-    given_name: string;
-    family_name: string;
-    email: string;
-  }
-}
+import { AuthorizationData } from '../../types';
 
 // to bypass double signedin state
 // https://github.com/aws-amplify/amplify-js/issues/7635
@@ -27,7 +18,7 @@ const InitializationWrapper: FC = ({ children }) => {
   const [user, setUser] = useRecoilState(userState);
   const [, setGames] = useRecoilState(gamesState);
 
-  async function fetchUser(authData: AuthData) {
+  async function fetchUser(authData: AuthorizationData) {
     try {
       const user = await getUser(authData.username);
       if (user) {
@@ -35,7 +26,10 @@ const InitializationWrapper: FC = ({ children }) => {
       }
       return await createUser(authData);
 
-    } catch (err) { console.log('error fetching user', err) }
+    } catch (err) {
+      console.log('error fetching user', err);
+      return null;
+    }
   }
 
   useEffect(() => {
@@ -58,8 +52,8 @@ const InitializationWrapper: FC = ({ children }) => {
       if (nextAuthState === 'signedin' && !signedIn) {
         signedIn = true;
         setLoadingUser(true);
-        fetchUser(authData as AuthData)
-          .then(setUser)
+        fetchUser(authData as AuthorizationData)
+          .then(user => setUser(user))
           .finally(() => setLoadingUser(false));
         // todo: catch case with error
       }

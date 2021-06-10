@@ -112,7 +112,7 @@ const RoomView = () => {
   const table = useRecoilValue(selectRoomTable);
 
   useEffect(() => {
-    getRoom(id).then(setRoom);
+    getRoom(id as string).then(setRoom);
 
     return () => setRoom(null);
   }, [id]);
@@ -253,7 +253,7 @@ const RoomView = () => {
           roomId={roomId}
           onClose={() => setBetDialog(undefined)}
           onSave={() => {
-            getRoom(id).then(setRoom).then(() => setBetDialog(undefined));
+            getRoom(id as string).then(setRoom).then(() => setBetDialog(undefined));
           }}
         />
       )}

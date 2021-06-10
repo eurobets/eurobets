@@ -33,7 +33,7 @@ const JoinRoom = () => {
 
   useEffect(() => {
     setLoading(true);
-    getRoom(id)
+    getRoom(id as string)
       .then(room => {
         if (room?.players.items.find((player: Player) => player.user.id === user?.id)) {
           setAlreadyThere(true);
