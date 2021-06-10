@@ -18,15 +18,18 @@ export interface Bet {
   game: number;
 }
 
+export interface GameFullTime {
+  homeTeam: number;
+  awayTeam: number;
+}
+
 export interface Game {
   id: number;
   matchday: number;
   utcDate: string;
   score: {
-    fullTime: {
-      homeTeam: number;
-      awayTeam: number;
-    };
+    winner: 'HOME_TEAM' | 'AWAY_TEAM' | 'DRAW'
+    fullTime: GameFullTime;
   };
   homeTeam: {
     name: string;

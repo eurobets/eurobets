@@ -5,7 +5,7 @@ import uniqWith from 'lodash/uniqWith';
 import { calculatePoints, getTotalScore, getTrololoPoints } from '../utils/pointsCalculation';
 import { Bet, Game, Room, RoomTableRow, Player } from '../types';
 
-function addTrololo(table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] {
+const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => {
   const gamesWithResults = games.map((game, index) => ({
     points: getTrololoPoints(table, index, room, game.matchday),
     ...game
