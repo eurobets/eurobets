@@ -1,4 +1,4 @@
-import {atom} from 'recoil';
+import { atom } from 'recoil';
 import { User, Room, Game } from '../types';
 
 export const gamesState = atom<Game[]>({

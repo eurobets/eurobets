@@ -8,7 +8,7 @@ const useStyles = createUseStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
     position: 'relative',
@@ -16,27 +16,27 @@ const useStyles = createUseStyles({
       display: 'none',
       position: 'absolute',
       content: '\'🚀\'',
-    }
+    },
   },
   homeWins: {
     '&::before': {
       left: -20,
       display: 'block',
-    }
+    },
   },
   awayWins: {
     '&::before': {
       right: -20,
       display: 'block',
-    }
-  }
+    },
+  },
 });
 
 const BetText: FC<Bet> = ({
   homeScore,
   awayScore,
   homeWins,
-  awayWins
+  awayWins,
 }) => {
   const classes = useStyles();
 
@@ -47,10 +47,12 @@ const BetText: FC<Bet> = ({
   return (
     <div className={classes.root}>
       <div className={cx(classes.text, homeWins && classes.homeWins, awayWins && classes.awayWins)}>
-        {homeScore} : {awayScore}
+        {homeScore}
+        {' : '}
+        {awayScore}
       </div>
     </div>
   );
-}
+};
 
 export default BetText;

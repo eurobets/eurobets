@@ -1,4 +1,4 @@
-import React, {MouseEvent, useRef, useState} from 'react';
+import React, { MouseEvent, useRef, useState } from 'react';
 import { Avatar, MenuItem, Menu } from '@material-ui/core';
 import { Auth } from 'aws-amplify';
 import { useRecoilValue } from 'recoil';
@@ -20,7 +20,7 @@ const User = () => {
         href="#"
         onClick={(e: MouseEvent<HTMLElement>) => {
           e.preventDefault();
-          setMenuOpen(true)
+          setMenuOpen(true);
         }}
         ref={avatarRef}
       >

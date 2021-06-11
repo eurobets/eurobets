@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     padding: [20, 40],
-    flexGrow: 1
+    flexGrow: 1,
   },
   header: {
     background: `linear-gradient(135deg, ${blue[900]} 0%, ${blue[500]} 100%)`,
@@ -36,7 +36,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  }
+  },
 });
 
 const Layout: FC = ({ children }) => {

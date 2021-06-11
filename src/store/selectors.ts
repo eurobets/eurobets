@@ -1,17 +1,16 @@
-import {selector} from 'recoil';
+import { selector } from 'recoil';
 import { gamesState, roomState, sortingState, userState } from './atoms';
-import uniqWith from 'lodash/uniqWith';
 
 import { getTotalScore, addTrololo, getRoomBetsByUser } from '../utils/pointsCalculation';
-import { Bet, Game, RoomTableRow, Player, User } from '../types';
+import { Game, RoomTableRow, Player, User } from '../types';
 
-const sortByScore = (a: RoomTableRow, b: RoomTableRow) => {
- return a.score > b.score ? -1 : 1
-}
+export const sortByScore = (a: RoomTableRow, b: RoomTableRow) => (
+  a.score > b.score ? -1 : 1
+);
 
-const sortByDefault = (a: RoomTableRow, b: RoomTableRow, user: User | null) => {
-  return a.id === user?.id ? -1 : 1
-}
+export const sortByDefault = (a: RoomTableRow, b: RoomTableRow, user: User | null) => (
+  a.id === user?.id ? -1 : 1
+);
 
 export const selectRoomTable = selector({
   key: 'selectRoomTable', // unique ID (with respect to other atoms/selectors)
@@ -30,20 +29,20 @@ export const selectRoomTable = selector({
       const gamesWithResults = games.map((game: Game) => ({
         started: new Date() > new Date(game.utcDate),
         ...roomBetsByUser[player.user.id]?.[game.id],
-        ...game
+        ...game,
       }));
       return {
         id: player.user.id,
         name: `${player.user.firstName || ''} ${player.user.lastName || ''}`.trim(),
         games: gamesWithResults,
-        score: getTotalScore(gamesWithResults)
-      }
+        score: getTotalScore(gamesWithResults),
+      };
     });
 
     return addTrololo(table, games, room)
-      .sort((a, b) => sorting === 'SCORE'
+      .sort((a, b) => (sorting === 'SCORE'
         ? sortByScore(a, b)
         : sortByDefault(a, b, user)
-      );
+      ));
   },
 });

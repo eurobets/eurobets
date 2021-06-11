@@ -3,7 +3,7 @@ import router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 import { Button, Typography } from '@material-ui/core';
-import { SetterOrUpdater, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { userState } from '../../store/atoms';
 import { joinRoom, getRoom } from '../../api';
@@ -20,8 +20,8 @@ const useStyles = createUseStyles({
     '&&': {
       margin: [16, 0],
     },
-    width: 300
-  }
+    width: 300,
+  },
 });
 const JoinRoom = () => {
   const classes = useStyles();
@@ -34,15 +34,14 @@ const JoinRoom = () => {
   useEffect(() => {
     setLoading(true);
     getRoom(id as string)
-      .then(room => {
-        if (room?.players.items.find((player: Player) => player.user.id === user?.id)) {
+      .then((roomResponse) => {
+        if (roomResponse?.players.items.find((player: Player) => player.user.id === user?.id)) {
           setAlreadyThere(true);
         }
         setRoom(room);
       })
       .finally(() => setLoading(false));
   }, [id]);
-
 
   if (loading) {
     return <Spinner />;
@@ -55,7 +54,7 @@ const JoinRoom = () => {
   return (
     <div className={classes.root}>
       <Typography variant="h3" component="h2">
-        Join room "{room.name}"
+        {`Join room ${room.name}`}
       </Typography>
       <Typography variant="subtitle1" component="h2">
         {alreadyThere ? 'you\'re already in this room' : 'Would you like to join this room?'}
@@ -69,7 +68,7 @@ const JoinRoom = () => {
               color="primary"
               variant="contained"
             >
-              Go to {room.name}
+              {`Go to ${room.name}`}
             </Button>
           </Link>
         )
@@ -85,8 +84,7 @@ const JoinRoom = () => {
           >
             Join
           </Button>
-        )
-      }
+        )}
     </div>
   );
 };

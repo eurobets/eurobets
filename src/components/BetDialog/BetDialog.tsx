@@ -1,11 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { DialogTitle } from '@material-ui/core';
 
 import { createUseStyles } from 'react-jss';
 import {
   Button, Dialog, DialogActions, DialogContent, Radio,
-  FormControl, OutlinedInput, FormLabel
+  FormControl, OutlinedInput, FormLabel, DialogTitle,
 } from '@material-ui/core';
 import { createBet } from '../../api';
 import Spinner from '../Spinner';
@@ -22,28 +21,28 @@ const useStyles = createUseStyles({
     '&&': {
       margin: [16, 0],
     },
-    width: 300
+    width: 300,
   },
   formInput: {
     '&&': {
       flexDirection: 'row',
       alignItems: 'center',
       margin: [16, 0, 32],
-    }
+    },
   },
   scoreInput: {
     '&&': {
       textAlign: 'center',
-      padding: 8
-    }
+      padding: 8,
+    },
   },
   scoreInputWrapper: {
     '&&': {
       fontSize: 24,
       margin: [0, 16],
       width: 60,
-      minWidth: 60
-    }
+      minWidth: 60,
+    },
   },
   scoreRow: {
     display: 'flex',
@@ -52,8 +51,8 @@ const useStyles = createUseStyles({
   flag: {
     boxShadow: [0, 0, 2, '#777'],
     height: 35,
-    margin: [0, 12]
-  }
+    margin: [0, 12],
+  },
 });
 
 interface BetDialogProps {
@@ -69,7 +68,7 @@ const BetDialog: FC<BetDialogProps> = ({
   bet = {},
   game,
   onClose,
-  onSave
+  onSave,
 }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -90,19 +89,19 @@ const BetDialog: FC<BetDialogProps> = ({
       <DialogContent>
         <form
           id="bet-form"
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             setLoading(true);
             createBet({
               homeScore: Number(homeScore),
               awayScore: Number(awayScore),
               game: game.id,
-              roomId: roomId,
+              roomId,
               homeWins: isPlayoff && homeWins,
-              awayWins: isPlayoff && awayWins
+              awayWins: isPlayoff && awayWins,
             })
               .then(onSave)
-              .catch(() => setLoading(false))
+              .catch(() => setLoading(false));
           }}
         >
           <div className={classes.scoreRow}>
@@ -125,15 +124,15 @@ const BetDialog: FC<BetDialogProps> = ({
               <OutlinedInput
                 inputProps={{
                   min: 0,
-                  max: 99
+                  max: 99,
                 }}
                 value={homeScore}
-                onChange={e => setHome(Number(e.target.value).toString())}
+                onChange={(e) => setHome(Number(e.target.value).toString())}
                 type="number"
                 id="home-input"
                 classes={{
                   root: classes.scoreInputWrapper,
-                  input: classes.scoreInput
+                  input: classes.scoreInput,
                 }}
               />
             </FormControl>
@@ -142,13 +141,13 @@ const BetDialog: FC<BetDialogProps> = ({
               <OutlinedInput
                 inputProps={{
                   min: 0,
-                  max: 99
+                  max: 99,
                 }}
                 value={awayScore}
-                onChange={e => setAway(Number(e.target.value).toString())}
+                onChange={(e) => setAway(Number(e.target.value).toString())}
                 classes={{
                   root: classes.scoreInputWrapper,
-                  input: classes.scoreInput
+                  input: classes.scoreInput,
                 }}
                 type="number"
                 id="away-input"

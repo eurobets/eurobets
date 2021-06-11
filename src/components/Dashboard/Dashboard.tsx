@@ -1,46 +1,45 @@
 import React from 'react';
 import Link from 'next/link';
-import { Link as MaterialLink } from '@material-ui/core';
 
 import { createUseStyles } from 'react-jss';
-import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, Link as MaterialLink } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import { useRecoilValue } from 'recoil';
 
 import { gamesState, userState } from '../../store/atoms';
 import { Bet, Game, Player } from '../../types';
-import BetCellContent from './../BetCellContent';
+import BetCellContent from '../BetCellContent';
 
 const useStyles = createUseStyles({
   root: {},
   subHeader: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   table: {
     '&&': {
-      width: 'auto'
+      width: 'auto',
     },
   },
   menuItem: {
-    marginRight: 36
+    marginRight: 36,
   },
   dateCell: {
-    width: 200
+    width: 200,
   },
   gameCell: {
-    width: 200
+    width: 200,
   },
   scoreCell: {
     width: 100,
   },
   betCell: {
     width: 100,
-    borderLeft: [1, 'solid', grey[300]]
+    borderLeft: [1, 'solid', grey[300]],
   },
   roomHeaderCell: {
     whiteSpace: 'nowrap',
-  }
+  },
 });
 
 const Dashboard = () => {
@@ -101,20 +100,27 @@ const Dashboard = () => {
                 {(new Date(game.utcDate)).toLocaleString()}
               </TableCell>
               <TableCell className={classes.gameCell}>
-                {game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}
+                {game.homeTeam.name || '?'}
+                {' — '}
+                {game.awayTeam.name || '?'}
               </TableCell>
               <TableCell align="center" className={classes.scoreCell}>
-                {game.score.fullTime.homeTeam || '-'} : {game.score.fullTime.awayTeam || '-'}
+                {game.score.fullTime.homeTeam || '-'}
+                {' : '}
+                {game.score.fullTime.awayTeam || '-'}
               </TableCell>
               {players.map((player: Player) => {
-                const bet = bets.find((bet: Bet) => (
-                  bet.owner === user?.id && bet.roomId === player.room.id && game.id === Number(bet.game)))
+                const bet = bets.find((item: Bet) => (
+                  item.owner === user?.id
+                  && item.roomId === player.room.id
+                  && game.id === Number(item.game)
+                ));
 
-                  return (
-                    <TableCell key={player.id} align="center" className={classes.betCell}>
-                      <BetCellContent bet={bet} />
-                    </TableCell>
-                  );
+                return (
+                  <TableCell key={player.id} align="center" className={classes.betCell}>
+                    <BetCellContent bet={bet} />
+                  </TableCell>
+                );
               })}
             </TableRow>
           ))}

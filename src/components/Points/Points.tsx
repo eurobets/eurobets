@@ -6,12 +6,12 @@ import red from '@material-ui/core/colors/red';
 
 const useStyles = createUseStyles({
   fail: {
-    color: red[900]
+    color: red[900],
   },
   success: {
     fontWeight: 'bold',
-    color: green[700]
-  }
+    color: green[700],
+  },
 });
 
 const Points: FC = ({ children }) => {

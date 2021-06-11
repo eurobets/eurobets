@@ -23,58 +23,58 @@ Amplify.configure(awsExports);
 
 const MyApp = (props: AppProps) => {
   useEffect(() => {
-    const style = document.getElementById('server-side-styles')
+    const style = document.getElementById('server-side-styles');
 
     if (style) {
-      style.parentNode?.removeChild(style)
+      style.parentNode?.removeChild(style);
     }
   }, []);
 
   return (
     <>
-    <Head>
-      <title>Euro 2020</title>
-      <meta name="viewport" content="initial-scale=0.4 width=device-width height=device-height" />
-      <link rel="shortcut icon" href="../favicon.png" />
-    </Head>
-    <AmplifyAuthenticator usernameAlias="email">
-      <AmplifySignUp
-        slot="sign-up"
-        usernameAlias="email"
-        formFields={[
-          {
-            type: "email",
-            inputProps: { required: true, autocomplete: "email" },
-          },
-          {
-            type: "given_name",
-            label: "First Name *",
-            placeholder: "Enter first name",
-            hint: null,
-            inputProps: { required: true },
-          },
-          {
-            type: "family_name",
-            label: "Last Name",
-            placeholder: "Enter last name",
-            hint: null,
-          },
-          {
-            type: "password",
-            inputProps: { required: true, autocomplete: "new-password" },
-          },
-        ]}
-      />
-    </AmplifyAuthenticator>
+      <Head>
+        <title>Euro 2020</title>
+        <meta name="viewport" content="initial-scale=0.4 width=device-width height=device-height" />
+        <link rel="shortcut icon" href="../favicon.png" />
+      </Head>
+      <AmplifyAuthenticator usernameAlias="email">
+        <AmplifySignUp
+          slot="sign-up"
+          usernameAlias="email"
+          formFields={[
+            {
+              type: 'email',
+              inputProps: { required: true, autocomplete: 'email' },
+            },
+            {
+              type: 'given_name',
+              label: 'First Name *',
+              placeholder: 'Enter first name',
+              hint: null,
+              inputProps: { required: true },
+            },
+            {
+              type: 'family_name',
+              label: 'Last Name',
+              placeholder: 'Enter last name',
+              hint: null,
+            },
+            {
+              type: 'password',
+              inputProps: { required: true, autocomplete: 'new-password' },
+            },
+          ]}
+        />
+      </AmplifyAuthenticator>
       <ThemeProvider theme={theme}>
-      <RecoilRoot>
-        <InitializationWrapper>
-          <App {...props} />
-        </InitializationWrapper>
-      </RecoilRoot>
+        <RecoilRoot>
+          <InitializationWrapper>
+            <App {...props} />
+          </InitializationWrapper>
+        </RecoilRoot>
       </ThemeProvider>
     </>
   );
-}
+};
 
 export default MyApp;

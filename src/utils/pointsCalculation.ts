@@ -3,23 +3,38 @@ import uniqWith from 'lodash/uniqWith';
 
 export const FIRST_PLAYOFF_DAY = 4;
 
-
-
-const isCorrectScore = ({ homeScore, awayScore }: Bet, { homeTeam, awayTeam }: GameFullTime): boolean => (
-  homeScore === homeTeam &&
-  awayScore === awayTeam
+const isCorrectScore = (
+  { homeScore, awayScore }: Bet,
+  { homeTeam, awayTeam }: GameFullTime,
+): boolean => (
+  homeScore === homeTeam
+  && awayScore === awayTeam
 );
 
-const isCorrectDifference = ({ homeScore, awayScore }: Bet, { homeTeam, awayTeam }: GameFullTime): boolean => (
-  homeScore !== null && awayScore !== null && homeScore - awayScore === homeTeam - awayTeam
+const isCorrectDifference = (
+  { homeScore, awayScore }: Bet,
+  { homeTeam, awayTeam }: GameFullTime,
+): boolean => (
+  homeScore !== null
+  && awayScore !== null
+  && homeScore - awayScore === homeTeam - awayTeam
 );
 
-const isCorrectResult = ({ homeScore, awayScore }: Bet, { homeTeam, awayTeam }: GameFullTime): boolean => (
-  homeScore !== null && awayScore !== null && (homeScore - awayScore) * (homeTeam - awayTeam) > 0
+const isCorrectResult = (
+  { homeScore, awayScore }: Bet,
+  { homeTeam, awayTeam }: GameFullTime,
+): boolean => (
+  homeScore !== null
+  && awayScore !== null
+  && (homeScore - awayScore) * (homeTeam - awayTeam) > 0
 );
 
-const isCorrectPromotion = ({ homeWins, awayWins }: Bet, { matchday, score: { winner } }: Game): boolean => (
-  matchday >= FIRST_PLAYOFF_DAY && ((winner === 'HOME_TEAM' && homeWins) || (winner === 'AWAY_TEAM' && awayWins))
+const isCorrectPromotion = (
+  { homeWins, awayWins }: Bet,
+  { matchday, score: { winner } }: Game,
+): boolean => (
+  matchday >= FIRST_PLAYOFF_DAY
+  && ((winner === 'HOME_TEAM' && homeWins) || (winner === 'AWAY_TEAM' && awayWins))
 );
 
 const calculatePoints = (
@@ -30,8 +45,8 @@ const calculatePoints = (
     playoffCoefficient,
     promotionPoints,
     resultPoints,
-    scorePoints
-  }: Room
+    scorePoints,
+  }: Room,
 ): number | null => {
   if (!game || game.score.fullTime.homeTeam === null || game.score.fullTime.awayTeam === null) {
     return null;
@@ -59,7 +74,7 @@ const calculatePoints = (
   }
 
   return points;
-}
+};
 
 export const getTotalScore = (items: TableGame[]) => (
   items.reduce((sum: number, item) => (sum + (item.points || 0)), 0)
@@ -67,7 +82,7 @@ export const getTotalScore = (items: TableGame[]) => (
 
 const getMaxPossiblePoints = (
   { scorePoints, playoffCoefficient, promotionPoints }: Room,
-  matchday: number
+  matchday: number,
 ) => (
   matchday >= FIRST_PLAYOFF_DAY
     ? (scorePoints + promotionPoints) * playoffCoefficient
@@ -78,7 +93,7 @@ const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matc
   const maxPossiblePoints = getMaxPossiblePoints(room, matchday);
 
   const maxPoints = table.reduce((result: number | null, row) => {
-    const points = row.games[index].points;
+    const { points } = row.games[index];
     if (typeof points !== 'number') {
       return result;
     }
@@ -89,12 +104,12 @@ const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matc
   }, null);
 
   return maxPoints === null ? null : maxPossiblePoints - maxPoints;
-}
+};
 
 export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => {
   const gamesWithResults = games.map((game, index) => ({
     points: getTrololoPoints(table, index, room, game.matchday),
-    ...game
+    ...game,
   }));
 
   return [
@@ -105,8 +120,8 @@ export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): Ro
       bot: true,
       avatar: '/trollface.png',
       games: gamesWithResults,
-      score: getTotalScore(gamesWithResults)
-    }
+      score: getTotalScore(gamesWithResults),
+    },
   ];
 };
 
@@ -117,7 +132,8 @@ interface RoomBetsByUser {
 }
 
 export const getRoomBetsByUser = (room: Room, games: Game[]) => uniqWith(
-  room.bets, (a, b) => a.game === b.game && a.owner === b.owner
+  room.bets,
+  (a, b) => a.game === b.game && a.owner === b.owner,
 )
   .reduce((result: RoomBetsByUser, bet: Bet) => ({
     ...result,
@@ -125,7 +141,7 @@ export const getRoomBetsByUser = (room: Room, games: Game[]) => uniqWith(
       ...result[bet.owner],
       [bet.game]: {
         bet,
-        points: calculatePoints(bet, games.find(game => game.id === bet.game), room)
-      }
-    }
+        points: calculatePoints(bet, games.find((game) => game.id === bet.game), room),
+      },
+    },
   }), {});

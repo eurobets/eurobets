@@ -14,8 +14,8 @@ const useStyles = createUseStyles({
     fontSize: '24px',
     letterSpacing: '.7px',
     textTransform: 'uppercase',
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
 const Logo: FC<LogoProps> = ({ className }) => {

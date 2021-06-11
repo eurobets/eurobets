@@ -20,20 +20,23 @@ const BetCellContent: FC<BetCellContentProps> = ({
   points,
   onlyPoints = false,
 }) => {
-
   if (onlyPoints) {
     return <Points>{points}</Points>;
   }
-  return bet
-    ? (onClick && !started && !bet.disabled
-      ? <Button onClick={onClick} size="small" color="primary"><BetText {...bet} /></Button>
-      : <div>
+
+  if (!bet) {
+    return onClick && !started
+      ? <IconButton onClick={onClick} size="small" color="primary"><AddIcon /></IconButton>
+      : null;
+  }
+  return onClick && !started && !bet.disabled
+    ? <Button onClick={onClick} size="small" color="primary"><BetText {...bet} /></Button>
+    : (
+      <div>
         <div><BetText {...bet} /></div>
         <Points>{points}</Points>
-      </div>)
-    : (onClick && !started
-      ? <IconButton onClick={onClick} size="small" color="primary"><AddIcon /></IconButton>
-      : null);
+      </div>
+    );
 };
 
 export default BetCellContent;

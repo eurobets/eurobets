@@ -2,7 +2,7 @@ import React, { useEffect, useState, FC } from 'react';
 import { useRecoilState } from 'recoil';
 import { onAuthUIStateChange } from '@aws-amplify/ui-components';
 
-import Spinner from '../../components/Spinner';
+import Spinner from '../Spinner';
 import { gamesState, userState } from '../../store/atoms';
 import Layout from '../Layout';
 import { getUser, createUser, getGames } from '../../api';
@@ -20,12 +20,12 @@ const InitializationWrapper: FC = ({ children }) => {
 
   async function fetchUser(authData: AuthorizationData) {
     try {
-      const user = await getUser(authData.username);
-      if (user) {
-        return user;
+      const userResponse = await getUser(authData.username);
+      if (userResponse) {
+        return userResponse;
       }
-      return await createUser(authData);
 
+      return await createUser(authData);
     } catch (err) {
       console.log('error fetching user', err);
       return null;
@@ -40,28 +40,26 @@ const InitializationWrapper: FC = ({ children }) => {
           setGames(games);
           setLoadingGames(false);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('error fetching footballData', error);
           setLoadingGames(false);
-        })
+        });
     }
   }, [user]);
 
-  useEffect(() => {
-    return onAuthUIStateChange((nextAuthState, authData) => {
-      if (nextAuthState === 'signedin' && !signedIn) {
-        signedIn = true;
-        setLoadingUser(true);
-        fetchUser(authData as AuthorizationData)
-          .then(user => setUser(user))
-          .finally(() => setLoadingUser(false));
-        // todo: catch case with error
-      }
-    });
-  }, []);
+  useEffect(() => onAuthUIStateChange((nextAuthState, authData) => {
+    if (nextAuthState === 'signedin' && !signedIn) {
+      signedIn = true;
+      setLoadingUser(true);
+      fetchUser(authData as AuthorizationData)
+        .then(setUser)
+        .finally(() => setLoadingUser(false));
+      // todo: catch case with error
+    }
+  }), []);
 
   if (loadingUser) {
-    return <Spinner />
+    return <Spinner />;
   }
   if (!user) {
     return null;
@@ -72,6 +70,6 @@ const InitializationWrapper: FC = ({ children }) => {
       {children}
     </Layout>
   );
-}
+};
 
 export default InitializationWrapper;

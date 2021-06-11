@@ -10,45 +10,45 @@ export default {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'row',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   footer: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    paddingTop: 16
+    paddingTop: 16,
   },
   input: {
-    width: 700
+    width: 700,
   },
   headerCell: {
     display: 'flex',
     flexWrap: 'nowrap',
     whiteSpace: 'nowrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   scrollable: {
     overflow: 'auto',
-    flexGrow: 1
+    flexGrow: 1,
   },
   leftTable: {
     maxWidth: 250,
     minWidth: 250,
-    borderRight: [1, 'solid', grey[300]]
+    borderRight: [1, 'solid', grey[300]],
   },
   rightTable: {
     maxWidth: 100,
     minWidth: 100,
-    borderLeft: [1, 'solid', grey[300]]
+    borderLeft: [1, 'solid', grey[300]],
 
   },
   icon: {
     height: 20,
     margin: [0, 8],
-    boxShadow: [0, 0, 2, grey[300]]
+    boxShadow: [0, 0, 2, grey[300]],
   },
   list: {
-    margin: [0, 0, 0, 24]
+    margin: [0, 0, 0, 24],
   },
   cell: {
     '&&': {
@@ -56,7 +56,7 @@ export default {
       height: 52,
       minWidth: 100,
       position: 'relative',
-    }
+    },
   },
   date: {
     '&&': {
@@ -67,18 +67,18 @@ export default {
       left: 0,
       right: 0,
       fontSize: 10,
-      width: '100%'
-    }
+      width: '100%',
+    },
   },
   avatar: {
     maxHeight: 32,
-    marginLeft: 16
+    marginLeft: 16,
   },
   userWrapper: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   flagDefault: {
-    color: grey[500]
-  }
+    color: grey[500],
+  },
 };

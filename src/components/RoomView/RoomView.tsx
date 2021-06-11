@@ -10,7 +10,7 @@ import {
   Button,
   Input,
   Tooltip,
-  TableSortLabel
+  TableSortLabel,
 } from '@material-ui/core';
 import Head from 'next/head';
 import { FlagOutlined } from '@material-ui/icons';
@@ -59,13 +59,13 @@ const RoomView = () => {
     resultPoints,
     promotionPoints,
     playoffCoefficient,
-    name
+    name,
   } = room;
 
   return (
     <div className={classes.root}>
       <Head>
-        <title>{name} — Euro 2020</title>
+        <title>{`${name} — Euro 2020`}</title>
       </Head>
       <div className={classes.content}>
         <section>
@@ -81,7 +81,7 @@ const RoomView = () => {
                   <TableCell className={classes.cell}>
                     <div className={classes.userWrapper}>
                       {row.name}
-                      <img src={row.avatar} className={classes.avatar} />
+                      <img src={row.avatar} className={classes.avatar} alt="avatar" />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -96,24 +96,38 @@ const RoomView = () => {
                 {games.map((game) => (
                   <TableCell key={game.id} align="center" className={classes.cell}>
                     <Tooltip
-                      title={
+                      title={(
                         <div>
-                          <div>{game.homeTeam.name || '?'} — {game.awayTeam.name || '?'}</div>
+                          <div>{`${game.homeTeam.name || '?'} — ${game.awayTeam.name || '?'}`}</div>
                           <div>{(new Date(game.utcDate)).toLocaleString()}</div>
                         </div>
-                      }
+                      )}
                     >
-                    <div className={classes.headerCell}>
-                      {game.homeTeam.icon
-                        ? <img className={classes.icon} src={game.homeTeam.icon} title={game.homeTeam.name}/>
-                        : <FlagOutlined className={classes.flagDefault} />}
-                      {game.score.fullTime.homeTeam}
-                      {' : '}
-                      {game.score.fullTime.awayTeam}
-                      {game.awayTeam.icon
-                        ? <img className={classes.icon} src={game.awayTeam.icon} title={game.awayTeam.name}/>
-                        : <FlagOutlined className={classes.flagDefault} />}
-                    </div>
+                      <div className={classes.headerCell}>
+                        {game.homeTeam.icon
+                          ? (
+                            <img
+                              alt="flag"
+                              className={classes.icon}
+                              src={game.homeTeam.icon}
+                              title={game.homeTeam.name}
+                            />
+                          )
+                          : <FlagOutlined className={classes.flagDefault} />}
+                        {game.score.fullTime.homeTeam}
+                        {' : '}
+                        {game.score.fullTime.awayTeam}
+                        {game.awayTeam.icon
+                          ? (
+                            <img
+                              alt="flag"
+                              className={classes.icon}
+                              src={game.awayTeam.icon}
+                              title={game.awayTeam.name}
+                            />
+                          )
+                          : <FlagOutlined className={classes.flagDefault} />}
+                      </div>
                     </Tooltip>
                   </TableCell>
                 ))}
@@ -122,21 +136,19 @@ const RoomView = () => {
             <TableBody>
               {table.map((row) => (
                 <TableRow key={row.id}>
-                  {row.games.map((game: TableGame) => {
-                    return (
-                      <TableCell key={game.id} align="center" className={classes.cell}>
-                        <BetCellContent
-                          points={game.points}
-                          started={game.started}
-                          onlyPoints={row.bot}
-                          bet={game.bet}
-                          onClick={user.id === row.id
-                            ? () => setBetDialog({ game, bet: game.bet })
-                            : undefined}
-                        />
-                      </TableCell>
-                    )
-                  })}
+                  {row.games.map((game: TableGame) => (
+                    <TableCell key={game.id} align="center" className={classes.cell}>
+                      <BetCellContent
+                        points={game.points}
+                        started={game.started}
+                        onlyPoints={row.bot}
+                        bet={game.bet}
+                        onClick={user.id === row.id
+                          ? () => setBetDialog({ game, bet: game.bet })
+                          : undefined}
+                      />
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -169,7 +181,8 @@ const RoomView = () => {
                       {row.score || 0}
                     </TableCell>
                   </TableRow>
-                ))}
+                ))
+}
             </TableBody>
           </Table>
         </section>
@@ -177,18 +190,32 @@ const RoomView = () => {
       <div className={classes.footer}>
         {!inviteMode
           ? <Button variant="outlined" onClick={() => setInviteMode(true)}>Show invite link</Button>
-          : <Input
-            readOnly
-            autoFocus
-            className={classes.input}
-            onBlur={() => setInviteMode(false)}
-            value={`https://${window.location.hostname}/join-room/${roomId}`}
-          />
-        }
+          : (
+            <Input
+              readOnly
+              autoFocus
+              className={classes.input}
+              onBlur={() => setInviteMode(false)}
+              value={`https://${window.location.hostname}/join-room/${roomId}`}
+            />
+          )}
         <ul className={classes.list}>
-          <li>Points: {scorePoints}/{differencePoints}/{resultPoints}</li>
-          <li>Promotion: +{promotionPoints}</li>
-          <li>Playoff: x{playoffCoefficient}</li>
+          <li>
+            Points:
+            {scorePoints}
+            /
+            {differencePoints}
+            /
+            {resultPoints}
+          </li>
+          <li>
+            Promotion: +
+            {promotionPoints}
+          </li>
+          <li>
+            Playoff: x
+            {playoffCoefficient}
+          </li>
         </ul>
       </div>
       {betDialog && (

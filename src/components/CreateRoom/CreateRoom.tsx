@@ -17,8 +17,8 @@ const useStyles = createUseStyles({
     '&&': {
       margin: [16, 0],
     },
-    width: 300
-  }
+    width: 300,
+  },
 });
 const CreateRoom = () => {
   const [, setUser] = useRecoilState(userState);
@@ -32,8 +32,8 @@ const CreateRoom = () => {
   const commonTextFieldProps = {
     required: true,
     className: classes.field,
-    InputLabelProps: { shrink: true }
-  }
+    InputLabelProps: { shrink: true },
+  };
 
   return (
     <div className={classes.root}>
@@ -47,25 +47,25 @@ const CreateRoom = () => {
         className={classes.root}
         noValidate
         autoComplete="off"
-          onSubmit={(e) => {
+        onSubmit={(e) => {
           e.preventDefault();
-            createRoom(
+          createRoom(
             {
               name,
               playoffCoefficient,
               scorePoints,
               differencePoints,
               resultPoints,
-              promotionPoints
-            }
+              promotionPoints,
+            },
           )
             .then(setUser)
             .then(() => router.push('/'));
-          }}
+        }}
       >
         <TextField
           {...commonTextFieldProps}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           label="Title"
           value={name}
         />
@@ -73,35 +73,35 @@ const CreateRoom = () => {
           {...commonTextFieldProps}
           type="number"
           label="Points for correct score"
-          onChange={e => setScorePoints(Number(e.target.value))}
+          onChange={(e) => setScorePoints(Number(e.target.value))}
           value={scorePoints}
         />
         <TextField
           {...commonTextFieldProps}
           type="number"
           label="Points for correct difference"
-          onChange={e => setDifferencePoints(Number(e.target.value))}
+          onChange={(e) => setDifferencePoints(Number(e.target.value))}
           value={differencePoints}
         />
         <TextField
           {...commonTextFieldProps}
           type="number"
           label="Points for correct result"
-          onChange={e => setResultPoints(Number(e.target.value))}
+          onChange={(e) => setResultPoints(Number(e.target.value))}
           value={resultPoints}
         />
         <TextField
           {...commonTextFieldProps}
           type="number"
           label="Additional points for playoff winners"
-          onChange={e => setPromotionPoints(Number(e.target.value))}
+          onChange={(e) => setPromotionPoints(Number(e.target.value))}
           value={promotionPoints}
         />
         <TextField
           {...commonTextFieldProps}
           type="number"
           label="Coefficient for playoff games"
-          onChange={e => setPlayoffCoefficient(Number(e.target.value))}
+          onChange={(e) => setPlayoffCoefficient(Number(e.target.value))}
           value={playoffCoefficient}
         />
         <Button type="submit" variant="contained" color="primary">Create</Button>
