@@ -18,6 +18,7 @@ module.exports = {
         '@typescript-eslint/semi': ['error'],
         'object-curly-newline': 'off',
         'react/prop-types': 'off',
+        'import/prefer-default-export': 'off',
         'react/jsx-props-no-spreading': 'off',
         'react/react-in-jsx-scope': 'off',
         'jsx-a11y/anchor-is-valid': 'off', // This rule is not compatible with Next.js's <Link /> components

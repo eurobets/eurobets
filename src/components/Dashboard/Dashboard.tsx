@@ -82,7 +82,7 @@ const Dashboard = () => {
             <TableCell align="center">
               Score
             </TableCell>
-            {players.map((player: any) => (
+            {players.map((player: Player) => (
               <TableCell key={player.id} className={classes.roomHeaderCell} align="center">
                 <Link href={`/rooms/${player.room.id}`} key={player.id}>
                   <a>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                 {game.score.fullTime.awayTeam || '-'}
               </TableCell>
               {players.map((player: Player) => {
-                const bet = bets.find((item: Bet) => (
+                const bet = player.room.bets.find((item: Bet) => (
                   item.owner === user?.id
                   && item.roomId === player.room.id
                   && game.id === Number(item.game)

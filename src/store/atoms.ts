@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { User, Room, Game } from '../types';
+import { User, Room, Game, Sorting } from '../types';
 
 export const gamesState = atom<Game[]>({
   key: 'gamesState',
@@ -16,7 +16,7 @@ export const userState = atom<User | null>({
   default: null,
 });
 
-export const sortingState = atom<'DEFAULT' | 'SCORE'>({
+export const sortingState = atom<Sorting>({
   key: 'sortingState',
   default: 'DEFAULT',
 });

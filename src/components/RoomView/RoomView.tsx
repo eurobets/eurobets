@@ -81,7 +81,7 @@ const RoomView = () => {
                   <TableCell className={classes.cell}>
                     <div className={classes.userWrapper}>
                       {row.name}
-                      <img src={row.avatar} className={classes.avatar} alt="avatar" />
+                      {row.avatar && <img src={row.avatar} className={classes.avatar} alt="avatar" />}
                     </div>
                   </TableCell>
                 </TableRow>

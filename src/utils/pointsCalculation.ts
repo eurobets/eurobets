@@ -1,7 +1,10 @@
-import { Room, RoomTableRow, TableGame, Bet, GameFullTime, Game } from '../types';
 import uniqWith from 'lodash/uniqWith';
 
+import { Room, RoomTableRow, TableGame, Bet, GameFullTime, Game, Player, User, Sorting } from '../types';
+
 export const FIRST_PLAYOFF_DAY = 4;
+const UNDERDOG_BONUS = 2;
+const UNDERDOG_APPLICABLE_LENGTH = 8;
 
 const isCorrectScore = (
   { homeScore, awayScore }: Bet,
@@ -89,10 +92,8 @@ const getMaxPossiblePoints = (
     : scorePoints
 );
 
-const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matchday: number) => {
-  const maxPossiblePoints = getMaxPossiblePoints(room, matchday);
-
-  const maxPoints = table.reduce((result: number | null, row) => {
+const getMaxPoints = (table: RoomTableRow[], index: number) => table
+  .reduce((result: number | null, row) => {
     const { points } = row.games[index];
     if (typeof points !== 'number') {
       return result;
@@ -103,27 +104,41 @@ const getTrololoPoints = (table: RoomTableRow[], index: number, room: Room, matc
       : result;
   }, null);
 
-  return maxPoints === null ? null : maxPossiblePoints - maxPoints;
+const getTrololoPoints = (
+  table: RoomTableRow[],
+  index: number,
+  room: Room,
+  matchday: number,
+): number | null => {
+  const maxPossiblePoints = getMaxPossiblePoints(room, matchday);
+
+  const maxPoints = getMaxPoints(table, index);
+  if (maxPoints === null) {
+    return null;
+  }
+
+  const trololoPoints = maxPossiblePoints - maxPoints;
+  if (trololoPoints >= 0) {
+    return trololoPoints;
+  }
+
+  return 0;
 };
 
-export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => {
-  const gamesWithResults = games.map((game, index) => ({
-    points: getTrololoPoints(table, index, room, game.matchday),
-    ...game,
-  }));
-
-  return [
-    ...table,
-    {
-      id: 'trololo',
-      name: 'Trololo',
-      bot: true,
-      avatar: '/trollface.png',
-      games: gamesWithResults,
-      score: getTotalScore(gamesWithResults),
-    },
-  ];
-};
+export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => [
+  ...table,
+  {
+    id: 'trololo',
+    name: 'Trololo',
+    bot: true,
+    avatar: '/trollface.png',
+    games: games.map((game, index) => ({
+      points: getTrololoPoints(table, index, room, game.matchday),
+      ...game,
+    })),
+    score: 0,
+  },
+];
 
 interface RoomBetsByUser {
   [key: string]: {
@@ -145,3 +160,69 @@ export const getRoomBetsByUser = (room: Room, games: Game[]) => uniqWith(
       },
     },
   }), {});
+
+export const makeATableWithPoints = (room: Room, games: Game[]): RoomTableRow[] => {
+  const roomBetsByUser = getRoomBetsByUser(room, games);
+
+  return room.players.items.map((player: Player) => ({
+    id: player.user.id,
+    name: `${player.user.firstName || ''} ${player.user.lastName || ''}`.trim(),
+    games: games.map((game: Game) => ({
+      started: new Date() > new Date(game.utcDate),
+      ...roomBetsByUser[player.user.id]?.[game.id],
+      ...game,
+    })),
+    score: 0,
+  }));
+};
+
+export const addUnderdogBonus = (
+  table: RoomTableRow[],
+): RoomTableRow[] => (
+  table.length > UNDERDOG_APPLICABLE_LENGTH
+    ? table.map((row, index) => ({
+      ...row,
+      games: row.games
+        .map((game, gameIndex) => {
+          if ((
+            typeof game.points === 'number'
+            && game.points > 0
+            && getMaxPoints(
+              table.filter((otherRow, otherIndex) => otherIndex !== index),
+              gameIndex,
+            ) === 0
+          )) {
+            return {
+              ...game,
+              points: game.points + UNDERDOG_BONUS,
+            };
+          }
+          return game;
+        }),
+    }))
+    : table
+);
+
+export const sortByScore = (a: RoomTableRow, b: RoomTableRow) => (
+  a.score > b.score ? -1 : 1
+);
+
+export const sortByDefault = (a: RoomTableRow, b: RoomTableRow, user: User | null) => (
+  a.id === user?.id ? -1 : 1
+);
+
+export const addScore = (table: RoomTableRow[]) => table
+  .map((row) => ({
+    ...row,
+    score: getTotalScore(row.games),
+  }));
+
+export const addSorting = (
+  table: RoomTableRow[],
+  sorting: Sorting,
+  user: User | null,
+) => table
+  .sort((a, b) => (sorting === 'SCORE'
+    ? sortByScore(a, b)
+    : sortByDefault(a, b, user)
+  ));

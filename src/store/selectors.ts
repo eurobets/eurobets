@@ -1,16 +1,10 @@
 import { selector } from 'recoil';
 import { gamesState, roomState, sortingState, userState } from './atoms';
 
-import { getTotalScore, addTrololo, getRoomBetsByUser } from '../utils/pointsCalculation';
-import { Game, RoomTableRow, Player, User } from '../types';
-
-export const sortByScore = (a: RoomTableRow, b: RoomTableRow) => (
-  a.score > b.score ? -1 : 1
-);
-
-export const sortByDefault = (a: RoomTableRow, b: RoomTableRow, user: User | null) => (
-  a.id === user?.id ? -1 : 1
-);
+import {
+  addSorting, addTrololo, /* addUnderdogBonus, */ makeATableWithPoints, addScore,
+} from '../utils/pointsCalculation';
+import { RoomTableRow } from '../types';
 
 export const selectRoomTable = selector({
   key: 'selectRoomTable', // unique ID (with respect to other atoms/selectors)
@@ -24,25 +18,10 @@ export const selectRoomTable = selector({
       return null;
     }
 
-    const roomBetsByUser = getRoomBetsByUser(room, games);
-    const table = room.players.items.map((player: Player) => {
-      const gamesWithResults = games.map((game: Game) => ({
-        started: new Date() > new Date(game.utcDate),
-        ...roomBetsByUser[player.user.id]?.[game.id],
-        ...game,
-      }));
-      return {
-        id: player.user.id,
-        name: `${player.user.firstName || ''} ${player.user.lastName || ''}`.trim(),
-        games: gamesWithResults,
-        score: getTotalScore(gamesWithResults),
-      };
-    });
-
-    return addTrololo(table, games, room)
-      .sort((a, b) => (sorting === 'SCORE'
-        ? sortByScore(a, b)
-        : sortByDefault(a, b, user)
-      ));
+    let table = makeATableWithPoints(room, games);
+    // table = addUnderdogBonus(table);
+    table = addTrololo(table, games, room);
+    table = addScore(table);
+    return addSorting(table, sorting, user);
   },
 });

@@ -89,3 +89,5 @@ export interface AuthorizationData {
     email: string;
   }
 }
+
+export type Sorting = 'DEFAULT' | 'SCORE';
