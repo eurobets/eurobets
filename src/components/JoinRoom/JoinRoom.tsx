@@ -38,7 +38,7 @@ const JoinRoom = () => {
         if (roomResponse?.players.items.find((player: Player) => player.user.id === user?.id)) {
           setAlreadyThere(true);
         }
-        setRoom(room);
+        setRoom(roomResponse);
       })
       .finally(() => setLoading(false));
   }, [id]);
