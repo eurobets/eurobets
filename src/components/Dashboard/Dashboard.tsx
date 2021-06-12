@@ -49,7 +49,7 @@ const Dashboard = () => {
   if (!user || games.length === 0) {
     return null;
   }
-  const { bets: { items: bets = [] }, players: { items: players = [] } } = user;
+  const { players: { items: players = [] } } = user;
 
   return (
     <div className={classes.root}>
@@ -105,9 +105,9 @@ const Dashboard = () => {
                 {game.awayTeam.name || '?'}
               </TableCell>
               <TableCell align="center" className={classes.scoreCell}>
-                {game.score.fullTime.homeTeam || '-'}
+                {typeof game.score.fullTime.homeTeam === 'number' ? game.score.fullTime.homeTeam : '-'}
                 {' : '}
-                {game.score.fullTime.awayTeam || '-'}
+                {typeof game.score.fullTime.awayTeam === 'number' ? game.score.fullTime.awayTeam : '-'}
               </TableCell>
               {players.map((player: Player) => {
                 const bet = player.room.bets.find((item: Bet) => (
