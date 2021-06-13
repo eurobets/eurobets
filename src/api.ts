@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 
-import * as queries from '../graphql/queries';
-import * as mutations from '../graphql/mutations';
+import * as queries from './graphql/queries';
+import * as mutations from './graphql/mutations';
 import {
   User, Room, Player, AuthorizationData, Bet, Game,
 } from './types';
