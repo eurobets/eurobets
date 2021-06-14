@@ -18,9 +18,10 @@ Project is deployed to AWS Amplify and accessible on https://www.euro2x.com/
 
 1. Next.js
 1. Typescript
-1. Recoil
+1. Recoil for state management
 1. AWS Amplify
 1. Jest + React Testing Library
-1. Graphql (for own data), REST (for proxy calls to football-data)
 1. JSS
+1. Graphql (for own data), REST (for proxy calls to football-data)
+1. DynamoDB (provided by AWS Amplify)
 1. Source of results: https://www.football-data.org/ 
