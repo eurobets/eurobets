@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { createUseStyles } from 'react-jss';
 import {
@@ -44,6 +44,12 @@ const RoomView = () => {
   const table = useRecoilValue(selectRoomTable);
   const nextGame = games?.find((game) => game.score.winner === null);
   const nextGameId = nextGame ? nextGame.id : null;
+
+  const scrollIntoViewCallback = useCallback((element: HTMLElement) => {
+    setTimeout(() => {
+      element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    });
+  }, []);
 
   useEffect(() => {
     getRoom(id as string).then(setRoom);
@@ -102,11 +108,7 @@ const RoomView = () => {
                     align="center"
                     className={classes.cell}
                     ref={game.id === nextGameId
-                      ? ((element: HTMLElement) => {
-                        setTimeout(() => {
-                          element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-                        });
-                      })
+                      ? scrollIntoViewCallback
                       : undefined}
                   >
                     <Tooltip
