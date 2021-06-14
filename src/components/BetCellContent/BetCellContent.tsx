@@ -26,13 +26,21 @@ const BetCellContent: FC<BetCellContentProps> = ({
 
   if (!bet) {
     return onClick && !started
-      ? <IconButton onClick={onClick} size="small" color="primary"><AddIcon /></IconButton>
+      ? (
+        <IconButton onClick={onClick} size="small" data-testid="add-bet" color="primary">
+          <AddIcon />
+        </IconButton>
+      )
       : null;
   }
   return onClick && !started && !bet.disabled
-    ? <Button onClick={onClick} size="small" color="primary"><BetText {...bet} /></Button>
+    ? (
+      <Button onClick={onClick} size="small" data-testid="edit-bet" color="primary">
+        <BetText {...bet} />
+      </Button>
+    )
     : (
-      <div>
+      <div data-testid="non-interactive-bet">
         <div><BetText {...bet} /></div>
         <Points>{points}</Points>
       </div>

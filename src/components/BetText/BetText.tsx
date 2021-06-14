@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import CheckIcon from '@material-ui/icons/Check';
-import cx from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { Bet } from '../../types';
 
@@ -12,23 +11,14 @@ const useStyles = createUseStyles({
   },
   text: {
     position: 'relative',
-    '&::before': {
-      display: 'none',
-      position: 'absolute',
-      content: '\'🚀\'',
-    },
   },
   homeWins: {
-    '&::before': {
-      left: -20,
-      display: 'block',
-    },
+    position: 'absolute',
+    left: -20,
   },
   awayWins: {
-    '&::before': {
-      right: -20,
-      display: 'block',
-    },
+    position: 'absolute',
+    right: -20,
   },
 });
 
@@ -41,15 +31,17 @@ const BetText: FC<Bet> = ({
   const classes = useStyles();
 
   if (typeof homeScore !== 'number' || typeof awayScore !== 'number') {
-    return <CheckIcon />;
+    return <CheckIcon data-testid="bet-placed" />;
   }
 
   return (
     <div className={classes.root}>
-      <div className={cx(classes.text, homeWins && classes.homeWins, awayWins && classes.awayWins)}>
+      <div className={classes.text}>
+        {homeWins && <span data-testid="home-wins" className={classes.homeWins}>🚀</span>}
         {homeScore}
         {' : '}
         {awayScore}
+        {awayWins && <span data-testid="away-wins" className={classes.awayWins}>🚀</span>}
       </div>
     </div>
   );

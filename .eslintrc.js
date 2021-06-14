@@ -4,6 +4,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 8 },
   ignorePatterns: ['node_modules/*', '.next/*', '.out/*'],
   extends: ['airbnb'],
+  plugins: ['jest'],
   overrides: [
     // This configuration will apply only to TypeScript files
     {
@@ -18,6 +19,7 @@ module.exports = {
         '@typescript-eslint/semi': ['error'],
         'object-curly-newline': 'off',
         'react/prop-types': 'off',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'import/prefer-default-export': 'off',
         'react/jsx-props-no-spreading': 'off',
         'react/react-in-jsx-scope': 'off',
@@ -30,6 +32,15 @@ module.exports = {
             allowConciseArrowFunctionExpressionsStartingWithVoid: true,
           },
         ],
+      },
+    },
+    {
+      files: [
+        '**/*.test.js',
+        '**/*.test.jsx',
+      ],
+      env: {
+        jest: true,
       },
     },
   ],
