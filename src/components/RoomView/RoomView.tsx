@@ -42,6 +42,8 @@ const RoomView = () => {
   const [room, setRoom] = useRecoilState(roomState);
   const [sorting, setSorting] = useRecoilState(sortingState);
   const table = useRecoilValue(selectRoomTable);
+  const nextGame = games?.find((game) => game.score.winner === null);
+  const nextGameId = nextGame ? nextGame.id : null;
 
   useEffect(() => {
     getRoom(id as string).then(setRoom);
@@ -49,9 +51,10 @@ const RoomView = () => {
     return () => setRoom(null);
   }, [id]);
 
-  if (!room || !user || !table) {
+  if (!room || !user || !table || !games) {
     return null;
   }
+
   const {
     id: roomId,
     scorePoints,
@@ -94,7 +97,18 @@ const RoomView = () => {
             <TableHead>
               <TableRow>
                 {games.map((game) => (
-                  <TableCell key={game.id} align="center" className={classes.cell}>
+                  <TableCell
+                    key={game.id}
+                    align="center"
+                    className={classes.cell}
+                    ref={game.id === nextGameId
+                      ? ((element: HTMLElement) => {
+                        setTimeout(() => {
+                          element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+                        });
+                      })
+                      : undefined}
+                  >
                     <Tooltip
                       title={(
                         <div>

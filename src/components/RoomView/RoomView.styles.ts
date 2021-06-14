@@ -54,7 +54,7 @@ export default {
     '&&': {
       padding: [0, 0],
       height: 52,
-      minWidth: 100,
+      minWidth: 120,
       position: 'relative',
     },
   },
