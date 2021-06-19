@@ -30,6 +30,7 @@ export interface Game {
     name: string;
     icon: string;
   };
+  status: 'FINISHED' | 'IN_PLAY' | 'SCHEDULED'
 }
 
 export interface User {

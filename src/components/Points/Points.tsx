@@ -9,7 +9,6 @@ const useStyles = createUseStyles({
     color: red[900],
   },
   success: {
-    fontWeight: 'bold',
     color: green[700],
   },
 });

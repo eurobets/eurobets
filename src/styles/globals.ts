@@ -6,7 +6,7 @@ import { fontFamily } from './constants';
 jss.setup(preset());
 
 const globalSheet = jss.createStyleSheet({
-  '@import': 'url(https://fonts.googleapis.com/css?family=Oswald|Roboto:300&subset=latin,cyrillic)',
+  '@import': 'url(https://fonts.googleapis.com/css?family=Oswald|Roboto:300,700&subset=latin,cyrillic)',
   '@global': {
     body: {
       padding: 0,

@@ -47,7 +47,9 @@ const RoomView = () => {
 
   const scrollIntoViewCallback = useCallback((element: HTMLElement) => {
     setTimeout(() => {
-      element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      }
     });
   }, []);
 
@@ -130,10 +132,17 @@ const RoomView = () => {
                             />
                           )
                           : <FlagOutlined className={classes.flagDefault} />}
-                        {game.score.fullTime.homeTeam}
-                        {' : '}
-                        {game.score.fullTime.awayTeam}
-                        {game.awayTeam.icon
+                          <div className={classes.score}>
+                            {game.status === 'IN_PLAY' && <div className={classes.live}>●</div>}
+                            {typeof game.score.fullTime.homeTeam === 'number'
+                              ? game.score.fullTime.homeTeam
+                              : '-'}
+                            {' : '}
+                            {typeof game.score.fullTime.awayTeam === 'number'
+                              ? game.score.fullTime.awayTeam
+                              : '-'}
+                          </div>
+                          {game.awayTeam.icon
                           ? (
                             <img
                               alt="flag"
