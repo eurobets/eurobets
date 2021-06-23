@@ -20,3 +20,8 @@ export const sortingState = atom<Sorting>({
   key: 'sortingState',
   default: 'DEFAULT',
 });
+
+export const lastNGames = atom<number | null>({
+  key: 'lastNGames',
+  default: null,
+});

@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import { gamesState, roomState, sortingState, userState } from './atoms';
+import { gamesState, roomState, sortingState, userState, lastNGames } from './atoms';
 
 import {
   addSorting, addTrololo, /* addUnderdogBonus, */ makeATableWithPoints, addScore,
@@ -29,6 +29,7 @@ export const selectRoomTable = selector({
 export const selectStatsTable = selector({
   key: 'selectStatsTable',
   get({ get }): StatsRow[] | null {
+    const numberOfPreviousGames = get(lastNGames);
     const table = get(selectRoomTable);
 
     if (!table) {
@@ -44,7 +45,7 @@ export const selectStatsTable = selector({
         .map((game, index) => ({
           x: index + 1,
           y: row.games.reduce((sum, prevGame, prevIndex) => (
-            prevIndex <= index
+            prevIndex <= index && (numberOfPreviousGames !== null ? prevIndex > index - numberOfPreviousGames : true)
               ? sum + (prevGame.points || 0)
               : sum
           ), 0),

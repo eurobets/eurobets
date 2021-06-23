@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { createUseStyles } from 'react-jss';
 import { ResponsiveLine } from '@nivo/line'
 import Head from 'next/head';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { gamesState, userState, roomState } from '../../store/atoms';
+import { gamesState, userState, roomState, lastNGames } from '../../store/atoms';
 import { selectStatsTable } from '../../store/selectors';
 import { getRoom } from '../../api';
 
 import styles from './RoomStats.styles';
 import Link from 'next/link';
-import { IconButton, Link as MaterialLink } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 
 const useStyles = createUseStyles(styles);
@@ -22,6 +22,7 @@ const RoomStats = () => {
   const { query: { id } } = useRouter();
   const games = useRecoilValue(gamesState);
   const [room, setRoom] = useRecoilState(roomState);
+  const [lastGames, setLastGames] = useRecoilState(lastNGames);
   const stats = useRecoilValue(selectStatsTable);
 
   useEffect(() => {
@@ -48,6 +49,13 @@ const RoomStats = () => {
           </IconButton>
         </Link>
       </div>
+      <TextField
+        style={{ width: 200 }}
+        label="Series of N games"
+        onChange={(e) => setLastGames(Number(e.target.value) || null)}
+        value={lastGames === null ? '' : lastGames}
+        type="number"
+      />
       <div className={classes.content}>
         {/* @ts-ignore */}
         <ResponsiveLine
