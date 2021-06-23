@@ -74,8 +74,8 @@ const BetDialog: FC<BetDialogProps> = ({
   const [loading, setLoading] = useState(false);
   const [homeScore, setHome] = useState(bet.homeScore || '0');
   const [awayScore, setAway] = useState(bet.awayScore || '0');
-  const [homeWins, setHomeWins] = useState(true);
-  const [awayWins, setAwayWins] = useState(false);
+  const [homeWins, setHomeWins] = useState(typeof bet.homeWins === 'boolean' ? bet.homeWins : true);
+  const [awayWins, setAwayWins] = useState(typeof bet.awayWins === 'boolean' ? bet.awayWins : false);
   const { query: { id } } = useRouter();
   const isPlayoff = game.matchday >= FIRST_PLAYOFF_DAY;
 

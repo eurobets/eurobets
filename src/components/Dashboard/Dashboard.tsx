@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import cx from 'classnames';
 
 import { createUseStyles } from 'react-jss';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button, Link as MaterialLink } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { gamesState, userState } from '../../store/atoms';
 import { Bet, Game, Player } from '../../types';
 import BetCellContent from '../BetCellContent';
+import BetDialog from '../BetDialog';
+import { getUser } from '../../api';
 
 const useStyles = createUseStyles({
   root: {},
@@ -40,16 +43,39 @@ const useStyles = createUseStyles({
   roomHeaderCell: {
     whiteSpace: 'nowrap',
   },
+  hidden: {
+    '&&': {
+      display: 'none'
+    }
+  }
 });
+
+type BetDialogInput = {
+  game: Game,
+  bet?: Bet,
+  roomId: string
+} | undefined;
 
 const Dashboard = () => {
   const classes = useStyles();
   const games = useRecoilValue(gamesState);
-  const user = useRecoilValue(userState);
+  const [user, setUser] = useRecoilState(userState);
+  const [betDialog, setBetDialog] = useState<BetDialogInput>();
+  const [showAll, setShowAll] = useState(false);
   if (!user || games.length === 0) {
     return null;
   }
-  const { players: { items: players = [] } } = user;
+  const { id, players: { items: players = [] } } = user;
+
+  async function onSave() {
+    try {
+      const response = await getUser(id);
+      setUser(response);
+      setBetDialog(undefined);
+    } catch (err) {
+      console.log('error fetching user', err);
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -94,38 +120,61 @@ const Dashboard = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {games.map((game: Game) => (
-            <TableRow key={game.id}>
-              <TableCell className={classes.dateCell}>
-                {(new Date(game.utcDate)).toLocaleString()}
+          {!showAll && (
+            <TableRow>
+              <TableCell colSpan={3 + players.length}>
+                <MaterialLink href="#" color="primary" onClick={() => setShowAll(true)}>
+                  Show previous games
+                </MaterialLink>
               </TableCell>
-              <TableCell className={classes.gameCell}>
-                {game.homeTeam.name || '?'}
-                {' — '}
-                {game.awayTeam.name || '?'}
-              </TableCell>
-              <TableCell align="center" className={classes.scoreCell}>
-                {typeof game.score.fullTime.homeTeam === 'number' ? game.score.fullTime.homeTeam : '-'}
-                {' : '}
-                {typeof game.score.fullTime.awayTeam === 'number' ? game.score.fullTime.awayTeam : '-'}
-              </TableCell>
-              {players.map((player: Player) => {
-                const bet = player.room.bets.find((item: Bet) => (
-                  item.owner === user?.id
-                  && item.roomId === player.room.id
-                  && game.id === Number(item.game)
-                ));
-
-                return (
-                  <TableCell key={player.id} align="center" className={classes.betCell}>
-                    <BetCellContent bet={bet} />
-                  </TableCell>
-                );
-              })}
             </TableRow>
-          ))}
+          )}
+          {games.map((game: Game) => {
+            const started = new Date() > new Date(game.utcDate);
+            return (
+              <TableRow key={game.id} className={cx(started && !showAll && classes.hidden)}>
+                <TableCell className={classes.dateCell}>
+                  {(new Date(game.utcDate)).toLocaleString()}
+                </TableCell>
+                <TableCell className={classes.gameCell}>
+                  {game.homeTeam.name || '?'}
+                  {' — '}
+                  {game.awayTeam.name || '?'}
+                </TableCell>
+                <TableCell align="center" className={classes.scoreCell}>
+                  {typeof game.score.fullTime.homeTeam === 'number' ? game.score.fullTime.homeTeam : '-'}
+                  {' : '}
+                  {typeof game.score.fullTime.awayTeam === 'number' ? game.score.fullTime.awayTeam : '-'}
+                </TableCell>
+                {players.map((player: Player) => {
+                  const bet = player.room.bets.find((item: Bet) => (
+                    item.owner === user?.id
+                    && item.roomId === player.room.id
+                    && game.id === Number(item.game)
+                  ));
+
+                  return (
+                    <TableCell key={player.id} align="center" className={classes.betCell}>
+                      <BetCellContent
+                        bet={bet}
+                        started={started}
+                        onClick={() => setBetDialog({ game, bet, roomId: player.room.id })}
+                      />
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
+      {betDialog && (
+        <BetDialog
+          {...betDialog}
+          onClose={() => setBetDialog(undefined)}
+          onSave={onSave}
+        />
+      )}
     </div>
   );
 };
