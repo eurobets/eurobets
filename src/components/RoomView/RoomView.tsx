@@ -10,10 +10,11 @@ import {
   Button,
   Input,
   Tooltip,
-  TableSortLabel,
+  IconButton,
+  TableSortLabel, Link as MaterialLink,
 } from '@material-ui/core';
 import Head from 'next/head';
-import { FlagOutlined } from '@material-ui/icons';
+import { FlagOutlined, ArrowBack } from '@material-ui/icons';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { gamesState, userState, roomState, sortingState } from '../../store/atoms';
@@ -24,6 +25,7 @@ import BetCellContent from '../BetCellContent';
 import { Bet, Game, TableGame, RoomTableRow } from '../../types';
 
 import styles from './RoomView.styles';
+import Link from 'next/link';
 
 const useStyles = createUseStyles(styles);
 
@@ -78,6 +80,18 @@ const RoomView = () => {
       <Head>
         <title>{`${name} — Euro 2020`}</title>
       </Head>
+      <div className={classes.header}>
+        <Link href="/">
+          <IconButton size="small" className={classes.back} color="primary">
+            <ArrowBack />
+          </IconButton>
+        </Link>
+        <Link href={`/rooms/${id}/stats`}>
+          <a>
+            <MaterialLink component="span">Statistics</MaterialLink>
+          </a>
+        </Link>
+      </div>
       <div className={classes.content}>
         <section>
           <Table className={classes.leftTable}>

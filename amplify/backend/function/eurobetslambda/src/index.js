@@ -18,18 +18,26 @@ const options = {
 
 const mergeGamesWithTeams = (games, teams) => {
     return games.map((game) => {
-        if (!game.homeTeam.id || !game.awayTeam.id) {
-            return game;
-        }
         return {
             ...game,
             homeTeam: {
                 ...game.homeTeam,
-                icon: teams.find(team => team.id === game.homeTeam.id).crestUrl
+                icon: game.homeTeam.id && teams.find(team => team.id === game.homeTeam.id).crestUrl
             },
             awayTeam: {
                 ...game.awayTeam,
-                icon: teams.find(team => team.id === game.awayTeam.id).crestUrl
+                icon: game.awayTeam.id && teams.find(team => team.id === game.awayTeam.id).crestUrl
+            },
+            score: {
+                ...game.score,
+                fullTime: {
+                    homeTeam: game.score.fullTime.homeTeam === null
+                      ? null
+                      : game.score.fullTime.homeTeam - (game.score.extraTime.homeTeam || 0),
+                    awayTeam: game.score.fullTime.awayTeam === null
+                      ? null
+                      : game.score.fullTime.awayTeam - (game.score.extraTime.awayTeam || 0)
+                }
             }
         }
     })

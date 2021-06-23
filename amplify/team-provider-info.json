@@ -41,7 +41,7 @@
         },
         "eurobetslambda": {
           "deploymentBucketName": "amplify-eurobets-dev-193407-deployment",
-          "s3Key": "amplify-builds/eurobetslambda-6f346a775951764e7855-build.zip"
+          "s3Key": "amplify-builds/eurobetslambda-6a48723659623559444c-build.zip"
         },
         "eurobetsroomlambda": {
           "deploymentBucketName": "amplify-eurobets-dev-193407-deployment",

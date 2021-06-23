@@ -82,6 +82,16 @@ export interface RoomTableRow {
   avatar?: string;
 }
 
+export interface StatsGame {
+  x: number;
+  y: number;
+}
+
+export interface StatsRow {
+  id: string;
+  data: StatsGame[];
+}
+
 export interface AuthorizationData {
   username: string;
   attributes: {

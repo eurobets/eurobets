@@ -96,6 +96,15 @@ export default {
   score: {
     position: 'relative',
   },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  back: {
+    '&&': {
+      marginRight: 20,
+    },
+  },
   live: {
     animationName: '$live-animation',
     animationDuration: '1500ms',
