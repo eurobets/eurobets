@@ -86,7 +86,7 @@ const RoomView = () => {
             <ArrowBack />
           </IconButton>
         </Link>
-        <Link href={`/rooms/${id}/stats`}>
+        <Link href={`/room-stats/${id}`}>
           <a>
             <MaterialLink component="span">Statistics</MaterialLink>
           </a>
