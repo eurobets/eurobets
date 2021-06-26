@@ -76,7 +76,7 @@ const calculatePoints = (
     return (points + resultPoints) * coefficient;
   }
 
-  return points;
+  return points * coefficient;
 };
 
 export const getTotalScore = (items: TableGame[]) => (
