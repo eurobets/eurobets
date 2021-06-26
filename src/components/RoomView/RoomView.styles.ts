@@ -1,5 +1,4 @@
 import grey from '@material-ui/core/colors/grey';
-import green from '@material-ui/core/colors/green';
 
 export default {
   '@keyframes live-animation': {
@@ -33,12 +32,6 @@ export default {
   input: {
     width: 700,
   },
-  headerCell: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    whiteSpace: 'nowrap',
-    justifyContent: 'center',
-  },
   scrollable: {
     overflow: 'auto',
     flexGrow: 1,
@@ -53,11 +46,6 @@ export default {
     minWidth: 100,
     borderLeft: [1, 'solid', grey[300]],
 
-  },
-  icon: {
-    height: 20,
-    margin: [0, 8],
-    boxShadow: [0, 0, 2, grey[300]],
   },
   list: {
     margin: [0, 0, 0, 24],
@@ -90,12 +78,6 @@ export default {
     display: 'flex',
     alignItems: 'center',
   },
-  flagDefault: {
-    color: grey[500],
-  },
-  score: {
-    position: 'relative',
-  },
   header: {
     display: 'flex',
     alignItems: 'center',
@@ -104,18 +86,5 @@ export default {
     '&&': {
       marginRight: 20,
     },
-  },
-  live: {
-    animationName: '$live-animation',
-    animationDuration: '1500ms',
-    animationIterationCount: 'infinite',
-    position: 'absolute',
-    color: green[500],
-    left: 0,
-    right: 0,
-    top: -16,
-    margin: 'auto',
-    fontSize: '12px',
-    fontWeight: 'bold',
   },
 };

@@ -26,6 +26,7 @@ import { Bet, Game, TableGame, RoomTableRow } from '../../types';
 
 import styles from './RoomView.styles';
 import Link from 'next/link';
+import RoomHeaderCell from '../RoomHeaderCell';
 
 const useStyles = createUseStyles(styles);
 
@@ -119,56 +120,14 @@ const RoomView = () => {
             <TableHead>
               <TableRow>
                 {games.map((game) => (
-                  <TableCell
-                    key={game.id}
-                    align="center"
+                  <RoomHeaderCell
+                    {...game}
                     className={classes.cell}
+                    key={game.id}
                     ref={game.id === nextGameId
                       ? scrollIntoViewCallback
                       : undefined}
-                  >
-                    <Tooltip
-                      title={(
-                        <div>
-                          <div>{`${game.homeTeam.name || '?'} — ${game.awayTeam.name || '?'}`}</div>
-                          <div>{(new Date(game.utcDate)).toLocaleString()}</div>
-                        </div>
-                      )}
-                    >
-                      <div className={classes.headerCell}>
-                        {game.homeTeam.icon
-                          ? (
-                            <img
-                              alt="flag"
-                              className={classes.icon}
-                              src={game.homeTeam.icon}
-                              title={game.homeTeam.name}
-                            />
-                          )
-                          : <FlagOutlined className={classes.flagDefault} />}
-                          <div className={classes.score}>
-                            {game.status === 'IN_PLAY' && <div className={classes.live}>●</div>}
-                            {typeof game.score.fullTime.homeTeam === 'number'
-                              ? game.score.fullTime.homeTeam
-                              : '-'}
-                            {' : '}
-                            {typeof game.score.fullTime.awayTeam === 'number'
-                              ? game.score.fullTime.awayTeam
-                              : '-'}
-                          </div>
-                          {game.awayTeam.icon
-                          ? (
-                            <img
-                              alt="flag"
-                              className={classes.icon}
-                              src={game.awayTeam.icon}
-                              title={game.awayTeam.name}
-                            />
-                          )
-                          : <FlagOutlined className={classes.flagDefault} />}
-                      </div>
-                    </Tooltip>
-                  </TableCell>
+                  />
                 ))}
               </TableRow>
             </TableHead>
