@@ -66,6 +66,8 @@ const Dashboard = () => {
     return null;
   }
   const { id, players: { items: players = [] } } = user;
+  const lastMidnight = new Date();
+  lastMidnight.setHours(0, 0, 0, 0);
 
   async function onSave() {
     try {
@@ -130,11 +132,13 @@ const Dashboard = () => {
             </TableRow>
           )}
           {games.map((game: Game) => {
-            const started = new Date() > new Date(game.utcDate);
+            const gameStart = new Date(game.utcDate);
+            const started = new Date() > gameStart;
+            const hideByDefault = lastMidnight > gameStart;
             return (
-              <TableRow key={game.id} className={cx(started && !showAll && classes.hidden)}>
+              <TableRow key={game.id} className={cx(hideByDefault && !showAll && classes.hidden)}>
                 <TableCell className={classes.dateCell}>
-                  {(new Date(game.utcDate)).toLocaleString()}
+                  {gameStart.toLocaleString()}
                 </TableCell>
                 <TableCell className={classes.gameCell}>
                   {game.homeTeam.name || '?'}
