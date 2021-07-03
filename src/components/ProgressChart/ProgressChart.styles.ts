@@ -4,10 +4,12 @@ export default {
     flexDirection: 'column',
     flexGrow: 1,
   },
-  header: {
+  content: {
     display: 'flex',
+    flexDirection: 'row',
+    overflow: 'auto',
+    flexGrow: 1,
+    height: 500,
   },
-  tabs: {
-    marginLeft: 36,
-  },
+
 };

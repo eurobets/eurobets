@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { gamesState, roomState, sortingState, userState, lastNGames } from './atoms';
 
 import {
-  addSorting, addTrololo, /* addUnderdogBonus, */ makeATableWithPoints, addScore,
+  addSorting, addTrololo, /* addUnderdogBonus, */ makeATableWithPoints, addScore, getTeamToPoints
 } from '../utils/pointsCalculation';
 import { RoomTableRow, StatsRow } from '../types';
 
@@ -53,5 +53,36 @@ export const selectStatsTable = selector({
     }));
 
     return result;
+  },
+});
+
+export const selectFavoriteTeams = selector({
+  key: 'selectFavoriteTeams',
+  get({ get }) {
+    const table = get(selectRoomTable);
+
+    if (!table) {
+      return null;
+    }
+
+    console.log(table.reduce((result, row) => {
+      const teamPoints = getTeamToPoints(row);
+      return {
+        ...result,
+        [row.id]: Object.keys(teamPoints)
+          .map((key) => ({ country: key, points: teamPoints[key] }))
+          .sort((a, b) => (a.points > b.points ? -1 : 1)),
+      };
+    }, {}));
+
+    return table.reduce((result, row) => {
+      const teamPoints = getTeamToPoints(row);
+      return {
+        ...result,
+        [row.id]: Object.keys(teamPoints)
+          .map((key) => ({ country: key, points: teamPoints[key] }))
+          .sort((a, b) => (a.points > b.points ? -1 : 1)),
+      };
+    }, {});
   },
 });

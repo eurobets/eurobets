@@ -226,3 +226,16 @@ export const addSorting = (
     ? sortByScore(a, b)
     : sortByDefault(a, b, user)
   ));
+
+export const getTeamToPoints = (row: RoomTableRow) => {
+  return row.games.reduce((result: { [key: string]: number }, game) => {
+    if (!game.homeTeam.name || !game.awayTeam.name) {
+      return result;
+    }
+    return {
+      ...result,
+      [game.homeTeam.name]: (result[game.homeTeam.name] || 0) + (game.points || 0),
+      [game.awayTeam.name]: (result[game.awayTeam.name] || 0) + (game.points || 0),
+    };
+  }, {});
+};

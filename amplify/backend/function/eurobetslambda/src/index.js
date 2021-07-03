@@ -33,10 +33,10 @@ const mergeGamesWithTeams = (games, teams) => {
                 fullTime: {
                     homeTeam: game.score.fullTime.homeTeam === null
                       ? null
-                      : game.score.fullTime.homeTeam - (game.score.extraTime.homeTeam || 0),
+                      : game.score.fullTime.homeTeam - (game.score.extraTime.homeTeam || 0) - (game.score.penalties.homeTeam || 0),
                     awayTeam: game.score.fullTime.awayTeam === null
                       ? null
-                      : game.score.fullTime.awayTeam - (game.score.extraTime.awayTeam || 0)
+                      : game.score.fullTime.awayTeam - (game.score.extraTime.awayTeam || 0) - (game.score.penalties.awayTeam || 0)
                 }
             }
         }
