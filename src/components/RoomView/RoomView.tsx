@@ -9,12 +9,12 @@ import {
   TableRow,
   Button,
   Input,
-  Tooltip,
   IconButton,
   TableSortLabel, Link as MaterialLink,
 } from '@material-ui/core';
 import Head from 'next/head';
-import { FlagOutlined, ArrowBack } from '@material-ui/icons';
+import { ArrowBack } from '@material-ui/icons';
+import Link from 'next/link';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { gamesState, userState, roomState, sortingState } from '../../store/atoms';
@@ -22,17 +22,16 @@ import { selectRoomTable } from '../../store/selectors';
 import { getRoom } from '../../api';
 import BetDialog from '../BetDialog';
 import BetCellContent from '../BetCellContent';
-import { Bet, Game, TableGame, RoomTableRow } from '../../types';
+import { Game, TableGame, RoomTableRow, BaseBet } from '../../types';
 
 import styles from './RoomView.styles';
-import Link from 'next/link';
 import RoomHeaderCell from '../RoomHeaderCell';
 
 const useStyles = createUseStyles(styles);
 
 type BetDialogInput = {
   game: Game,
-  bet?: Bet
+  bet?: BaseBet
 } | undefined;
 
 const RoomView = () => {
@@ -139,7 +138,7 @@ const RoomView = () => {
                       <BetCellContent
                         points={game.points}
                         started={game.started}
-                        onlyPoints={row.bot}
+                        bot={row.bot}
                         bet={game.bet}
                         onClick={user.id === row.id
                           ? () => setBetDialog({ game, bet: game.bet })

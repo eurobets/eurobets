@@ -1,13 +1,13 @@
 import uniqWith from 'lodash/uniqWith';
 
-import { Room, RoomTableRow, TableGame, Bet, GameFullTime, Game, Player, User, Sorting } from '../types';
+import { Room, RoomTableRow, TableGame, Bet, GameFullTime, Game, Player, User, Sorting, BaseBet } from '../types';
 
 export const FIRST_PLAYOFF_DAY = 4;
 const UNDERDOG_BONUS = 2;
 const UNDERDOG_APPLICABLE_LENGTH = 8;
 
 const isCorrectScore = (
-  { homeScore, awayScore }: Bet,
+  { homeScore, awayScore }: BaseBet,
   { homeTeam, awayTeam }: GameFullTime,
 ): boolean => (
   homeScore === homeTeam
@@ -15,7 +15,7 @@ const isCorrectScore = (
 );
 
 const isCorrectDifference = (
-  { homeScore, awayScore }: Bet,
+  { homeScore, awayScore }: BaseBet,
   { homeTeam, awayTeam }: GameFullTime,
 ): boolean => (
   homeScore !== null
@@ -24,7 +24,7 @@ const isCorrectDifference = (
 );
 
 const isCorrectResult = (
-  { homeScore, awayScore }: Bet,
+  { homeScore, awayScore }: BaseBet,
   { homeTeam, awayTeam }: GameFullTime,
 ): boolean => (
   homeScore !== null
@@ -33,7 +33,7 @@ const isCorrectResult = (
 );
 
 const isCorrectPromotion = (
-  { homeWins, awayWins }: Bet,
+  { homeWins, awayWins }: BaseBet,
   { matchday, score: { winner } }: Game,
 ): boolean => (
   matchday >= FIRST_PLAYOFF_DAY
@@ -41,7 +41,7 @@ const isCorrectPromotion = (
 );
 
 const calculatePoints = (
-  bet: Bet,
+  bet: BaseBet,
   game: Game | undefined,
   {
     differencePoints,
@@ -124,6 +124,67 @@ const getTrololoPoints = (
 
   return 0;
 };
+
+const getAverageNumber = (
+  table: RoomTableRow[],
+  index: number,
+  field: 'homeScore' | 'awayScore' | 'homeWins' | 'awayWins',
+) => {
+  let sum = 0;
+  let amount = 0;
+
+  table.forEach((row) => {
+    const bet = row.games[index]?.bet;
+    if (!bet) {
+      return;
+    }
+
+    if (['number', 'boolean'].includes(typeof bet[field])) {
+      sum += Number(bet[field]);
+      amount += 1;
+    }
+  });
+
+  if (amount === 0) {
+    return null;
+  }
+
+  return Math.round(sum / amount);
+};
+
+export const getCOBet = (
+  table: RoomTableRow[],
+  index: number,
+): BaseBet => {
+  const homeWins = Boolean(getAverageNumber(table, index, 'homeWins'));
+  const awayWins = Boolean(getAverageNumber(table, index, 'awayWins'));
+
+  return {
+    homeWins,
+    homeScore: getAverageNumber(table, index, 'homeScore'),
+    awayScore: getAverageNumber(table, index, 'awayScore'),
+    awayWins: awayWins && homeWins ? false : awayWins, // cover case "both can't be true"
+  };
+};
+
+export const addCO = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => [
+  ...table,
+  {
+    id: 'co',
+    name: 'Captain Obvious',
+    avatar: '/co.jpeg',
+    bot: true,
+    games: games.map((game, index) => {
+      const bet = getCOBet(table, index);
+      return {
+        bet: new Date() > new Date(game.utcDate) ? bet : undefined,
+        points: calculatePoints(bet, game, room),
+        ...game,
+      };
+    }),
+    score: 0,
+  },
+];
 
 export const addTrololo = (table: RoomTableRow[], games: Game[], room: Room): RoomTableRow[] => [
   ...table,

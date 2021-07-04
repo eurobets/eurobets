@@ -2,14 +2,14 @@ import React, { FC, MouseEvent } from 'react';
 import { Button, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import BetText from '../BetText';
-import { Bet } from '../../types';
+import { BaseBet } from '../../types';
 import Points from '../Points';
 
 interface BetCellContentProps {
-  bet?: Bet,
+  bet?: BaseBet,
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   started?: boolean;
-  onlyPoints?: boolean;
+  bot?: boolean;
   points?: number | null;
 }
 
@@ -18,9 +18,9 @@ const BetCellContent: FC<BetCellContentProps> = ({
   onClick,
   started = false,
   points,
-  onlyPoints = false,
+  bot = false,
 }) => {
-  if (onlyPoints) {
+  if (bot && !bet) {
     return <Points>{points}</Points>;
   }
 

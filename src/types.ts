@@ -1,8 +1,15 @@
-export interface Bet {
+export interface BaseBet {
   homeWins: boolean;
   homeScore: number | null;
   awayScore: number | null;
   awayWins: boolean;
+  disabled?: boolean;
+  owner?: string;
+  roomId?: string;
+  game?: number;
+}
+
+export interface Bet extends BaseBet {
   disabled: boolean;
   owner: string;
   roomId: string;
@@ -69,7 +76,7 @@ export interface Room {
 export interface TableGame extends Game {
   points?: number | null;
   started?: boolean;
-  bet?: Bet;
+  bet?: BaseBet;
   bot?: boolean
 }
 

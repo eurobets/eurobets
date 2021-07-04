@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { gamesState, roomState, sortingState, userState, lastNGames } from './atoms';
 
 import {
-  addSorting, addTrololo, /* addUnderdogBonus, */ makeATableWithPoints, addScore, getTeamToPoints
+  addSorting, addTrololo, addCO, /* addUnderdogBonus, */ makeATableWithPoints, addScore, getTeamToPoints
 } from '../utils/pointsCalculation';
 import { RoomTableRow, StatsRow } from '../types';
 
@@ -20,6 +20,7 @@ export const selectRoomTable = selector({
 
     let table = makeATableWithPoints(room, games);
     // table = addUnderdogBonus(table);
+    table = addCO(table, games, room);
     table = addTrololo(table, games, room);
     table = addScore(table);
     return addSorting(table, sorting, user);

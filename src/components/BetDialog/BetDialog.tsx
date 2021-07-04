@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { createBet } from '../../api';
 import Spinner from '../Spinner';
-import { Bet, Game } from '../../types';
+import { BaseBet, Game } from '../../types';
 import { FIRST_PLAYOFF_DAY } from '../../utils/pointsCalculation';
 
 const useStyles = createUseStyles({
@@ -56,7 +56,7 @@ const useStyles = createUseStyles({
 });
 
 interface BetDialogProps {
-  bet?: Bet,
+  bet?: BaseBet,
   game: Game,
   roomId: string,
   onClose: () => void,

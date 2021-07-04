@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import { createUseStyles } from 'react-jss';
-import { Bet } from '../../types';
+import { BaseBet } from '../../types';
 
 const useStyles = createUseStyles({
   root: {
@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const BetText: FC<Bet> = ({
+const BetText: FC<BaseBet> = ({
   homeScore,
   awayScore,
   homeWins,
