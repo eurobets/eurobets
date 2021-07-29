@@ -1,3 +1,5 @@
+### The project is on hold till World Cup 2022 
+
 ## Getting Started
 
 Run the development server:
